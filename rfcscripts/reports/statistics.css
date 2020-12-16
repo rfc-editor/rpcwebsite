@@ -1,0 +1,64 @@
+/* Copyright The IETF Trust 2020 All Rights Reserved */
+body { background: rgb(215,215,245); margin: 0em; }
+
+img.header { margin-bottom: 20px; margin-top: 30px;}
+
+table { background: white; margin-left: auto; margin-right: auto; text-align: right; }
+
+table.search {  margin-bottom: 50px; }
+table.search_states {  padding: 15px; }
+table.search_states th {  text-align: left; border-bottom: none;}
+table.search_fields {  padding: 15px; }
+table.sort_fields {  padding: 15px; }
+table.edit_hits {  padding: 15px; }
+table.choices {  margin-left: 0; }
+/*table th { font-family: "Courier New", Courier, "Andale Mono", Monaco, monospace;
+           font-weight: bold;
+           font-size: large;
+         }
+*/
+
+table th { font-weight: bold;
+           font-size: large;
+         }
+
+
+table tr.odd { background: rgb(245,235,235); }
+table tr.even { background: rgb(235,245,245); }
+label.error { color: red; }
+label.readonly { background: rgb(200,200,200); }
+span.warning { color: red; }
+span.draftname { font-weight: bold; font-family: monospace; }
+.info { margin-left: +3em; font-size: smaller; }
+.warning { color: red; }
+.error { font-weight: bold; color: red; }
+
+ul.rfc_fcns { display: table; margin-left: auto; margin-right: auto; }
+ul.rfc_fcns li { display: table-cell; padding: 0.5em; background: white; }
+
+div.center { margin-left: auto; margin-right: auto; text-align: center;}
+input.red {background-color: #cc0000; font-weight: bold; font-size: 12px; color: white;}
+
+.simple_left { text-align: left; }
+.simple_right {text-align: right;}
+.simple_center { text-align: center;}
+.notice { background: white; margin-left: 25%; margin-right: 25%; }
+
+
+/*.rfctext { font-family: "Courier New", Courier, "Andale Mono", Monaco, monospace;
+           white-space: pre;
+           margin-left: 2em;
+           font-weight: bold;
+           font-size: large;
+           border-bottom: solid;
+           text-align: left;  
+         }
+*/
+.rfctext { white-space: pre;
+           margin-left: 2em;
+           font-weight: bold;
+           font-size: large;
+           border-bottom: solid;
+           text-align: left;  
+         }
+

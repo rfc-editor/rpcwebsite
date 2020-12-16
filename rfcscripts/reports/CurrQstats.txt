@@ -1,0 +1,21 @@
+#### RFC Editor Queue Summary:  2016-02-02 ####
+
+    State             total #       total #      Median Wks    Average Wks
+                      docs          pages        in state      in state
+    EDIT                   40            906            3.1            4.5
+    RFC-EDITOR              9            268            0.7            1.1
+    AUTH48                 20            562            1.1            2.6
+    AUTH48-DONE             6            178            3.0            3.6
+    AUTH                    3            362            7.9           21.3
+    IANA                    1            112            0.0            5.9
+    IESG                    0              0            0.0            0.0
+    REF                     1             32            0.0           14.6
+    MISSREF(1G)            25            797           19.7           24.8
+    MISSREF(2G)             2             32            9.1            9.1
+    MISSREF(3G)             0              0            0.0            0.0
+    ISR                     0              0            0.0            0.0
+    ISR-AUTH                0              0            0.0            0.0
+    TO                      0              0            0.0            0.0
+
+
+Totals:    107 docs    3249 pages

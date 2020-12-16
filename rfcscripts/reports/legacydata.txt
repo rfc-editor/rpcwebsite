@@ -1,0 +1,391 @@
+Reminder: data before March 2012 is not 100% accurate
+
+ MONTHLY SUMMARY OF STATE CHANGES: NEW STATES
+
+
+2007 Jan EDIT        Added  29 docs, 1036 pgs   Yr Cum:   29,  1036 pgs  35 p/d
+2007 Jan RFC-EDIT    Added  10 docs,  481 pgs   Yr Cum:   10,   481 pgs  48 p/d
+2007 Jan AUTH48      Added  16 docs,  706 pgs   Yr Cum:   16,   706 pgs  44 p/d
+2007 Jan PUB         Added  22 docs,  654 pgs   Yr Cum:   22,   654 pgs  29 p/d
+2007 Jan DNP         Added   6 docs,  107 pgs   Yr Cum:    6,   107 pgs  17 p/d
+
+2007 Feb EDIT        Added  40 docs, 1766 pgs   Yr Cum:   69,  2802 pgs  40 p/d
+2007 Feb RFC-EDIT    Added  19 docs,  666 pgs   Yr Cum:   29,  1147 pgs  39 p/d
+2007 Feb AUTH48      Added  25 docs,  630 pgs   Yr Cum:   41,  1336 pgs  32 p/d
+2007 Feb PUB         Added  17 docs,  606 pgs   Yr Cum:   39,  1260 pgs  32 p/d
+2007 Feb DNP         Added   8 docs,  295 pgs   Yr Cum:   14,   402 pgs  28 p/d
+
+2007 Mar EDIT        Added  57 docs, 2184 pgs   Yr Cum:  126,  4986 pgs  39 p/d
+2007 Mar RFC-EDIT    Added  20 docs,  553 pgs   Yr Cum:   49,  1700 pgs  34 p/d
+2007 Mar AUTH48      Added  16 docs,  479 pgs   Yr Cum:   57,  1815 pgs  31 p/d
+2007 Mar PUB         Added  19 docs,  744 pgs   Yr Cum:   58,  2004 pgs  34 p/d
+
+2007 Apr EDIT        Added  30 docs,  982 pgs   Yr Cum:  156,  5968 pgs  38 p/d
+2007 Apr RFC-EDIT    Added  37 docs, 1206 pgs   Yr Cum:   86,  2906 pgs  33 p/d
+2007 Apr AUTH48      Added  43 docs, 1298 pgs   Yr Cum:  100,  3113 pgs  31 p/d
+2007 Apr PUB         Added  30 docs,  825 pgs   Yr Cum:   88,  2829 pgs  32 p/d
+
+2007 May EDIT        Added  20 docs,  496 pgs   Yr Cum:  176,  6464 pgs  36 p/d
+2007 May RFC-EDIT    Added  25 docs, 1034 pgs   Yr Cum:  111,  3940 pgs  35 p/d
+2007 May AUTH48      Added  26 docs,  971 pgs   Yr Cum:  126,  4084 pgs  32 p/d
+2007 May PUB         Added  30 docs, 1101 pgs   Yr Cum:  118,  3930 pgs  33 p/d
+
+2007 Jun EDIT        Added  21 docs,  593 pgs   Yr Cum:  197,  7057 pgs  35 p/d
+2007 Jun RFC-EDIT    Added  23 docs,  896 pgs   Yr Cum:  134,  4836 pgs  36 p/d
+2007 Jun AUTH48      Added  31 docs, 1171 pgs   Yr Cum:  157,  5255 pgs  33 p/d
+2007 Jun PUB         Added  24 docs,  758 pgs   Yr Cum:  142,  4688 pgs  33 p/d
+2007 Jun DNP         Added   1 docs,    8 pgs   Yr Cum:   15,   410 pgs  27 p/d
+
+2007 Jul EDIT        Added  20 docs,  506 pgs   Yr Cum:  217,  7563 pgs  34 p/d
+2007 Jul RFC-EDIT    Added  24 docs,  912 pgs   Yr Cum:  158,  5748 pgs  36 p/d
+2007 Jul AUTH48      Added  37 docs, 1347 pgs   Yr Cum:  194,  6602 pgs  34 p/d
+2007 Jul PUB         Added  44 docs, 1474 pgs   Yr Cum:  186,  6162 pgs  33 p/d
+
+2007 Aug EDIT        Added  16 docs,  445 pgs   Yr Cum:  233,  8008 pgs  34 p/d
+2007 Aug RFC-EDIT    Added  26 docs, 1033 pgs   Yr Cum:  184,  6781 pgs  36 p/d
+2007 Aug AUTH48      Added  38 docs,  866 pgs   Yr Cum:  232,  7468 pgs  32 p/d
+2007 Aug PUB         Added  34 docs, 1148 pgs   Yr Cum:  220,  7310 pgs  33 p/d
+
+2007 Sep EDIT        Added  19 docs,  537 pgs   Yr Cum:  252,  8545 pgs  33 p/d
+2007 Sep RFC-EDIT    Added  21 docs, 1027 pgs   Yr Cum:  205,  7808 pgs  38 p/d
+2007 Sep AUTH48      Added  14 docs,  622 pgs   Yr Cum:  246,  8090 pgs  32 p/d
+2007 Sep PUB         Added  34 docs, 1072 pgs   Yr Cum:  254,  8382 pgs  33 p/d
+
+2007 Oct EDIT        Added  35 docs, 1084 pgs   Yr Cum:  287,  9629 pgs  33 p/d
+2007 Oct RFC-EDIT    Added  32 docs,  954 pgs   Yr Cum:  237,  8762 pgs  36 p/d
+2007 Oct AUTH48      Added  28 docs,  956 pgs   Yr Cum:  274,  9046 pgs  33 p/d
+2007 Oct PUB         Added  26 docs, 1047 pgs   Yr Cum:  280,  9429 pgs  33 p/d
+
+2007 Nov EDIT        Added  32 docs,  873 pgs   Yr Cum:  319, 10502 pgs  32 p/d
+2007 Nov RFC-EDIT    Added  22 docs,  592 pgs   Yr Cum:  259,  9354 pgs  36 p/d
+2007 Nov AUTH48      Added  28 docs,  958 pgs   Yr Cum:  302, 10004 pgs  33 p/d
+2007 Nov PUB         Added  16 docs,  610 pgs   Yr Cum:  296, 10039 pgs  33 p/d
+
+2007 Dec EDIT        Added  16 docs,  468 pgs   Yr Cum:  335, 10970 pgs  32 p/d
+2007 Dec RFC-EDIT    Added  18 docs,  691 pgs   Yr Cum:  277, 10045 pgs  36 p/d
+2007 Dec AUTH48      Added  21 docs,  719 pgs   Yr Cum:  323, 10723 pgs  33 p/d
+2007 Dec PUB         Added  23 docs,  676 pgs   Yr Cum:  319, 10715 pgs  33 p/d
+2007 Dec DNP         Added   2 docs,   41 pgs   Yr Cum:   17,   451 pgs  26 p/d
+
+         STATISTICS FOR YEAR:  2007
+
+Year     State                Docs   Pages
+
+2007     EDIT        Yr Cum:  335, 10970 
+2007     RFC-EDIT    Yr Cum:  277, 10045 
+2007     AUTH48      Yr Cum:  323, 10723 
+2007     PUB         Yr Cum:  319, 10715 
+2007     DNP         Yr Cum:   17,   451 
+
+2008 Jan EDIT        Added  24 docs,  637 pgs   Yr Cum:   24,   637 pgs  26 p/d
+2008 Jan RFC-EDIT    Added  19 docs,  468 pgs   Yr Cum:   19,   468 pgs  24 p/d
+2008 Jan AUTH48      Added  23 docs,  453 pgs   Yr Cum:   23,   453 pgs  19 p/d
+2008 Jan PUB         Added  33 docs,  974 pgs   Yr Cum:   33,   974 pgs  29 p/d
+
+2008 Feb EDIT        Added  11 docs,  347 pgs   Yr Cum:   35,   984 pgs  28 p/d
+2008 Feb RFC-EDIT    Added  34 docs,  919 pgs   Yr Cum:   53,  1387 pgs  26 p/d
+2008 Feb AUTH48      Added  32 docs,  901 pgs   Yr Cum:   55,  1354 pgs  24 p/d
+2008 Feb PUB         Added  31 docs,  673 pgs   Yr Cum:   64,  1647 pgs  25 p/d
+2008 Feb DNP         Added   1 docs,   19 pgs   Yr Cum:    1,    19 pgs  19 p/d
+
+2008 Mar EDIT        Added  17 docs,  679 pgs   Yr Cum:   52,  1663 pgs  31 p/d
+2008 Mar RFC-EDIT    Added  15 docs,  454 pgs   Yr Cum:   68,  1841 pgs  27 p/d
+2008 Mar AUTH48      Added  25 docs,  574 pgs   Yr Cum:   80,  1928 pgs  24 p/d
+2008 Mar PUB         Added  25 docs,  768 pgs   Yr Cum:   89,  2415 pgs  27 p/d
+2008 Mar DNP         Added   5 docs,   63 pgs   Yr Cum:    6,    82 pgs  13 p/d
+
+2008 Apr EDIT        Added  14 docs,  388 pgs   Yr Cum:   66,  2051 pgs  31 p/d
+2008 Apr RFC-EDIT    Added  13 docs,  390 pgs   Yr Cum:   81,  2231 pgs  27 p/d
+2008 Apr AUTH48      Added  16 docs,  816 pgs   Yr Cum:   96,  2744 pgs  28 p/d
+2008 Apr PUB         Added  18 docs,  557 pgs   Yr Cum:  107,  2972 pgs  27 p/d
+2008 Apr DNP         Added   4 docs,  103 pgs   Yr Cum:   10,   185 pgs  18 p/d
+
+2008 May EDIT        Added  34 docs, 1289 pgs   Yr Cum:  100,  3340 pgs  33 p/d
+2008 May RFC-EDIT    Added  24 docs,  734 pgs   Yr Cum:  105,  2965 pgs  28 p/d
+2008 May AUTH48      Added  26 docs,  693 pgs   Yr Cum:  122,  3437 pgs  28 p/d
+2008 May PUB         Added  19 docs,  555 pgs   Yr Cum:  126,  3527 pgs  27 p/d
+
+2008 Jun EDIT        Added  31 docs,  614 pgs   Yr Cum:  131,  3954 pgs  30 p/d
+2008 Jun RFC-EDIT    Added  28 docs,  924 pgs   Yr Cum:  133,  3889 pgs  29 p/d
+2008 Jun AUTH48      Added  26 docs, 1017 pgs   Yr Cum:  148,  4454 pgs  30 p/d
+2008 Jun PUB         Added  26 docs,  861 pgs   Yr Cum:  152,  4388 pgs  28 p/d
+
+2008 Jul EDIT        Added  44 docs, 1173 pgs   Yr Cum:  175,  5127 pgs  29 p/d
+2008 Jul RFC-EDIT    Added  18 docs,  302 pgs   Yr Cum:  151,  4191 pgs  27 p/d
+2008 Jul AUTH48      Added  24 docs,  444 pgs   Yr Cum:  172,  4898 pgs  28 p/d
+2008 Jul PUB         Added  22 docs,  520 pgs   Yr Cum:  174,  4908 pgs  28 p/d
+
+2008 Aug EDIT        Added  17 docs,  494 pgs   Yr Cum:  192,  5621 pgs  29 p/d
+2008 Aug RFC-EDIT    Added  31 docs,  856 pgs   Yr Cum:  182,  5047 pgs  27 p/d
+2008 Aug AUTH48      Added  27 docs,  675 pgs   Yr Cum:  199,  5573 pgs  28 p/d
+2008 Aug PUB         Added  22 docs,  708 pgs   Yr Cum:  196,  5616 pgs  28 p/d
+2008 Aug DNP         Added   2 docs,   40 pgs   Yr Cum:   12,   225 pgs  18 p/d
+
+2008 Sep EDIT        Added  18 docs,  564 pgs   Yr Cum:  210,  6185 pgs  29 p/d
+2008 Sep RFC-EDIT    Added  35 docs,  993 pgs   Yr Cum:  217,  6040 pgs  27 p/d
+2008 Sep AUTH48      Added  35 docs,  867 pgs   Yr Cum:  234,  6440 pgs  27 p/d
+2008 Sep PUB         Added  32 docs, 1075 pgs   Yr Cum:  228,  6691 pgs  29 p/d
+
+2008 Oct EDIT        Added  27 docs,  755 pgs   Yr Cum:  237,  6940 pgs  29 p/d
+2008 Oct RFC-EDIT    Added  14 docs,  400 pgs   Yr Cum:  231,  6440 pgs  27 p/d
+2008 Oct AUTH48      Added  19 docs,  554 pgs   Yr Cum:  253,  6994 pgs  27 p/d
+2008 Oct PUB         Added  37 docs,  837 pgs   Yr Cum:  265,  7528 pgs  28 p/d
+2008 Oct DNP         Added   2 docs,   52 pgs   Yr Cum:   14,   277 pgs  19 p/d
+
+2008 Nov EDIT        Added  32 docs, 1304 pgs   Yr Cum:  269,  8244 pgs  30 p/d
+2008 Nov RFC-EDIT    Added  19 docs,  463 pgs   Yr Cum:  250,  6903 pgs  27 p/d
+2008 Nov AUTH48      Added  14 docs,  406 pgs   Yr Cum:  267,  7400 pgs  27 p/d
+2008 Nov PUB         Added  13 docs,  333 pgs   Yr Cum:  278,  7861 pgs  28 p/d
+2008 Nov DNP         Added   2 docs,    8 pgs   Yr Cum:   16,   285 pgs  17 p/d
+
+2008 Dec EDIT        Added  29 docs,  841 pgs   Yr Cum:  298,  9085 pgs  30 p/d
+2008 Dec RFC-EDIT    Added  26 docs, 1087 pgs   Yr Cum:  276,  7990 pgs  28 p/d
+2008 Dec AUTH48      Added  17 docs,  530 pgs   Yr Cum:  284,  7930 pgs  27 p/d
+2008 Dec PUB         Added  11 docs,  302 pgs   Yr Cum:  289,  8163 pgs  28 p/d
+2008 Dec DNP         Added   1 docs,   14 pgs   Yr Cum:   17,   299 pgs  17 p/d
+
+         STATISTICS FOR YEAR:  2008
+
+Year     State                Docs   Pages
+
+2008     EDIT        Yr Cum:  298,  9085 
+2008     RFC-EDIT    Yr Cum:  276,  7990 
+2008     AUTH48      Yr Cum:  284,  7930 
+2008     PUB         Yr Cum:  289,  8163 
+2008     DNP         Yr Cum:   17,   299 
+
+2009 Jan EDIT        Added  28 docs, 1306 pgs   Yr Cum:   28,  1306 pgs  46 p/d
+2009 Jan RFC-EDIT    Added  36 docs,  947 pgs   Yr Cum:   36,   947 pgs  26 p/d
+2009 Jan AUTH48      Added  40 docs, 1240 pgs   Yr Cum:   40,  1240 pgs  31 p/d
+2009 Jan PUB         Added  13 docs,  246 pgs   Yr Cum:   13,   246 pgs  18 p/d
+
+2009 Feb EDIT        Added  20 docs,  516 pgs   Yr Cum:   48,  1822 pgs  37 p/d
+2009 Feb RFC-EDIT    Added  27 docs,  581 pgs   Yr Cum:   63,  1528 pgs  24 p/d
+2009 Feb AUTH48      Added  27 docs,  704 pgs   Yr Cum:   67,  1944 pgs  29 p/d
+2009 Feb PUB         Added  22 docs,  518 pgs   Yr Cum:   35,   764 pgs  21 p/d
+
+2009 Mar EDIT        Added  37 docs, 1194 pgs   Yr Cum:   85,  3016 pgs  35 p/d
+2009 Mar RFC-EDIT    Added  23 docs,  443 pgs   Yr Cum:   86,  1971 pgs  22 p/d
+2009 Mar AUTH48      Added  26 docs,  559 pgs   Yr Cum:   93,  2503 pgs  26 p/d
+2009 Mar PUB         Added  53 docs, 1480 pgs   Yr Cum:   88,  2244 pgs  25 p/d
+
+2009 Apr EDIT        Added  22 docs,  807 pgs   Yr Cum:  107,  3823 pgs  35 p/d
+2009 Apr RFC-EDIT    Added  26 docs,  853 pgs   Yr Cum:  112,  2824 pgs  25 p/d
+2009 Apr AUTH48      Added  30 docs,  662 pgs   Yr Cum:  123,  3165 pgs  25 p/d
+2009 Apr PUB         Added  25 docs,  549 pgs   Yr Cum:  113,  2793 pgs  24 p/d
+
+2009 May EDIT        Added  22 docs,  598 pgs   Yr Cum:  129,  4421 pgs  34 p/d
+2009 May RFC-EDIT    Added  25 docs,  893 pgs   Yr Cum:  137,  3717 pgs  27 p/d
+2009 May AUTH48      Added  23 docs,  873 pgs   Yr Cum:  146,  4038 pgs  27 p/d
+2009 May PUB         Added  19 docs,  430 pgs   Yr Cum:  132,  3223 pgs  24 p/d
+
+2009 Jun EDIT        Added  34 docs, 1497 pgs   Yr Cum:  163,  5918 pgs  36 p/d
+2009 Jun RFC-EDIT    Added  23 docs,  687 pgs   Yr Cum:  160,  4404 pgs  27 p/d
+2009 Jun AUTH48      Added  29 docs,  964 pgs   Yr Cum:  175,  5002 pgs  28 p/d
+2009 Jun PUB         Added  21 docs,  784 pgs   Yr Cum:  153,  4007 pgs  26 p/d
+
+2009 Jul EDIT        Added  28 docs, 1025 pgs   Yr Cum:  191,  6943 pgs  36 p/d
+2009 Jul RFC-EDIT    Added  40 docs, 1478 pgs   Yr Cum:  200,  5882 pgs  29 p/d
+2009 Jul AUTH48      Added  20 docs,  675 pgs   Yr Cum:  195,  5677 pgs  29 p/d
+2009 Jul PUB         Added  19 docs,  606 pgs   Yr Cum:  172,  4613 pgs  26 p/d
+
+2009 Aug EDIT        Added  14 docs,  390 pgs   Yr Cum:  205,  7333 pgs  35 p/d
+2009 Aug RFC-EDIT    Added  15 docs,  813 pgs   Yr Cum:  215,  6695 pgs  31 p/d
+2009 Aug AUTH48      Added  37 docs, 1486 pgs   Yr Cum:  232,  7163 pgs  30 p/d
+2009 Aug PUB         Added  36 docs, 1019 pgs   Yr Cum:  208,  5632 pgs  27 p/d
+
+2009 Sep EDIT        Added  38 docs, 1186 pgs   Yr Cum:  243,  8519 pgs  35 p/d
+2009 Sep RFC-EDIT    Added  35 docs, 1641 pgs   Yr Cum:  250,  8336 pgs  33 p/d
+2009 Sep AUTH48      Added  12 docs,  529 pgs   Yr Cum:  244,  7692 pgs  31 p/d
+2009 Sep PUB         Added  20 docs, 1323 pgs   Yr Cum:  228,  6955 pgs  30 p/d
+
+2009 Oct EDIT        Added  31 docs,  921 pgs   Yr Cum:  274,  9440 pgs  34 p/d
+2009 Oct RFC-EDIT    Added  34 docs, 1118 pgs   Yr Cum:  284,  9454 pgs  33 p/d
+2009 Oct AUTH48      Added  46 docs, 1934 pgs   Yr Cum:  290,  9626 pgs  33 p/d
+2009 Oct PUB         Added  29 docs,  850 pgs   Yr Cum:  257,  7805 pgs  30 p/d
+2009 Oct DNP         Added   1 docs,   13 pgs   Yr Cum:    1,    13 pgs  13 p/d
+
+2009 Nov EDIT        Added  21 docs,  662 pgs   Yr Cum:  295, 10102 pgs  34 p/d
+2009 Nov RFC-EDIT    Added  15 docs,  453 pgs   Yr Cum:  299,  9907 pgs  33 p/d
+2009 Nov AUTH48      Added   7 docs,  376 pgs   Yr Cum:  297, 10002 pgs  33 p/d
+2009 Nov PUB         Added  13 docs,  470 pgs   Yr Cum:  270,  8275 pgs  30 p/d
+
+2009 Dec EDIT        Added  28 docs, 1064 pgs   Yr Cum:  323, 11166 pgs  34 p/d
+2009 Dec RFC-EDIT    Added  17 docs,  667 pgs   Yr Cum:  316, 10574 pgs  33 p/d
+2009 Dec AUTH48      Added  28 docs,  583 pgs   Yr Cum:  325, 10585 pgs  32 p/d
+2009 Dec PUB         Added  13 docs,  335 pgs   Yr Cum:  283,  8610 pgs  30 p/d
+2009 Dec DNP         Added   2 docs,   56 pgs   Yr Cum:    3,    69 pgs  23 p/d
+
+         STATISTICS FOR YEAR:  2009
+
+Year     State                Docs   Pages
+
+2009     EDIT        Yr Cum:  323, 11166 
+2009     RFC-EDIT    Yr Cum:  316, 10574 
+2009     AUTH48      Yr Cum:  325, 10585 
+2009     PUB         Yr Cum:  283,  8610 
+2009     DNP         Yr Cum:    3,    69 
+
+2010 Jan EDIT        Added  39 docs, 1100 pgs   Yr Cum:   39,  1100 pgs  28 p/d
+2010 Jan RFC-EDIT    Added  35 docs, 1326 pgs   Yr Cum:   35,  1326 pgs  37 p/d
+2010 Jan AUTH48      Added   6 docs,  270 pgs   Yr Cum:    6,   270 pgs  45 p/d
+2010 Jan PUB         Added  34 docs, 1502 pgs   Yr Cum:   34,  1502 pgs  44 p/d
+2010 Jan DNP         Added   1 docs,   23 pgs   Yr Cum:    1,    23 pgs  23 p/d
+
+2010 Feb EDIT        Added  20 docs,  685 pgs   Yr Cum:   59,  1785 pgs  30 p/d
+2010 Feb RFC-EDIT    Added  23 docs,  752 pgs   Yr Cum:   58,  2078 pgs  35 p/d
+2010 Feb AUTH48      Added  39 docs, 1279 pgs   Yr Cum:   45,  1549 pgs  34 p/d
+2010 Feb PUB         Added  40 docs, 1659 pgs   Yr Cum:   74,  3161 pgs  42 p/d
+
+2010 Mar EDIT        Added  65 docs, 1745 pgs   Yr Cum:  124,  3530 pgs  28 p/d
+2010 Mar RFC-EDIT    Added  35 docs,  856 pgs   Yr Cum:   93,  2934 pgs  31 p/d
+2010 Mar AUTH48      Added  38 docs, 1333 pgs   Yr Cum:   83,  2882 pgs  34 p/d
+2010 Mar PUB         Added  38 docs, 1354 pgs   Yr Cum:  112,  4515 pgs  40 p/d
+
+2010 Apr EDIT        Added  16 docs,  910 pgs   Yr Cum:  140,  4440 pgs  31 p/d
+2010 Apr RFC-EDIT    Added  42 docs, 1188 pgs   Yr Cum:  135,  4122 pgs  30 p/d
+2010 Apr AUTH48      Added  36 docs,  953 pgs   Yr Cum:  119,  3835 pgs  32 p/d
+2010 Apr PUB         Added  33 docs,  936 pgs   Yr Cum:  145,  5451 pgs  37 p/d
+
+2010 May EDIT        Added  33 docs, 1114 pgs   Yr Cum:  173,  5554 pgs  32 p/d
+2010 May RFC-EDIT    Added  20 docs,  663 pgs   Yr Cum:  155,  4785 pgs  30 p/d
+2010 May AUTH48      Added  33 docs,  953 pgs   Yr Cum:  152,  4788 pgs  31 p/d
+2010 May PUB         Added  40 docs, 1131 pgs   Yr Cum:  185,  6582 pgs  35 p/d
+
+2010 Jun EDIT        Added  33 docs,  833 pgs   Yr Cum:  206,  6387 pgs  31 p/d
+2010 Jun RFC-EDIT    Added  13 docs,  418 pgs   Yr Cum:  168,  5203 pgs  30 p/d
+2010 Jun AUTH48      Added  25 docs,  747 pgs   Yr Cum:  177,  5535 pgs  31 p/d
+2010 Jun PUB         Added  31 docs,  861 pgs   Yr Cum:  216,  7443 pgs  34 p/d
+2010 Jun DNP         Added   3 docs,   62 pgs   Yr Cum:    4,    85 pgs  21 p/d
+
+2010 Jul EDIT        Added  20 docs,  387 pgs   Yr Cum:  226,  6774 pgs  29 p/d
+2010 Jul RFC-EDIT    Added  32 docs, 1458 pgs   Yr Cum:  200,  6661 pgs  33 p/d
+2010 Jul AUTH48      Added  21 docs, 1165 pgs   Yr Cum:  198,  6700 pgs  33 p/d
+2010 Jul PUB         Added  16 docs,  479 pgs   Yr Cum:  232,  7922 pgs  34 p/d
+
+2010 Aug EDIT        Added  27 docs,  775 pgs   Yr Cum:  253,  7549 pgs  29 p/d
+2010 Aug RFC-EDIT    Added  21 docs,  657 pgs   Yr Cum:  221,  7318 pgs  33 p/d
+2010 Aug AUTH48      Added  37 docs,  834 pgs   Yr Cum:  235,  7534 pgs  32 p/d
+2010 Aug PUB         Added  36 docs,  856 pgs   Yr Cum:  268,  8778 pgs  32 p/d
+
+2010 Sep EDIT        Added  28 docs,  867 pgs   Yr Cum:  281,  8416 pgs  29 p/d
+2010 Sep RFC-EDIT    Added  16 docs,  375 pgs   Yr Cum:  237,  7693 pgs  32 p/d
+2010 Sep AUTH48      Added  32 docs,  972 pgs   Yr Cum:  267,  8506 pgs  31 p/d
+2010 Sep PUB         Added  26 docs,  761 pgs   Yr Cum:  294,  9539 pgs  32 p/d
+
+2010 Oct EDIT        Added  28 docs,  923 pgs   Yr Cum:  309,  9339 pgs  30 p/d
+2010 Oct RFC-EDIT    Added  18 docs,  748 pgs   Yr Cum:  255,  8441 pgs  33 p/d
+2010 Oct AUTH48      Added  31 docs,  837 pgs   Yr Cum:  298,  9343 pgs  31 p/d
+2010 Oct PUB         Added  46 docs, 1752 pgs   Yr Cum:  340, 11291 pgs  33 p/d
+
+2010 Nov EDIT        Added  26 docs,  647 pgs   Yr Cum:  335,  9986 pgs  29 p/d
+2010 Nov RFC-EDIT    Added  24 docs,  639 pgs   Yr Cum:  279,  9080 pgs  32 p/d
+2010 Nov AUTH48      Added   9 docs,  347 pgs   Yr Cum:  307,  9690 pgs  31 p/d
+2010 Nov PUB         Added  15 docs,  500 pgs   Yr Cum:  355, 11791 pgs  33 p/d
+
+2010 Dec EDIT        Added  26 docs,  875 pgs   Yr Cum:  361, 10861 pgs  30 p/d
+2010 Dec RFC-EDIT    Added  17 docs,  531 pgs   Yr Cum:  296,  9611 pgs  32 p/d
+2010 Dec AUTH48      Added  19 docs,  492 pgs   Yr Cum:  326, 10182 pgs  31 p/d
+2010 Dec PUB         Added   9 docs,  277 pgs   Yr Cum:  364, 12068 pgs  33 p/d
+
+         STATISTICS FOR YEAR:  2010
+
+Year     State                Docs   Pages
+
+2010     EDIT        Yr Cum:  361, 10861 
+2010     RFC-EDIT    Yr Cum:  296,  9611 
+2010     AUTH48      Yr Cum:  326, 10182 
+2010     PUB         Yr Cum:  364, 12068 
+2010     DNP         Yr Cum:    4,    85 
+
+2011 Jan EDIT        Added  45 docs, 1311 pgs   Yr Cum:   45,  1311 pgs  29 p/d
+2011 Jan RFC-EDIT    Added  19 docs,  449 pgs   Yr Cum:   19,   449 pgs  23 p/d
+2011 Jan AUTH48      Added  19 docs,  501 pgs   Yr Cum:   19,   501 pgs  26 p/d
+2011 Jan PUB         Added  23 docs,  605 pgs   Yr Cum:   23,   605 pgs  26 p/d
+2011 Jan DNP         Added   2 docs,   16 pgs   Yr Cum:    2,    16 pgs   8 p/d
+
+2011 Feb EDIT        Added  26 docs,  829 pgs   Yr Cum:   71,  2140 pgs  30 p/d
+2011 Feb RFC-EDIT    Added  39 docs, 1230 pgs   Yr Cum:   58,  1679 pgs  28 p/d
+2011 Feb AUTH48      Added  46 docs, 1408 pgs   Yr Cum:   65,  1909 pgs  29 p/d
+2011 Feb PUB         Added  26 docs,  807 pgs   Yr Cum:   49,  1412 pgs  28 p/d
+
+2011 Mar EDIT        Added  56 docs, 1926 pgs   Yr Cum:  127,  4066 pgs  32 p/d
+2011 Mar RFC-EDIT    Added  41 docs,  735 pgs   Yr Cum:   99,  2414 pgs  24 p/d
+2011 Mar AUTH48      Added  44 docs, 1684 pgs   Yr Cum:  109,  3593 pgs  32 p/d
+2011 Mar PUB         Added  49 docs, 1640 pgs   Yr Cum:   98,  3052 pgs  31 p/d
+
+2011 Apr EDIT        Added  18 docs,  703 pgs   Yr Cum:  145,  4769 pgs  32 p/d
+2011 Apr RFC-EDIT    Added  24 docs, 1115 pgs   Yr Cum:  123,  3529 pgs  28 p/d
+2011 Apr AUTH48      Added  33 docs,  744 pgs   Yr Cum:  142,  4337 pgs  30 p/d
+2011 Apr PUB         Added  46 docs, 1209 pgs   Yr Cum:  144,  4261 pgs  29 p/d
+
+2011 May EDIT        Added  37 docs,  898 pgs   Yr Cum:  182,  5667 pgs  31 p/d
+2011 May RFC-EDIT    Added  27 docs,  867 pgs   Yr Cum:  150,  4396 pgs  29 p/d
+2011 May AUTH48      Added  31 docs,  879 pgs   Yr Cum:  173,  5216 pgs  30 p/d
+2011 May PUB         Added  37 docs, 1199 pgs   Yr Cum:  181,  5460 pgs  30 p/d
+2011 May DNP         Added   1 docs,   10 pgs   Yr Cum:    3,    26 pgs   8 p/d
+
+2011 Jun EDIT        Added  33 docs,  805 pgs   Yr Cum:  215,  6472 pgs  30 p/d
+2011 Jun RFC-EDIT    Added  34 docs, 1330 pgs   Yr Cum:  184,  5726 pgs  31 p/d
+2011 Jun AUTH48      Added  42 docs, 1436 pgs   Yr Cum:  215,  6652 pgs  30 p/d
+2011 Jun PUB         Added  37 docs, 1138 pgs   Yr Cum:  218,  6598 pgs  30 p/d
+2011 Jun DNP         Added   2 docs,   16 pgs   Yr Cum:    5,    42 pgs   8 p/d
+
+2011 Jul EDIT        Added  17 docs,  621 pgs   Yr Cum:  232,  7093 pgs  30 p/d
+2011 Jul RFC-EDIT    Added  18 docs,  400 pgs   Yr Cum:  202,  6126 pgs  30 p/d
+2011 Jul AUTH48      Added  35 docs, 1123 pgs   Yr Cum:  250,  7775 pgs  31 p/d
+2011 Jul PUB         Added  36 docs, 1421 pgs   Yr Cum:  254,  8019 pgs  31 p/d
+2011 Jul DNP         Added   2 docs,   14 pgs   Yr Cum:    7,    56 pgs   8 p/d
+
+2011 Aug EDIT        Added  34 docs, 1126 pgs   Yr Cum:  266,  8219 pgs  30 p/d
+2011 Aug RFC-EDIT    Added  18 docs,  632 pgs   Yr Cum:  220,  6758 pgs  30 p/d
+2011 Aug AUTH48      Added  29 docs,  763 pgs   Yr Cum:  279,  8538 pgs  30 p/d
+2011 Aug PUB         Added  31 docs,  814 pgs   Yr Cum:  285,  8833 pgs  30 p/d
+2011 Aug DNP         Added   2 docs,   23 pgs   Yr Cum:    9,    79 pgs   8 p/d
+
+2011 Sep EDIT        Added  48 docs, 1354 pgs   Yr Cum:  314,  9573 pgs  30 p/d
+2011 Sep RFC-EDIT    Added  30 docs,  893 pgs   Yr Cum:  250,  7651 pgs  30 p/d
+2011 Sep AUTH48      Added  27 docs,  831 pgs   Yr Cum:  306,  9369 pgs  30 p/d
+2011 Sep PUB         Added  18 docs,  602 pgs   Yr Cum:  303,  9435 pgs  31 p/d
+
+2011 Oct EDIT        Added  28 docs,  629 pgs   Yr Cum:  342, 10202 pgs  29 p/d
+2011 Oct RFC-EDIT    Added  24 docs,  564 pgs   Yr Cum:  274,  8215 pgs  29 p/d
+2011 Oct AUTH48      Added  34 docs,  929 pgs   Yr Cum:  340, 10298 pgs  30 p/d
+2011 Oct PUB         Added  30 docs,  749 pgs   Yr Cum:  333, 10184 pgs  30 p/d
+2011 Oct DNP         Added   1 docs,    3 pgs   Yr Cum:   10,    82 pgs   8 p/d
+
+2011 Nov EDIT        Added  13 docs,  253 pgs   Yr Cum:  355, 10455 pgs  29 p/d
+2011 Nov RFC-EDIT    Added  22 docs,  644 pgs   Yr Cum:  296,  8859 pgs  29 p/d
+2011 Nov AUTH48      Added  25 docs,  492 pgs   Yr Cum:  365, 10790 pgs  29 p/d
+2011 Nov PUB         Added  32 docs,  791 pgs   Yr Cum:  365, 10975 pgs  30 p/d
+2011 Nov DNP         Added   4 docs,  125 pgs   Yr Cum:   14,   207 pgs  14 p/d
+
+2011 Dec EDIT        Added  32 docs,  959 pgs   Yr Cum:  387, 11414 pgs  29 p/d
+2011 Dec RFC-EDIT    Added  22 docs,  736 pgs   Yr Cum:  318,  9595 pgs  30 p/d
+2011 Dec AUTH48      Added  32 docs,  711 pgs   Yr Cum:  397, 11501 pgs  28 p/d
+2011 Dec PUB         Added  21 docs,  513 pgs   Yr Cum:  386, 11488 pgs  29 p/d
+2011 Dec DNP         Added   1 docs,    9 pgs   Yr Cum:   15,   216 pgs  14 p/d
+
+         STATISTICS FOR YEAR:  2011
+
+Year     State                Docs   Pages
+
+2011     EDIT        Yr Cum:  387, 11414 
+2011     RFC-EDIT    Yr Cum:  318,  9595 
+2011     AUTH48      Yr Cum:  397, 11501 
+2011     PUB         Yr Cum:  386, 11488 
+2011     DNP         Yr Cum:   15,   216 
+
+2012 Jan EDIT        Added  28 docs,  625 pgs   Yr Cum:   28,   625 pgs  22 p/d
+2012 Jan RFC-EDIT    Added  20 docs,  489 pgs   Yr Cum:   20,   489 pgs  24 p/d
+2012 Jan AUTH48      Added  32 docs, 1097 pgs   Yr Cum:   32,  1097 pgs  34 p/d
+2012 Jan PUB         Added  19 docs,  400 pgs   Yr Cum:   19,   400 pgs  21 p/d
+2012 Jan DNP         Added   5 docs,   81 pgs   Yr Cum:    5,    81 pgs  16 p/d
+
+2012 Feb EDIT        Added  25 docs,  478 pgs   Yr Cum:   53,  1103 pgs  20 p/d
+2012 Feb RFC-EDIT    Added  30 docs,  927 pgs   Yr Cum:   50,  1416 pgs  28 p/d
+2012 Feb AUTH48      Added  35 docs,  986 pgs   Yr Cum:   67,  2083 pgs  31 p/d
+2012 Feb PUB         Added  44 docs, 1000 pgs   Yr Cum:   63,  1400 pgs  22 p/d
+2012 Feb DNP         Added   1 docs,   12 pgs   Yr Cum:    6,    93 pgs  15 p/d
+
+

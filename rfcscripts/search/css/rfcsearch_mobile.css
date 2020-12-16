@@ -1,0 +1,31 @@
+/* Copyright The IETF Trust 2020 All Rights Reserved */
+@media only screen and (max-width: 700px), only screen and (max-device-width: 700px){
+
+ .container {
+	width: 100%;
+	min-width: 240px;/* a min-width may be desirable to keep this layout from getting too narrow. This keeps line length more readable in the side columns. IE6 does not respect this declaration. */
+}
+.help_box, .help_box1{
+   width:45%;
+   font-size:8px;
+}
+
+.help_box{
+   right:10px;
+}
+.searchform{
+       min-width:240px;
+}  
+
+.mytext{
+     width:120px;
+}
+.scrolltable {
+      width :100%;
+      overflow:scroll;
+}
+
+}
+
+
+

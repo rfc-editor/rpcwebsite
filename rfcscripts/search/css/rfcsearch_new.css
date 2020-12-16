@@ -1,0 +1,359 @@
+/* Copyright The IETF Trust 2020 All Rights Reserved */
+body {
+	margin:0;
+	padding:0;
+	border:0;			/* This removes the border around the viewport in old versions of IE */
+	width:100%;
+	background:#fff;
+/*	min-width:600px;*/
+    	/* Minimum width of layout - remove line if not required */
+					/* The min-width property does not work in old versions of Internet Explorer */
+	font-size:90%;
+    font: "Courier New", Courier, monospace;
+
+}
+/*a {
+	color:#369;
+}
+a:hover {
+	color:#fff;
+	background:#369;
+	text-decoration:none;
+}
+*/
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color:#414958;
+/*	color:#3366FF;*/
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #4E5869;
+	text-decoration: underline;
+}
+
+
+h1, h2, h3 {
+	margin:.8em 0 .2em 0;
+	padding:0;
+}
+p {
+	margin:.4em 0 .8em 0;
+	padding:0;
+}
+
+img {
+	margin:10px 0 5px;
+}
+
+	
+
+
+/* Header styles */
+#header {
+	clear:both;
+	float:left;
+	width:100%;
+}
+
+#header {
+	border-bottom:1px solid #000;
+}
+#header p,
+#header h1,
+#header h2 {
+	padding:.4em 15px 0 15px;
+	margin:0;
+}
+
+#header ul {
+	clear:left;
+	float:left;
+	width:100%;
+	list-style:none;
+	margin:10px 0 0 0;
+	padding:0;
+}
+#header ul li {
+	display:inline;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#header ul li a {
+	display:block;
+	float:left;
+	margin:0 0 0 1px;
+	padding:3px 10px;
+	text-align:center;
+	background:#eee;
+	color:#000;
+	text-decoration:none;
+	position:relative;
+	left:15px;
+	line-height:1.3em;
+}
+#header ul li a:hover {
+	background:#369;
+	color:#fff;
+}
+#header ul li a.active,
+#header ul li a.active:hover {
+	color:#fff;
+	background:#000;
+	font-weight:bold;
+}
+
+#header ul li a span {
+	display:block;
+}
+/* 'widths' sub menu */
+#layoutdims {
+	clear:both;
+	background:#eee;
+	border-top:4px solid #000;
+	margin:0;
+	padding:6px 15px !important;
+	text-align:right;
+}
+
+/*Container for view search*/
+.box {
+	position:relative;
+	width:95%;
+	border:thin;
+	padding: 0 15px 0 35px;
+}
+
+/*view search header*/
+.view_header{
+/*	background: #3333CC;*/
+	background: #9FB6CD;
+	
+	}	
+/*view search link*/
+.view_link a {
+	font-size:14px;
+	color:Blue;
+	list-style-type:circle;
+	list-style-position:inside;
+	}
+	
+
+.vp {
+	font-size:15px;
+	padding:0 15px 0 20px;	
+}
+
+.sp {
+	font-size:15px;
+	padding:0 10px 0 10px;	
+}
+	
+.p {
+	font-size:15px;
+	padding:0 15px 0 35px;
+}
+
+.p a{
+	color:blue;
+	font-size:15px;
+}
+
+/* column container */
+.colmask {
+	position:relative;	/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+/*	overflow:hidden;		/* This chops off any overhanging divs */
+}
+/* common column settings */
+.colright,
+.colmid,
+.colleft {
+	float:left;
+	width:100%;
+	position:relative;
+}
+.col1,
+.col2,
+.col3 {
+	float:left;
+	position: relative;
+	padding:0 0 1em 0;
+/*	overflow:hidden;*/
+}
+/* 2 Column (left menu) settings */
+.leftmenu {
+	background:#fff;		/* right column background colour */
+}
+.leftmenu .colleft {
+	right:75%;			/* right column width */
+/*	right:80%;			/* right column width */
+	background:#f4f4f4;	/* left column background colour */
+	border-color:#2B3856;
+	border:thin;
+	border-style:solid;
+}
+.leftmenu .col1 {
+	width:70%;			/* right column content width */
+/*	width:75%;			/* right column content width */	
+	left:102%;			/* 100% plus left column left padding */
+}
+
+.leftmenu .col2 {
+	width:22%;			/* left column content width (column width minus left and right padding) */
+	left:6%;			/* (right column left and right padding) plus (left column left padding) */
+	font-size:12px;
+}
+
+
+.basic_search  {
+	background:#f4f4f4;
+	border:thin;
+	border-color:#DFDFDF;
+	border-style:solid;
+	padding: 10px 0;
+
+}
+
+.content {
+	padding: 10px 0;
+}
+
+.menuheader {
+/*	background: #2B3856;*/
+/*    font-family: verdana,arial,sans-serif;*/
+    font-size:15px;
+/*	color:#FFFFFF;*/
+
+}
+
+.header {
+/*	background: #00274F;*/
+	background: #9FB6CD;
+        height: 100px;
+
+}
+
+.page_title{
+	text-align:center;
+	font-size:24px;
+	color:white;
+	}
+	
+.help_box1{
+    width: 320px;
+    padding: 5px;
+    margin: 0;
+    position:absolute;
+    top : 70px;
+}	
+
+.help_box{
+    width: 320px;
+    padding: 5px;
+    margin: 0;
+    position:absolute;
+    top : 70px;
+    right:10px;
+}
+
+.help_link{
+	text-align:right;
+	
+
+}
+.help_link a{
+	font-size:18px;
+	color:white;
+	}
+
+.help_link1{
+	text-align:left;
+	
+
+}
+.help_link1 a{
+	font-size:18px;
+	color:white;
+	}
+
+.errors {
+	font-style:15px;
+	color:red;
+	text-align:center;
+	}
+	
+/* Footer styles */
+#footer {
+	clear:both;
+	float:left;
+	width:100%;
+	border-top:1px solid #000;
+}
+#footer p {
+	padding:10px;
+	margin:0;
+}
+
+/*ul
+{
+    list-style-type: none;
+}
+*/
+label
+{
+    font-weight:bold;
+}
+
+table.gridtable {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+		width:100%;
+
+	
+}
+table.gridtable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+}
+
+table.gridtable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+}
+
+
+				  
+td.special		{
+			  	 font-weight: bold;
+				 color:grey}
+
+
+td.title        {
+                  font-weight: bold;
+				  letter-spacing: inherit;
+				  
+				  
+}
+
+table.formtable td{
+		text-align:left;
+		padding: 8px;
+        font-size:20px;
+
+	}
+		
+		
