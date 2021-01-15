@@ -1,6 +1,6 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: makeAnnouncement.php,v 2.25 2020/11/11 01:03:17 priyanka Exp $
+# $Id: makeAnnouncement.php,v 2.28 2021/01/14 01:04:16 priyanka Exp $
 # 07-10-2012 Added function get_wg_ssp_id to indentify IRTF documents
 #            using ssp-id.
 /*April 2015 : Update INDEX table for DOI values                   */
@@ -8,6 +8,7 @@
 /*July 2017  : Updated get_draftName function to handle mysqli_fetch_assoc coorectly*/
 /*December 2019  : Removed the character count from the announcement email - PN*/
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/* January 2021 : Adjusted the spacing for Email and Authors for Announcment  - PN*/
 
 include("db_connect.php");
 include("format_lib.php");
@@ -265,128 +266,32 @@ if ($flag <> "1")
        }
       $i++;
     }
-   $email = $line['EMAIL'];
-   list($e1, $e2, $e3, $e4, $e5,$e6, $e7, $e8, $e9, $e10) =
-   split(",\s*", $email, 10);
-   if($e2 == '')
-   {
-     $email1=$e1;
-   }
-   else
-   {
-     $email1=$e1.", \n                   ".$e2;
-   }
-   $e=$email1;
-   if($e3 != '' || $e4 != '')
-   {
-     if($e4 == '')
-       {
-	 $email2=", \n                   ".$e3;
+   
+    $emails = explode(',', $line['EMAIL']);
+    $email_line = "";
+    foreach ($emails as $email) {
+       $email = trim($email);
+       if ($email_line == ""){
+           $email_line .= "$email";
+       } else {
+           $email_line .= ",\n                    ".$email;
        }
-     else
-       {
-	 $email2=", \n                   ".$e3.", ".$e4;
-       }
-     $e=$e.$email2;
-   }
-   if($e5 != '' || $e6 != '')
-   {
-     if($e6 == '')
-     {
-       $email3=", \n                   ".$e5;
-     }
-     else
-     {
-       $email3=", \n                   ".$e5.", ".$e6;
-     }
-     $e=$e.$email3;
-   }
-   if($e7 != '' || $e8 != '')
-   {
-     if($e8 == '')
-     {
-       $email4=", \n                   ".$e7;
-     }
-     else
-     {
-       $email4=", \n                   ".$e7.", ".$e8;
-     }
-     $e=$e.$email4;
-   }
-   if($e9 != '' || $e10 != '')
-   {
-     if($e10 == '')
-     {
-       $email5=", \n                   ".$e9;
-     }
-     else
-     {
-       $email5=", \n                   ".$e9.", ".$e10;
-     }
-     $e=$e.$email5;
-   }
+    }
+    $e = $email_line;
 
-   $author = $line['AUTHORS'];
-   list($f1,$f2,$f3,$f4,$f5,$f6,$f7,$f8,$f9,$f10) =
-   split(",\s*", $author, 10);
-   if($f2 == '')
-   {
-     $author1=$f1;
-   }
-   else
-   {
-     $author1=$f1.",".$f2;
-   }
-   $f=$author1;
-   if($f3 != '' || $f4 != '')
-   {
-     if($f4 == '')
-       {
-	 $author2=",\n                   ".$f3;
+    $author_list = preg_replace('/, Ed\./', '; Ed.', $line['AUTHORS']);
+    $authors = explode(',', $author_list);
+    $author_line = "";
+    foreach ($authors as $author) {
+       $author = trim($author);
+       $author = preg_replace('/; Ed\./', ', Ed.', $author);
+       if ($author_line == ""){
+           $author_line .= "$author";
+       } else {
+           $author_line .= ",\n                    ".$author;
        }
-     else
-       {
-	 $author2=",\n                   ".$f3.",".$f4;
-       }
-     $f=$f.$author2;
-   }
-   if($f5 != '' || $f6 != '')
-   {
-     if($f6 == '')
-     {
-       $author3=",\n                     ".$f5;
-     }
-     else
-     {
-       $author3=",\n                     ".$f5.",".$f6;
-     }
-     $f=$f.$author3;
-   }
-   if($f7 != '' || $f8 != '')
-   {
-     if($f8 == '')
-     {
-       $author4=",\n                     ".$f7;
-     }
-     else
-     {
-       $author4=",\n                     ".$f7.",".$f8;
-     }
-     $f=$f.$author4;
-   }
-   if($f9 != '' || $f10 != '')
-   {
-     if($f10 == '')
-     {
-       $author5=",\n                      ".$f9;
-     }
-     else
-     {
-       $author5=",\n                      ".$f9.",".$f10;
-     }
-    
-     $f=$f.$author5;
-   }
+    }
+    $f = $author_line;
 
    $source=$line['SOURCE'];
   
