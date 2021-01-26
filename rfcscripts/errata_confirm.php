@@ -1,7 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
   /* $Id: errata_confirm.php,v 1.3 2021/01/26 19:22:43 priyanka Exp $ */
-  /*January 2021 : Modified the text on the form - PN */
+  /* January 2021 : Modified the text on the form - PN */
 session_start();
 include("errata_headers.php");
 http_redirect(); // if we're on a HTTPS connection, goto HTTP
