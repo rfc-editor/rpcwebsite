@@ -205,7 +205,7 @@ if (isset($_POST['doc-id']) && ($_POST['submit'] != "Edit this Errata Report")) 
  
     if (trim($correct_text) == '')
     {
-        $errmsg = $errmsg . "ERROR: Please enter corrected text<br>";
+        $errmsg = $errmsg . "ERROR: Please enter corrected text <br>";
     }
 
     if (trim($notes) == '')
