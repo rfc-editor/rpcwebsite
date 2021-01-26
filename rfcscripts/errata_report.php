@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved               */
-  /* $Id: errata_report.php,v 1.6 2020/05/13 23:19:04 priyanka Exp $ */
+  /* $Id: errata_report.php,v 1.9 2021/01/26 19:22:43 priyanka Exp $ */
   //
   //       2010/04/14 rcross: added server-side validations.  errata_confirm.php has been 
   //                          absorbed into this script so we can validate and hand off to 
@@ -10,6 +10,7 @@
  /*  August 2018 Update - Added Publication format for errata - PN*/
  /* May 2020 Updates : Replaced function Unserialize/ serialize from the script with JSON_DECODE/JSON_ENCODE as per ZX security review - PN */
  /* June 2020 Updates : Modified the wordings and hidden variable names Math problem to handle bot problem - PN */
+ /* January 2021 : Made Original and corrected text and Notes required in Errata report form - PN */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -80,8 +81,8 @@ function display_confirm(){
      <div class="post-127 page type-page status-publish hentry post clear" id="post-127">
      <div class="singlepost entry">
 <p>This is how the record would look after adding it to the database.
-If it is correct, you may confirm the report or confirm the report and report
-more errata for this RFC. If there is an error in the report, you
+If it is correct, please submit the report. (Or, you can submit it and report 
+more errata for the same RFC.) If there is an error in the report, you
 may select the edit button to continue editing this report.
 </p>
 <hr />';
@@ -194,7 +195,22 @@ if (isset($_POST['doc-id']) && ($_POST['submit'] != "Edit this Errata Report")) 
 
     if (trim($section) == '')
     {
-        $errmsg = $errmsg . "ERROR: Please enter a section<br>";
+        $errmsg = $errmsg . "ERROR: Please enter a section number<br>";
+    }
+
+    if (trim($orig_text) == '')
+    {
+        $errmsg = $errmsg . "ERROR: Please enter original text<br>";
+    }
+ 
+    if (trim($correct_text) == '')
+    {
+        $errmsg = $errmsg . "ERROR: Please enter corrected text<br>";
+    }
+
+    if (trim($notes) == '')
+    {
+        $errmsg = $errmsg . "ERROR: Please enter notes<br>";
     }
 
     if (empty($errmsg)) {
@@ -203,7 +219,7 @@ if (isset($_POST['doc-id']) && ($_POST['submit'] != "Edit this Errata Report")) 
 
         if (empty($_POST['ua'])){
 
-            $errmsg = $errmsg . "ERROR: Please enter values<br>";
+            $errmsg = $errmsg . "ERROR: Please solver the equation below<br>";
         } elseif ($_POST['ua'] != $_POST['ra']){
             $errmsg = $errmsg . "ERROR: Incorrect values<br>";
         } else {

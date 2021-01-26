@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_confirm.php,v 1.1.1.1 2016/02/08 21:03:50 priyanka Exp $ */
+  /* $Id: errata_confirm.php,v 1.3 2021/01/26 19:22:43 priyanka Exp $ */
+  /*January 2021 : Modified the text on the form - PN */
 session_start();
 include("errata_headers.php");
 http_redirect(); // if we're on a HTTPS connection, goto HTTP
@@ -31,8 +32,8 @@ if (array_key_exists('rfcid',$_POST)) {
      $title    = substr($_POST['title'],0,MAX_TITLE);
      print "<h1 class='maintitle'>Report Errata for " . htmlspecialchars($rfcid) . "</h1>
 <p>This is how the record would look after adding it to the database.
-If it is correct, you may confirm the report or confirm the report and report
-more errata for this RFC. If there is an error in the report, you
+If it is correct, please submit the report. (Or, you can submit it and report 
+more errata for the same RFC.) If there is an error in the report, you
 may select the edit button to continue editing this report.
 </p>
 <hr />";
