@@ -34,6 +34,7 @@
  * March 20202 : Added the icon for inline errata format - PN
  * November 2020 : Modified the script to use PDO prepared statements - PN            
  * December 2020 : Modified the the link for the definition of Stream from RFC 4844 to RFC 8729 - PN            
+ * February 2021 : Removed the Download PDF Reader link from the page - PN            
 */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -209,7 +210,6 @@ see <a href="/info/rfc2026">RFC 2026</a>.
 For the definition of <b>Stream</b>, see <a href="/info/rfc8729">RFC 8729</a>.
 </p>
 <hr>
-<p><a href="//get.adobe.com/reader/">Download PDF Reader</a></p>
 END;
 }
 else {
@@ -225,7 +225,6 @@ see <a href="/info/rfc2026">RFC 2026</a>.
 For the definition of <b>Stream</b>, see <a href="/info/rfc8729">RFC 8729</a>.
 </p>
 <hr>
-<p><a href="//get.adobe.com/reader/">Download PDF Reader</a></p>
 END;
 }
 
