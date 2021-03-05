@@ -1,8 +1,9 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: auth48_edit.php,v 2.4 2020/11/11 01:24:27 priyanka Exp $
+# $Id: auth48_edit.php,v 2.8 2021/03/05 21:06:20 priyanka Exp $
 # AUTH48 edit forms.
-# November 2020 : Modified the script to use PDO prepared statements - PN
+/* November 2020 : Modified the script to use PDO prepared statements - PN*/
+/* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
 session_start();
 include("header.php");
 include("auth48_lib.php");
@@ -18,7 +19,8 @@ $debug_auth48 = FALSE;
 # included, use it if 'yes.'
 function new_approver_check($data) {
      global $a48_id, $debug_auth48;
-
+     $awaiting_ad_approval = 0;  
+     
      if ($debug_auth48 === TRUE) {
           print("<!--\nnew_approver={$data['new_approver']}\n");
           if (array_key_exists('new_approved', $data)) {
@@ -33,16 +35,32 @@ function new_approver_check($data) {
          strlen(trim($data['new_approver'])) > 0) {
           $name = substr($data['new_approver'],0,MAX_APPROVER_NAME);
           $status = add_approver($a48_id, $name);
+# When new approver is added to Approval table check if the entry begins with 'AD -'
+# if that is the case then as we know the default approval flag is 'no' so now set the
+# awaiting AD approval flag to 'Yes' in auth48_s table.
+
+          if (preg_match("/^AD - /",$name)) { 
+             $awaiting_ad_approval = 1; 
+          }
      }
      
      if (array_key_exists('new_approved', $data)) {
           $value = substr($data['new_approved'],0,MAX_APPROVED_ENUM);
 # The default is 'no' so only make call if pre-approved
           if (strcmp($value, 'yes') == 0) {
-               $status = set_approval($a48_id,$name,$value);
+              #CASE 1 : 'AD -' John Smith and approved = 'yes' so awaiting_ad_approval not set
+              $status = set_approval($a48_id,$name,$value);
+          } else { #CASE 2 : 'AD -' John Smith and approved = 'no' so awaiting_ad_approval = 'yes'
+                 if ($awaiting_ad_approval == '1'){
+                   $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                 }
           }
+     } else { # CASE 3 : 'AD -' John Smith and approved = unselected so default value 'no so awaiting_ad_approval = 'yes'
+                if ($awaiting_ad_approval == '1'){
+                   $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                }
      }
-
+     
      return $status;
 }
 
@@ -85,6 +103,7 @@ function update_approvals_check($data) {
 }
 
 function update_names_check($data) {
+     global $a48_id;
      $status = TRUE;
      $name_count = $_POST['name_count'];
      for ($counter=0; $counter < $name_count; $counter++) {
@@ -92,7 +111,34 @@ function update_names_check($data) {
           $name = $data["name_$counter"];
           if (strcmp($name, $old_name) != 0) {
                $status = update_name($data["app_id_$counter"], $name);
+#Check if the name is begin with AD : and approved flag is no then set the 
+#awaiting ad approval flag to yes
+#Once 'AD -' is added in front of name it is not removed so not checking this case for
+#old name 
+               if (preg_match("/^AD - /",$name)) {
+                  $approved = $data["approved_$counter"];
+                  if ($approved == "no") {
+                     $awaiting_ad_approval = 'yes';
+                     $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                  } elseif ($approved == 'yes'){
+                     $awaiting_ad_approval = 'no';
+                     $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                  }
+              } 
+          } else /*When old name and new name is same and begins with 'AD -' */{
+              if (preg_match("/^AD - /",$name)) {
+                  $approved = $data["approved_$counter"];
+                  if ($approved == "no") {
+                     $awaiting_ad_approval = 'yes';
+                     $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                  } elseif ($approved == 'yes'){
+                     $awaiting_ad_approval = 'no';
+                     $status   = update_awaiting_ad_approval($a48_id,$awaiting_ad_approval);
+                  }
+              }        
+
           }
+          
           if ($status === FALSE) {
                break;
           }
