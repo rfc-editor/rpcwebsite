@@ -5,9 +5,10 @@
 /*Description : The script handles the functionality for Auth48 processing                                 */
 /*May 2017    : Modified to add the file type changes  PN                                                  */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
 /***********************************************************************************************************/
 #
-# $Id: auth48_lib.php,v 2.20 2020/11/11 01:03:17 priyanka Exp $
+# $Id: auth48_lib.php,v 2.22 2021/03/05 19:58:19 priyanka Exp $
 # Routines to support processing of the AUTH48 state
 include_once("db_connect.php");
 include_once("cluster_support_lib.php");
@@ -166,7 +167,30 @@ function get_a48_id_by_draft($draft) {
    return $a48_id;
 }
 
+#Update the awaiting_ad_approval_flag
+function update_awaiting_ad_approval($a48_id,$awaiting_ad_approval){
+   global $debug_a48_lib;
+   global $pdo;
 
+   $status = FALSE;
+   $update = "UPDATE auth48s SET awaiting_ad_approval=:awaiting_ad_approval WHERE a48_id=:a48_id";
+   if ($debug_a48_lib === TRUE) {
+       print("\n<!-- update_notes: update='$update'\n-->\n");
+   }
+   try {
+       $stmt = $pdo->prepare($update);
+       $stmt->bindParam('awaiting_ad_approval',$awaiting_ad_approval);
+       $stmt->bindParam('a48_id',$a48_id);
+       $stmt->execute();
+       $change_rows = $stmt->rowCount();
+   } catch (PDOException $pe){
+       error_log("Error processing : update_awaitibg_ad_approval", $pe->getMessage(), $pe->getCode(), array('exception' => $pe));
+   }
+   if ($change_rows) {
+       $status = TRUE;
+   } 
+
+}
 
 
 # Set the value for the approved column. This routine uses the a48_id and name
@@ -677,7 +701,7 @@ function approvals_display_form($docnum) {
          print ("<table style=\"width: 850px; margin: auto\"; >");
          print ("<tr><td>");
          //To display special area director names
-         print ("<label class=\"a48\">Area Directors :</label>".$ad_name);
+         print ("<label class=\"a48\">Area Directors: </label>".$ad_name);
          print ("</td></tr></table>");       
 #         print("<h3>Area Directors : $ad_name</h3>");
 
@@ -688,6 +712,20 @@ function approvals_display_form($docnum) {
           var_dump($a48_row);
           print("\n-->\n");
      }
+
+     if ($a48_row !== FALSE){
+       # Get the iesg_contact from index table
+        if ($ad_name == 'Not Applicable'){
+          $iesg_contact = 'Not Applicable';
+        } else { 
+          $iesg_contact = get_iesg_contact($a48_row['doc-id']);
+        }
+        print ("<table style=\"width: 850px; margin: auto\"; >");
+        print ("<tr><td>");
+        print ("<label class=\"a48\">Responsible AD: </label>".$iesg_contact);
+        print ("</td></tr></table>");       
+     }
+
 
      if ($a48_row !== FALSE) {
           approvals_form_open($a48_row);
@@ -1319,6 +1357,38 @@ function get_draft_name($doc_id){
    }
 
    return $draft_base;
+}
+
+#Get iesg_contact_name
+function get_iesg_contact($doc_id){
+   global $debug_a48_lib;
+   global $pdo;
+   
+   $query= "
+       SELECT `iesg_contact`
+       FROM `index` i
+       WHERE i.`doc-id` = :doc_id";
+
+   try {
+       $stmt = $pdo->prepare($query);
+       $stmt->bindParam('doc_id',$doc_id);
+       $stmt->execute();
+       $num_of_rows = $stmt->rowCount();
+   }catch (PDOException $pe){
+       error_log("Error processing : get_iesg_contact", $pe->getMessage(), $pe->getCode(), array('exception' => $pe));
+   }
+
+   if ($debug_a48_lib === TRUE) {
+       print("\n<!-- get_iesg_contact: query=$query\n-->\n");
+   }
+
+   #$count = $num_of_rows;
+   if ($num_of_rows > 0) {
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+       $iesg_contact = $row['iesg_contact'];
+   }
+
+   return $iesg_contact;
 }
 
 ?>
