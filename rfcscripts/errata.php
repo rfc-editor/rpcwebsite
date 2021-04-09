@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata.php,v 1.3 2019/09/10 16:52:06 priyanka Exp $ */
+  /* $Id: errata.php,v 1.5 2021/04/09 16:06:09 priyanka Exp $ */
   /* April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN*/
 session_start();
 $_SESSION['report_count'] = 0;  /* Count errata reports submitted this session */
@@ -112,10 +112,6 @@ reported to the maintainer of rfc2html or <a href="mailto:rfc-editor@rfc-editor.
   <li>For verifiers: <a href="$how_to_verify">How to verify errata</a></li>
   <li>IESG Statement on <a href="$ietf_base$errata_processing_html">
 "IESG Processing of RFC Errata for the IETF Stream"</a></li>
-  <li>
-<a href="$materials$draft_errata_process" target="_blank">
-RFC Editor Proposal for Handling RFC Errata</a>
-  </li>
 </ul> 
 
 END;
