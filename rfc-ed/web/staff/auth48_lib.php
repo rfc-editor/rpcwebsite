@@ -8,7 +8,7 @@
 /* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
 /***********************************************************************************************************/
 #
-# $Id: auth48_lib.php,v 2.22 2021/03/05 19:58:19 priyanka Exp $
+# $Id: auth48_lib.php,v 2.23 2021/05/10 21:47:30 priyanka Exp $
 # Routines to support processing of the AUTH48 state
 include_once("db_connect.php");
 include_once("cluster_support_lib.php");
@@ -958,9 +958,10 @@ END;
             if ($cid == "0"){
                 $cid = "";
             }else {
+                $cid = '<a href="/cluster_info.php?cid='. htmlspecialchars($cid).'">'.htmlspecialchars($cid).'</a>';
                 $cid = "(".$cid.")";
             }
-            print '<td width="50" align="left"><a href="' . htmlspecialchars($_SERVER["REQUEST_URI"]) . '?docnum=' . htmlspecialchars($number) . '">' . htmlspecialchars($number) . '</a>&nbsp;' . htmlspecialchars($cid) . '</td>';
+            print '<td width="50" align="left"><a href="' . htmlspecialchars($_SERVER["REQUEST_URI"]) . '?docnum=' . htmlspecialchars($number) . '">' . htmlspecialchars($number) . '</a>&nbsp;'. $cid .'</td>';
         }
         print "</tr>\n";
     }

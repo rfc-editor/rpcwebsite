@@ -173,6 +173,7 @@ foreach ($state_order as $state) { //Need to maintain default report order
 								   if ($cid == "0"){
 									   $cid = "";
 								   }else {
+                                                                           $cid = '<a href="/cluster_info.php?cid='.htmlspecialchars($cid).'">'.htmlspecialchars($cid).'</a>';
 									   $cid = "(".$cid.")";
 									   }
 								   

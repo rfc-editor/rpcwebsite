@@ -12,7 +12,7 @@
 /*Dec 2018     : Added the tool adjustment state TI -PN                                                    */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
 /***********************************************************************************************************/
-# $Id: current_queue.php,v 2.15 2020/11/11 01:03:17 priyanka Exp $
+# $Id: current_queue.php,v 2.17 2021/05/10 21:47:30 priyanka Exp $
 session_start();
 include('header.php');
 include('db_connect.php');
@@ -180,6 +180,7 @@ if ($count > 0 ) {
 		$cid = get_cluster_id($pdo,$line[5]);
                 if ($cid != "0") {
                     $line[6] = $cid;
+                    $line[6]= '<a href="/cluster_info.php?cid='.htmlspecialchars($line[6]).'">'.htmlspecialchars($line[6]).'</a>';
                 } else {
                     $line[6] = "";
                 }
@@ -222,6 +223,7 @@ if ($count > 0 ) {
 		$cid = get_cluster_id($pdo,$line[5]);
                 if ($cid != "0") {
                     $line[6] = $cid;
+                    $line[6]= '<a href="/cluster_info.php?cid='.htmlspecialchars($line[6]).'">'.htmlspecialchars($line[6]).'</a>';
                 } else {
                     $line[6] = "";
                 }
@@ -264,6 +266,7 @@ if ($count > 0 ) {
 			$cid = get_cluster_id($pdo,$line[5]);
 	                if ($cid != "0") {
 	                    $line[6] = $cid;
+                            $line[6]= '<a href="/cluster_info.php?cid='.htmlspecialchars($line[6]).'">'.htmlspecialchars($line[6]).'</a>';
 	                } else {
 	                    $line[6] = "";
         	        }
@@ -352,8 +355,9 @@ if ($count > 0 ) {
                         print "<td>$sort_line[4]</td>";
 	                print "<td>$sort_line[5]</td>";
                         if ($sort_line[6]){  
-	                        print "<td>C$sort_line[6]</td>";
-			}else {
+                                $sort_line[6]= '<a href="/cluster_info.php?cid=C'.htmlspecialchars($sort_line[6]).'">C'.htmlspecialchars($sort_line[6]).'</a>';
+	                        print "<td>$sort_line[6]</td>";
+ 			}else {
 	                        print "<td>$sort_line[6]</td>";
 			}
                         print "<td>$sort_line[7]</td>";
@@ -407,7 +411,9 @@ if ($count > 0 ) {
                         print "<td>$sort_line[4]</td>";
 	                print "<td>$sort_line[5]</td>";
                         if ($sort_line[6]){  
-	                        print "<td>C$sort_line[6]</td>";
+                                $sort_line[6]= '<a href="/cluster_info.php?cid=C'.htmlspecialchars($sort_line[6]).'">C'.htmlspecialchars($sort_line[6]).'</a>';
+                                print "<td>$sort_line[6]</td>";
+
 			}else {
 	                        print "<td>$sort_line[6]</td>";
 			}

@@ -7,7 +7,7 @@
 /*June 2017    : Modified to add the file type as one of the search field -  PN                               */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
 /**************************************************************************************************************/
-# $Id: list_drafts.php,v 2.12 2020/11/11 01:03:17 priyanka Exp $
+# $Id: list_drafts.php,v 2.14 2021/05/10 21:47:30 priyanka Exp $
 session_start();
 include('header.php');
 include('db_connect.php');
@@ -692,7 +692,7 @@ if ( array_key_exists('submit',$_POST) ) {
                } else if ($line[11] == "3"){
                    $line[3] = $line[3]."(3G)";
                }
-
+               $line [4]= '<a href="/cluster_info.php?cid='.htmlspecialchars($line[4]).'">'.htmlspecialchars($line[4]).'</a>';
 	       $class = ($i++ % 2) ? "odd" : "even";
 	       print "<tr class=\"$class\"><td>\n";
 #		print implode("</td><td>", $line);
@@ -751,6 +751,7 @@ if ( array_key_exists('submit',$_POST) ) {
                } else if ($line[11] == "3"){
                    $line[3] = $line[3]."(3G)";
                }
+               $line [4]= '<a href="/cluster_info.php?cid='.htmlspecialchars($line[4]).'">'.htmlspecialchars($line[4]).'</a>';
                print '"'.$line[0].'"';
 	       print '"'.$line[1].'"';
 	       print '"'.$line[12].'"';
