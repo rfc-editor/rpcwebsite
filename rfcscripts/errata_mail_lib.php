@@ -1,8 +1,9 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved                 */
-  /* $Id: errata_mail_lib.php,v 1.6 2020/06/17 22:51:38 priyanka Exp $ */
+  /* $Id: errata_mail_lib.php,v 1.8 2021/07/16 15:38:48 priyanka Exp $ */
   /* May 2017 Updates : Removed rfcid from function generate_rfc_errata_search_query - PN*/ 
   /* June 2020 Updates : Added check for 'None' in the email address to avoild sending email to None - PN*/
+  /* July 2021 Updates : Added the changes to Make Editorial errata notification go to rfc-ed only - PN*/
 // Set dev_mode 
 include_once("ams_util_lib.php");
 include("config.php");
@@ -221,31 +222,57 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
                    $email_without_none = array_diff($email_array,array('none'));
                    $out_email_string = implode(',',$email_without_none);
                 }
-                if ($out_email_string){
-                   $to = $out_email_string;
-                }else {
-                   $to = trim($db_data['email']); // Authors
-               }
-               $to .= ", " . $additional_to;
+                if ($form_data['errata_type_code'] != 'Editorial') {
+                   if ($out_email_string){
+                      $to = $out_email_string;
+                   } else {
+                      $to = trim($db_data['email']); // Authors
+                   }
+                   $to .= ", " . $additional_to;
+                } else {
+                   $to = "rfc-editor@rfc-editor.org";
+                    if ($out_email_string){
+                      $cc_authors = $out_email_string;
+                   } else {
+                      $cc_authors = trim($db_data['email']); // Authors
+                   }
+                }
           } else {
-               $to  = $additional_to; // SSP
+               if ($form_data['errata_type_code'] != 'Editorial') {
+                  $to  = $additional_to; // SSP
+               } else {
+                  $to = "rfc-editor@rfc-editor.org";
+               }
           }
           // For report acknowledgments, make To & Cc like this:
           // To: AUTHORS, SSP or ADs
           // Cc: SUBMITTER (, and RFC-EDITOR)
-          $headers .=  "Cc: " . $form_data['submitter_email']; // Start Cc: of header
-          // Add the working group list address if recorded and WG "open"
-          if ($use_wg_email && $db_data['wg_email'] != null && $db_data['wg_status'] == 'open') {
-               $headers .= ", " . $db_data['wg_email'];
+          
+          if ($form_data['errata_type_code'] != 'Editorial') {
+              $headers .=  "Cc: " . $form_data['submitter_email']; // Start Cc: of header
+              // Add the working group list address if recorded and WG "open"
+              if ($use_wg_email && $db_data['wg_email'] != null && $db_data['wg_status'] == 'open') {
+                 $headers .= ", " . $db_data['wg_email'];
+              }
+          } else {
+              $headers .=  "Cc: " . $form_data['submitter_email']; // Start Cc: of header
+              $headers .= ", ".$cc_authors;
+              // Add the working group list address if recorded and WG "open"
+              if ($use_wg_email && $db_data['wg_email'] != null && $db_data['wg_status'] == 'open') {
+                 $headers .= ", " . $db_data['wg_email'];
+              }
           }
           break;
      default:
           error_log("generate_msg() called with unknown style: " . $style);
           break;
      }
-     // Tag on the RFC Editor address if the SSP isn't the RFC Editor
-     if ((strcasecmp($db_data['ssp_email'], "rfc-editor@rfc-editor.org")) != 0) {
-          $headers .= ", rfc-editor@rfc-editor.org";
+     
+     if ($form_data['errata_type_code'] != 'Editorial') {
+         // Tag on the RFC Editor address if the SSP isn't the RFC Editor
+         if ((strcasecmp($db_data['ssp_email'], "rfc-editor@rfc-editor.org")) != 0) {
+             $headers .= ", rfc-editor@rfc-editor.org";
+         }
      }
      $headers .= "\n"; // Always terminate line with a newline
      $headers .= "Content-Type: text/plain; charset=UTF-8";
