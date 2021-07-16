@@ -2,6 +2,7 @@
 /* Copyright The IETF Trust 2020 All Rights Reserved */
 /* April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN*/
 /* June 2019 Updates : Modified the search_query_base from http to https - PN*/
+/* July 2021 Updates : Modified the errata_processing_html link - PN*/
 
 /*********************************************************/
 /*For all_clusters.php/rfcmeta.php/auth48_cluster.php*/
@@ -72,7 +73,7 @@ $search_query_base = "https://" . $_SERVER['SERVER_NAME'] . "/errata/";
 $status_type_errata = "/errata-definitions/";
 $how_to_report = "/how-to-report/";
 $how_to_verify = "/how-to-verify/";
-$errata_processing_html = "/iesg/statement/errata-processing.html";
+$errata_processing_html = "/about/groups/iesg/statements/processing-errata-ietf-stream/";
 $materials = "/materials";
 $draft_errata_process= "/draft-rfc-editor-errata-process-02.txt";
 /*********************************************************/
