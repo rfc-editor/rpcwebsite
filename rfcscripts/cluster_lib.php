@@ -1,5 +1,5 @@
 <?php
-  /* $Id: cluster_lib.php,v 1.8 2020/12/01 01:11:38 priyanka Exp $ */
+  /* $Id: cluster_lib.php,v 1.10 2021/09/17 04:57:15 priyanka Exp $ */
 /**************************************************************************************/
 /* Copyright The IETF Trust 2020 All Rights Reserved                                  */
 /* March 2020 : Modified the script to change the order of cluster detail based on    */
@@ -7,6 +7,7 @@
 /* May 2020 : Added the state_id != 19 (withdrawn) condition to get_clsuter - PN      */
 /* July 2020 : Added PDO related changes  - PN and XSS changes are done by - ZX       */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* September 2021 : Added get_draft_exact_data to script - PN                         */
 /**************************************************************************************/
 #
 #+
@@ -364,6 +365,87 @@ function get_draft_data($pdo,$draft_base) {
 
 }
 
+# Queries the database to retrive displayable data for one draft. The "draft
+# name" is the exact draft namedraft_base from the index table.
+function get_draft_exact_data($pdo,$draft_base) {
+   $params = [":draft_base" => $draft_base];
+   $state_ids = [3,16,19,99];
+   $in = "";
+   foreach ($state_ids as $i => $item)
+   {
+       $key = ":state_id".$i;
+       $in .= "$key,";
+       $in_params[$key] = $item; // collecting values into key-value array
+   }
+   $in = rtrim($in,","); 
+
+
+    try {
+        $sql= "
+        SELECT  i.draft, i.date_received,i.state_id, 
+		CONCAT( s.state_name,CASE WHEN i.iana_flag = \"1\"THEN \"*A\"ELSE \"\"END ,CASE WHEN i.ref_flag = \"1\"THEN \"*R\"ELSE \"\"END,
+	        CASE WHEN i.generation_number = \"1\" THEN \"(1G)\" WHEN i.generation_number = \"2\" THEN \"(2G)\" WHEN i.generation_number = \"3\" THEN \"(3G)\" WHEN i.generation_number = \"0\" THEN \"\" END) as state,
+		i.authors, i.title, i.`char-count`,
+               i.ref, i.source,i.`time-out-date`, i.`pub-status`, i.`doc-id`, i.`internal_key`,
+           CASE
+              WHEN i.SOURCE='INDEPENDENT' THEN 1
+              ELSE 0
+           END indep
+        FROM `index` i, `states` s 
+        WHERE i.state_id NOT IN ($in)
+	    AND  i.state_id = s.state_id	
+            AND draft LIKE CONCAT(:draft_base,'%')";
+        
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array_merge($params,$in_params)); // just merge two arrays
+        $num_of_rows = $stmt->rowCount();
+   
+   }catch (PDOException $pe){
+         error_log("Error processing : get_draft_data", $pe->getMessage(), $pe->getCode(), array('exception' => $pe));
+   }
+
+   $result_row = array();
+    if ($num_of_rows > 0){
+       switch ($num_of_rows) {
+          case '2':
+               while ($index_row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $index_draft = $index_row['draft'];
+                    $index_draft_base = strip_number($index_draft);
+                    if ($index_draft_base == $draft_base) {
+                       $result_row['draft'] = $index_row['draft'];
+                       $result_row['date_received'] = $index_row['date_received'];
+                       $result_row['state_id'] = $index_row['state_id'];
+                       $result_row['state'] = $index_row['state'];
+                       $result_row['authors'] = $index_row['authors'];
+                       $result_row['title'] = $index_row['title'];
+                       $result_row['char-count'] = $index_row['char-count'];
+                       $result_row['ref'] = $index_row['ref'];
+                       $result_row['source'] = $index_row['source'];
+                       $result_row['pub-status'] = $index_row['pub-status'];
+                       $result_row['doc-id'] = $index_row['doc-id'];
+                       $result_row['internal_key'] = $index_row['internal_key'];
+                       $result_row['indexp'] = $index_row['indep'];
+                     }
+               }
+               break; 
+          case '1':
+          default:
+          // Return matched data
+               $row = $stmt->fetch(PDO::FETCH_ASSOC);
+               break;
+        }
+     }
+
+     $pdo = null;
+     if ($result_row) {
+         return $result_row;
+     }else {
+     return $row;
+     }
+
+
+}
 # Add the STATE to the display.
 # This routine replaces the line:
 #   if ($draft_data['state'] != 'REF') print("{$draft_data['state']}\n");
