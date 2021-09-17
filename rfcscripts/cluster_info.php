@@ -5,6 +5,7 @@
 # Apr 2020 : Added a condition to supress display of PUB documents only for C238 - PN 
 # July 2020 : Modified for PDO related changes - PN
 # November 2020 : Modified the script to use PDO prepared statements - PN            
+# September 2021 : Modified script to use get_draft_exact_data instead of get_draft_data - PN
 #-
 include('cluster_lib.php');
 include('config.php');
@@ -100,7 +101,7 @@ if ($cid == null) {
         $draft_list = get_cluster($pdo,$cid);
      }
      foreach ($draft_list as $draft_base) {
-          $draft_data = get_draft_data($pdo,$draft_base);
+          $draft_data = get_draft_exact_data($pdo,$draft_base);
           $draft_data['draft_base'] = $draft_base;
           $draft_data['cid'] = $cid;
           display_draft_data($draft_data);
