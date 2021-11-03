@@ -7,6 +7,7 @@
 /*              Cluster, Pages, Submitted Date                                                             */
 /*Dec 2018     : Added the tool adjustment state TI -PN                                                    */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/* June 2021 : Modified the script for server upgrade - PN                                                 */
 /***********************************************************************************************************/
 session_start();
 include('cluster_support_lib.php');
@@ -43,7 +44,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 
 if (isset($_GET['sortkey'])){ 

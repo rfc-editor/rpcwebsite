@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved               */
-  /* $Id: errata_report.php,v 1.9 2021/01/26 19:22:43 priyanka Exp $ */
+  /* $Id: errata_report.php,v 1.11 2021/10/08 20:35:42 priyanka Exp $ */
   //
   //       2010/04/14 rcross: added server-side validations.  errata_confirm.php has been 
   //                          absorbed into this script so we can validate and hand off to 
@@ -11,6 +11,9 @@
  /* May 2020 Updates : Replaced function Unserialize/ serialize from the script with JSON_DECODE/JSON_ENCODE as per ZX security review - PN */
  /* June 2020 Updates : Modified the wordings and hidden variable names Math problem to handle bot problem - PN */
  /* January 2021 : Made Original and corrected text and Notes required in Errata report form - PN */
+ /* June 2021 : Modified the script for server upgrade - PN                            */
+ /* October 2021 : Modified the script to increase maxlength for section - PN                            */
+
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -67,7 +70,7 @@ function display_confirm(){
 
     /*Get the wordpress header and sidebar*/
     get_header();
-    get_sidebar(left);
+    get_sidebar('left');
 
 
     if (array_key_exists('rfcid',$_POST)) {
@@ -263,7 +266,7 @@ if ($debug_ersub === true) {
 
 /*Get the wordpress header and sidebar*/
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 // display error messages
 print("<p class=\"error\">$errmsg</p>");
@@ -358,7 +361,7 @@ END;
         grammar, punctuation, or syntax error that does not affect the technical meaning.</p> </td></tr>');
      #select_input('Type', 'errata_type_code', $errata_types, $errata_type_code, false);
 
-     text_input('Section', 'section', $section, false, true, 12, 20,'Enter number or GLOBAL');
+     text_input('Section', 'section', $section, false, true, 20, 20,'Enter number or GLOBAL');
      #text_input('Section', 'section', $section, false, false, 12, 12);
      textarea_input("Original Text", "orig_text", $orig_text, false, 10, 80, 'No','Yes');
      textarea_input("Corrected Text", "correct_text", $correct_text, false, 10, 80, 'No','Yes');

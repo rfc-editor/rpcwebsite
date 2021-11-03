@@ -1,9 +1,10 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: auth48_edit.php,v 2.8 2021/03/05 21:06:20 priyanka Exp $
+# $Id: auth48_edit.php,v 2.9 2021/06/23 05:11:48 priyanka Exp $
 # AUTH48 edit forms.
 /* November 2020 : Modified the script to use PDO prepared statements - PN*/
 /* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
+/* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("header.php");
 include("auth48_lib.php");
@@ -177,9 +178,10 @@ function update_state_check($data){
 
      if ($data['old_state_id'] != $data['state_id']){
          $status = update_state($data['doc-id'], $data['state_id']);
-         if ($status === FALSE) {
+        /* if ($status === FALSE) {
                break;
           }
+        */
      }
      return $status;
 }

@@ -1,7 +1,8 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: sendEMail.php,v 2.7 2020/11/11 01:03:17 priyanka Exp $
+# $Id: sendEMail.php,v 2.9 2021/06/23 05:11:48 priyanka Exp $
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* June 2021 : Modified the script for server upgrade - PN                            */
   $debug = false;
 ?>
 <?xml version="1.0" encoding="UTF-8"?>
@@ -99,7 +100,7 @@ if ($flag1 <> "1")
 
  $author = $line['AUTHORS'];
    list($e1, $e2, $e3, $e4, $e5,$e6, $e7, $e8, $e9, $e10) =
-   split(",", $author, 10);
+   preg_split("/\,/", $author, 10);
    if($e2 == '')
    {
      $author1=$e1;

@@ -74,7 +74,7 @@ return array ('clusterinfo');
 add_action('body_class','add_body_class_function');
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 #get_sidebar();
 
 if ($cid == null) {

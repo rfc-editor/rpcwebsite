@@ -35,6 +35,7 @@
  * November 2020 : Modified the script to use PDO prepared statements - PN            
  * December 2020 : Modified the the link for the definition of Stream from RFC 4844 to RFC 8729 - PN            
  * February 2021 : Removed the Download PDF Reader link from the page - PN            
+ * October 2021 : Added link to the datatracker - PN
 */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -351,7 +352,9 @@ function display_errata_and_ipr_section($data_in) {
 <a href="/errata/rfc$rfcnum">View Errata</a> &nbsp;|</b>&nbsp; 
 <a href="/errata.php#reportnew">Submit Errata</a> &nbsp;|</b>&nbsp;
 <a href="$datatracker_base/ipr/search/?draft=&rfc=$rfcnum&submit=rfc">
-Find IPR Disclosures from the IETF</a>
+Find IPR Disclosures from the IETF</a> &nbsp;|</b>&nbsp;
+<a href="$datatracker_base/doc/rfc$rfcnum/">
+View History of RFC $rfcnum</a>
 </p>
 
 END;
@@ -363,7 +366,9 @@ END;
 <b>Other actions</b>: 
 <a href="/errata.php#reportnew">Submit Errata</a> &nbsp;|</b>&nbsp;
 <a href="$datatracker_base/ipr/search/?draft=&rfc=$rfcnum&submit=rfc">
-Find IPR Disclosures from the IETF</a>
+Find IPR Disclosures from the IETF</a> &nbsp;|</b>&nbsp;
+<a href="$datatracker_base/doc/rfc$rfcnum/">
+View History of RFC $rfcnum</a>
 </p>
 
 END;
@@ -380,7 +385,9 @@ END;
 <a href="/errata/$doc_id_in">View Errata</a> &nbsp;|</b>&nbsp; 
 <a href="/errata.php#reportnew">Submit Errata</a> &nbsp;|</b>&nbsp;
 <a href="$datatracker_base/ipr/search/?draft=&rfc=$doc_id_in&submit=rfc">
-Find IPR Disclosures from the IETF</a>
+Find IPR Disclosures from the IETF</a> &nbsp;|</b>&nbsp;
+<a href="$datatracker_base/doc/rfc$rfcnum/">
+View History of RFC $rfcnum</a>
 </p>
 
 END;
@@ -392,7 +399,9 @@ END;
 <b>Other actions</b>: 
 <a href="/errata.php#reportnew">Submit Errata</a> &nbsp;|</b>&nbsp;
 <a href="$datatracker_base/ipr/search/?draft=&rfc=$doc_id_in&submit=rfc">
-Find IPR Disclosures from the IETF</a>
+Find IPR Disclosures from the IETF</a> &nbsp;|</b>&nbsp;
+<a href="$datatracker_base/doc/rfc$rfcnum/">
+View History of RFC $rfcnum</a>
 </p>
 
 END;

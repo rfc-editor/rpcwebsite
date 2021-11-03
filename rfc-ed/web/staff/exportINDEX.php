@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: exportINDEX.php,v 2.7 2016/01/22 19:15:34 priyanka Exp $ */
+  /* $Id: exportINDEX.php,v 2.9 2021/10/01 06:19:25 priyanka Exp $ */
 $ei_debug = false;
 $output   = array();
 $status   = null;
@@ -17,9 +17,9 @@ $make_bcp_ref_cmd = "/usr/bin/perl $ref_cmd_base/make_bcp_ref.pl $ref_cmd_base/d
 $make_std_ref_cmd = "/usr/bin/perl $ref_cmd_base/make_std_ref.pl $ref_cmd_base/database_information.txt > /a/ftp/in-notes/std-ref.txt";
 
 
-$parse_ref_cmd = "/usr/bin/python $ref_cmd_base/parse-rfcref.py";
-$parse_bcp_ref_cmd = "/usr/bin/python $ref_cmd_base/parse-bcpref.py";
-$parse_std_ref_cmd = "/usr/bin/python $ref_cmd_base/parse-stdref.py";
+$parse_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-rfcref.py";
+$parse_bcp_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-bcpref.py";
+$parse_std_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-stdref.py";
 
 
 ?>

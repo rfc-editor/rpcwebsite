@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: verify_errata.php,v 1.1.1.1 2016/02/08 21:03:50 priyanka Exp $ */
+  /* $Id: verify_errata.php,v 1.3 2021/06/17 00:47:33 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_search_lib.php");
@@ -133,7 +134,7 @@ return array ('verify_errata');
 
  /*Add Wordpress header and Sidebar*/
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
      switch ($_POST['submit']) {
      case 'Duplicate':
@@ -228,7 +229,7 @@ return array ('verify_errata');
 
 /*Add Wordpress header and Sidebar*/
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 /*Add DIV use with wordpress for content*/
      print<<<END

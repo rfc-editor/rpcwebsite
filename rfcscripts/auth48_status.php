@@ -1,8 +1,9 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: auth48_status.php,v 1.3 2020/11/11 01:03:39 priyanka Exp $
+# $Id: auth48_status.php,v 1.5 2021/06/17 00:47:33 priyanka Exp $
 # Script to query the status of the AUTH48 process for a document.
 # November 2020 : Modified the script to use PDO prepared statements - PN            
+# June 2021 : Modified the script for server upgrade - PN                           
 include("config.php");
 include("db_connect.php");
 include_once("cluster_lib.php");
@@ -351,7 +352,7 @@ if ($docnum != NULL) {
      global $pdo;
 
      get_header();
-     get_sidebar(left);
+     get_sidebar('left');
 ?>
     <div id="content" class="narrowcolumn">
 <?php
@@ -363,7 +364,7 @@ if ($docnum != NULL) {
 
 }else {
      get_header();
-     get_sidebar(left);
+     get_sidebar('left');
 ?>
 
     <div id="content" class="narrowcolumn">

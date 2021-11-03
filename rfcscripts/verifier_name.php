@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: verifier_name.php,v 1.1.1.1 2016/02/08 21:03:50 priyanka Exp $ */
+  /* $Id: verifier_name.php,v 1.3 2021/06/17 00:47:33 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_authen_lib.php");
@@ -82,7 +83,7 @@ return array ('verifier_name');
 add_action('body_class','add_body_class_function');
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
      print<<<END
 <div id="content" class="narrowcolumn">

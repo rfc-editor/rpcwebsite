@@ -10,6 +10,7 @@
 /*              ascending RFC numbers - PN                                            */
 /* Apr 2020 : Added a condition to supress display of PUB documents only for C238 -PN */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* June 2021 : Modified the script for server upgrade - PN                            */
 /**************************************************************************************/
 include("config.php");
 include('cluster_lib.php');
@@ -102,7 +103,7 @@ add_action('body_class','add_body_class_function');
 
 
      get_header();
-     get_sidebar(left);
+     get_sidebar('left');
 ?>
      <div id="content" class="narrowcolumn">
      <h1 class="post_title">No Cluster Identifier</h1>
@@ -136,7 +137,7 @@ return array ('auth48cluster');
 add_action('body_class','add_body_class_function');
 
      get_header();
-     get_sidebar(left);
+     get_sidebar('left');
  
 ?>
      <div id="content" class="narrowcolumn">
