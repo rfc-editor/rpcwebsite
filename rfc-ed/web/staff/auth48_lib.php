@@ -6,9 +6,10 @@
 /*May 2017    : Modified to add the file type changes  PN                                                  */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
 /* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
+/* June 2021 : Modified the script for server upgrade - PN                                                 */
 /***********************************************************************************************************/
 #
-# $Id: auth48_lib.php,v 2.23 2021/05/10 21:47:30 priyanka Exp $
+# $Id: auth48_lib.php,v 2.24 2021/06/23 05:11:48 priyanka Exp $
 # Routines to support processing of the AUTH48 state
 include_once("db_connect.php");
 include_once("cluster_support_lib.php");
@@ -564,7 +565,7 @@ function update_state($doc_id,$state_id){
        $history_status = create_history_row($doc_id);          
        if ($history_status === FALSE){
            $status = FALSE;  
-           break; 
+           #break; 
        } else {   
 	   $status = TRUE;
        }  

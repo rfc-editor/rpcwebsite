@@ -1,8 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_search.php,v 1.2 2017/05/01 23:01:48 priyanka Exp $ */
+  /* $Id: errata_search.php,v 1.4 2021/06/17 00:47:33 priyanka Exp $ */
   /* April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN */
-
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 #http_redirect(); // if we're on a HTTPS connection, goto HTTP
@@ -52,7 +52,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <h1 class="post_title">RFC Errata</h1>

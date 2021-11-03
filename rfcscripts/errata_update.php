@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_update.php,v 1.2 2016/10/19 17:30:06 priyanka Exp $ */
+  /* $Id: errata_update.php,v 1.4 2021/06/17 00:47:33 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -100,7 +101,7 @@ switch ($errata_status_ids[$errata_status_code]) {
 
 
               get_header();
-              get_sidebar(left);
+              get_sidebar('left');
 
 ?>
                    <div id="content" class="narrowcolumn">
@@ -151,7 +152,7 @@ switch ($errata_status_ids[$errata_status_code]) {
 
             add_action('body_class','add_body_class_function');
             get_header();
-            get_sidebar(left);
+            get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <h1 class="post_title">Errata Update Notification</h1>
@@ -163,7 +164,7 @@ switch ($errata_status_ids[$errata_status_code]) {
            $_SESSION['include_verified'] ='yes';
 
            if ($status_change == TRUE) {//Show notification email when there is change in the errata status
-               $_SESSION[super_user] = 'yes'; 
+               $_SESSION['super_user'] = 'yes'; 
                send_errata_update_form($_POST);
            } else {
 ?>
@@ -196,7 +197,7 @@ switch ($errata_status_ids[$errata_status_code]) {
 
 
                get_header();
-               get_sidebar(left);
+               get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <div class="post-127 page type-page status-publish hentry post clear" id="post-127">

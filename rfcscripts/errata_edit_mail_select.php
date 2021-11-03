@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_edit_mail_select.php,v 1.1 2016/10/19 17:30:06 priyanka Exp $ */
+  /* $Id: errata_edit_mail_select.php,v 1.3 2021/06/17 00:55:26 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -89,7 +90,7 @@ if ($submit) {
 
 
     get_header();
-    get_sidebar(left);
+    get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <div class="post-127 page type-page status-publish hentry post clear" id="post-127">

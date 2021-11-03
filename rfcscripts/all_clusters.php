@@ -6,6 +6,7 @@
 # report on all clusters, past and present. An ad-hoc SQL query could fulfill
 # that need.
 # November 2020 : Modified the script to use PDO prepared statements - PN 
+# June 2020 : Modified script for server upgrade - PN
 #-
 include("config.php");
 include("cluster_lib.php");
@@ -53,7 +54,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 #get_sidebar();
 ?>
 

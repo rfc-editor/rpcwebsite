@@ -1,5 +1,6 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
+/* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -101,7 +102,7 @@ if (isset($_POST['submit'])) {
 
             add_action('body_class','add_body_class_function');
             get_header();
-            get_sidebar(left);
+            get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <h1 class="post_title">Errata Update Notification</h1>
@@ -151,7 +152,7 @@ if (isset($_POST['submit'])) {
 
 
                get_header();
-               get_sidebar(left);
+               get_sidebar('left');
 ?>
 <div id="content" class="narrowcolumn">
      <div class="post-127 page type-page status-publish hentry post clear" id="post-127">

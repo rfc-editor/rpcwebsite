@@ -20,6 +20,8 @@
 /*May 2020     : Modified the script to accomadate very long Updated By value in the   */
 /*               header. This required modification of the processing of header        */
 /*               with a new approach - PN                                              */
+/*November 2021 : Modified the script to add info link in the first line of HTML       */
+/*               header - PN                                                           */
 /***************************************************************************************/
 
 
@@ -486,7 +488,13 @@ function get_meta_header($rfc_data,$display,$in_num){
       $html_first_chars = $html_first_chars + 9; // For [Errata] and a space
    }
    }
- 
+
+   if ($display == 'rfc'){
+      $info_page_text = '[<a href=\'https://www.rfc-editor.org/info/' . htmlspecialchars($display.$in_num) . '\' title=\'Info page\'>Info page</a>]';
+      $html_first_line .= ' '.$info_page_text;
+      $html_first_chars = $html_first_chars + 12; // For [Info page] and a space
+   }
+
    $first_pad_line = get_padded_data($html_first_chars);
    $html_var .= $html_first_line.$first_pad_line.'</span><br/>';
 

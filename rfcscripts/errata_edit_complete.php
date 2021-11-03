@@ -1,5 +1,6 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
+/* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -61,7 +62,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 
 

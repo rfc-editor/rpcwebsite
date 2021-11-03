@@ -1,6 +1,7 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include('db_connect.php');
 include('config.php');
@@ -33,7 +34,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 
 

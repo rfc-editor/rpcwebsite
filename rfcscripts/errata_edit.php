@@ -1,6 +1,7 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_edit.php,v 1.1.1.1 2016/02/08 21:03:50 priyanka Exp $ */
+  /* $Id: errata_edit.php,v 1.3 2021/06/17 00:47:33 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -124,7 +125,7 @@ return array ('errata_edit');
 
  /*Add Wordpress header and Sidebar*/
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 /*Add DIV use with wordpress for content*/
 

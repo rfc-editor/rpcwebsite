@@ -1,9 +1,10 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved                 */
-  /* $Id: errata_mail_lib.php,v 1.8 2021/07/16 15:38:48 priyanka Exp $ */
+  /* $Id: errata_mail_lib.php,v 1.9 2021/10/08 20:35:42 priyanka Exp $ */
   /* May 2017 Updates : Removed rfcid from function generate_rfc_errata_search_query - PN*/ 
   /* June 2020 Updates : Added check for 'None' in the email address to avoild sending email to None - PN*/
   /* July 2021 Updates : Added the changes to Make Editorial errata notification go to rfc-ed only - PN*/
+  /* October 2021 : Modified the script to remove unwanted print - PN   */  
 // Set dev_mode 
 include_once("ams_util_lib.php");
 include("config.php");
@@ -180,7 +181,6 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
                $email_count = count($email_array);
                if (in_array("none",$email_array)){
                    $email_without_none = array_diff($email_array,array('none'));
-                   print_r($email_without_none);
                    $out_email_string = implode(',',$email_without_none);
                 }
                 if ($out_email_string){

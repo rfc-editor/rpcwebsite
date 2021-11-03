@@ -1,7 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
   /* June 2017 : Increased the length of login_name to 35 from 30  - PN */
-  /* $Id: verify_login.php,v 1.2 2017/06/06 17:59:11 priyanka Exp $ */
+  /* $Id: verify_login.php,v 1.4 2021/06/17 00:47:33 priyanka Exp $ */
+  /* June 2021 : Modified the script for server upgrade - PN                            */
 session_start();
 
 // Include WordPress
@@ -78,7 +79,7 @@ add_action('body_class','add_body_class_function');
 
 
 get_header();
-get_sidebar(left);
+get_sidebar('left');
 
 
 

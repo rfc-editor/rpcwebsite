@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.14 2020/11/11 01:03:39 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.17 2021/10/08 20:35:42 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -10,6 +10,8 @@
    * May 2020 Updates : Replaced function Unserialize/ serialize from the script with JSON_DECODE/JSON_ENCODE as per ZX security review - PN
    * June 2020 Updates : Added inline errata link in the Full records view of an Errata - PN
    * November 2020 : Modified the script to use PDO prepared statements - PN            
+   * June 2021 : Modified the script for server upgrade - PN                            
+   * October 2021 : Modified the script to increase maxlength for section - PN                            
    */
 
 include_once("db_connect.php");
@@ -813,7 +815,7 @@ function verify_record_form($data) {
 
      }
 
-     text_input('Section', 'section', preg_replace("[\r\n]","",$data['section']), false, true, 512, 12);
+     text_input('Section', 'section', preg_replace("[\r\n]","",$data['section']), false, true, 512, 20);
 
 
     if (array_key_exists('format',$data)){
@@ -945,7 +947,7 @@ function path_selector($data){
 
                    /*Add Wordpress header and Sidebar*/
                    get_header();
-                   get_sidebar(left);
+                   get_sidebar('left');
 
                    /*Add DIV use with wordpress for content*/
 ?>
@@ -984,7 +986,7 @@ END;
 
                    /*Add Wordpress header and Sidebar*/
                    get_header();
-                   get_sidebar(left);
+                   get_sidebar('left');
 
                    /*Add DIV use with wordpress for content*/
 ?>
@@ -1339,7 +1341,7 @@ function update_errata_record($data) {
      }
 
      if ($template) {
-     try
+        try
         {
               $query = "UPDATE errata $template WHERE errata_id=:errata_id";
               $stmt = $pdo->prepare($query);
@@ -2620,7 +2622,7 @@ function get_area_acronyms() {
            AND area_status = :area_status
            ORDER BY area_acronym";
          $stmt = $pdo->prepare($query);
-         $stmt->bindValue('area_status',open);
+         $stmt->bindValue('area_status','open');
          $stmt->execute();
          $num_of_rows = $stmt->rowCount(); 
      } catch (PDOException $pe){

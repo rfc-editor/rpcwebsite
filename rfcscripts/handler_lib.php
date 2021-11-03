@@ -12,7 +12,8 @@
 /*              .html file does not exist - PN                                             */
 /*February 2020: Modified the script added the case to query the index table based on the  */
 /*               display type provided by the user - PN                                    */
-/* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* November 2020 : Modified the script to use PDO prepared statements - PN                 */
+/* June 2021 : Modified the script for server upgrade - PN                                 */
 /*******************************************************************************************/
 
 include('handler_config.php');
@@ -111,7 +112,7 @@ global $debug_handler_lib,$pdo;
      }
 
     
-   if ($debug_html_header === TRUE) {
+   if ($debug_handler_lib === TRUE) {
        print("<pre>\n");
        var_dump($query);
        print("</pre>\n");
