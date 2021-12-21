@@ -2,10 +2,15 @@
 /* Copyright The IETF Trust 2020 All Rights Reserved */
 /*
  * Authentication routines for the Errata Verification & Editing pages.
- * $Id: errata_authen_lib.php,v 1.4 2020/11/11 01:03:39 priyanka Exp $
+ * $Id: errata_authen_lib.php,v 1.6 2021/12/16 06:53:58 priyanka Exp $
  */
 /* June 2017 : Increased the length of MAX_LOGIN_NAME to 35 from 30  - PN */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
+/* December 2021 : Modified the script to use password_verify function to check */
+/*                 the password entered by user. This updated also needed the modification */
+/*                 of password field in Verifier table. It is now VARCHAR 255 to hold the  */
+/*                 password created through password_hash function         - PN            */
+
 include_once("db_connect.php");
 include_once("ams_util_lib.php");
 
@@ -99,38 +104,51 @@ function authenticate_user($username, $password)
 
      // Guard against SQL injection
      $login_name = $username;
-     // Create a digest of the password collected from
-     // the challenge
-     $password_digest = md5(trim($password) . trim($username));
-
-     // Formulate the SQL find the user
+     
+     //Create the SQL parameters
+     $params = [":login_name" => $login_name];
+     //Eliminate the inactive accoounts in the query
+     $inactive_passwords = ['No longer a verifier','No longer IRTF Chair','No longer in use','No longer ISE','No longer and AD','NOTHING_MATCHES_THIS'];
+     $in = "";
+     foreach ($inactive_passwords as $i => $item)
+     {
+         $key = ":password_id".$i;
+         $in .= "$key,";
+         $in_params[$key] = $item; // collecting values into key-value array
+     }
+     $in = rtrim($in,",");
 
      try {
          $query =
              "SELECT v.verifier_id, v.login_name, s.ssp_name,
-                 s.ssp_id
+                 s.ssp_id , v.password
              FROM verifiers v, stream_specific_parties s 
              WHERE v.ssp_id = s.ssp_id 
-                 AND v.login_name=:login_name
-                 AND v.password=:password_digest";
-	 $stmt = $pdo->prepare($query);
-	 $stmt->bindParam('login_name',$login_name);
-	 $stmt->bindParam('password_digest',$password_digest);
-	 $stmt->execute();
+                 AND v.login_name=:login_name and v.password NOT IN ($in)";
+	 
+         $stmt = $pdo->prepare($query);
+         $stmt->execute(array_merge($params,$in_params)); // just merge two arrays
 	 $num_of_rows = $stmt->rowCount();
      } catch (PDOException $pe){
          error_log("Error processing : authenticate_user", $pe->getMessage(), $pe->getCode(), array('exception' => $pe));
      }
 
+ 
      $ret_value = null;
-
+     $auth_data = null;
 
      if ($num_of_rows != 1) {
          // too many or too few rows!
-         $ret_value = false;
+         $auth_data = false;
      }else {
          $ret_value = $stmt->fetch(PDO::FETCH_ASSOC);
+         if (password_verify($password, $ret_value['password'])){
+            $auth_data = $ret_value;
+         } else {
+            $auth_data = false;
+         }
      }
+     $ret_value = $auth_data;
 
      return $ret_value;
 }
