@@ -162,11 +162,14 @@ function get_meta_header($rfc_data,$display,$in_num){
   } else {
 	  $server = "http://localhost";
   }
+  $reportnumber = sprintf("%s%d", strtolower(substr($rfc_data['DOC-ID'],0,3)),substr($rfc_data['DOC-ID'], 3)); // rfc123
 
   $meta_header = $author_tag .
       '      <meta name="citation_publication_date" content="' . htmlspecialchars($date_published) . '"/>
       <meta name="citation_title" content="'.htmlspecialchars($rfc_data['TITLE']).'"/>
       <meta name="citation_doi" content="'.htmlspecialchars($rfc_data['DOI']).'"/>
+      <meta name="citation_issn" content="2070-1721"/>
+      <meta name="citation_technical_report_number" content="' . $reportnumber . '">
       <meta name="citation_pdf_url" content="' .  htmlspecialchars($server . generate_url_by_format($rfc_data['DOC-ID'], 'ASCII, PDF')) . "\"/>\n";
 
    if ($debug_html_header === TRUE) {
