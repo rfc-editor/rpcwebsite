@@ -22,11 +22,14 @@
 /*               with a new approach - PN                                              */
 /*November 2021 : Modified the script to add info link in the first line of HTML       */
 /*               header - PN                                                           */
+/*January 2022  : Change tags to make Google Scholar happy, fix broken HTML - JRL      */
 /***************************************************************************************/
 
 
    include('db_connect.php');
    $debug_html_header=FALSE;
+   $debug_add_header=FALSE;
+
 /******************************************************************/
 /*get_error_header : Gets the Header information for Errored i/p  */
 /******************************************************************/
@@ -49,11 +52,10 @@
       $html_error_header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="index,follow" />
-    <meta name="creator" content="rfcmarkup version 1.129b" />
-    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />';
+    <meta name="creator" content="rfchandler version 0.2" />';
 
       $html_error_header .= $html_error_title;
   
@@ -95,14 +97,12 @@
       $html_remaining = get_html_remaining($rfc_data,$display,$in_num,$case);
            
 
-      $html_header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
+      $html_header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="index,follow" />
-    <meta name="creator" content="rfcmarkup version 1.129b" />
-    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />';
+    <meta name="creator" content="rfchandler version 0.2" />' . "\n";
 
       $html_header .= $html_meta_header;
 
@@ -111,6 +111,8 @@
       $html_header .= $html_css;
       
       $html_header .= $html_javascript;
+
+      $html_header .= "</head>\n<body>\n";	// everything after this is in the body
  
       $html_header .= $html_remaining;
       
@@ -139,8 +141,8 @@ function get_meta_header($rfc_data,$display,$in_num){
    $num_auths = count($authors);
    foreach ($authors as $author) {
        $author = trim($author);
-       $author = preg_replace('/; Ed\./', ', Ed.', $author);
-       $author_tag .= "<meta name=\"DC.Creator\" content=\"" . htmlspecialchars($author) . "\">";
+       $author = preg_replace('/; Ed\./', '', $author); // no Ed. per Google Scholar
+       $author_tag .= "      <meta name=\"citation_author\" content=\"" . htmlspecialchars($author) . "\"/>\n";
    }
   
   $pub_day = substr($rfc_data['PUB-DATE'],-2);
@@ -154,15 +156,21 @@ function get_meta_header($rfc_data,$display,$in_num){
          $date_published = date("F, Y" ,strtotime($rfc_data['PUB-DATE']));
  }
   
-  $meta_header = '
-      <meta name="DC.Identifier" content="urn:ietf:'. htmlspecialchars($display) . ':' . htmlspecialchars($in_num) . '" />
-      <meta name="DC.Relation.Replaces" content="' . htmlspecialchars($rfc_data['OBSOLETES']) . '"/>'
-      .$author_tag.
-      '<meta name="DC.Date.Issued" content="' . htmlspecialchars($date_published) . '"/>
-       <meta name="DC.Title" content="'.htmlspecialchars($rfc_data['TITLE']).'"/>
-       ';
+  // server name for PDF URL below
+  if (isset($_SERVER['SERVER_NAME'])) {
+	  $server = "https://" . $_SERVER['SERVER_NAME'];
+  } else {
+	  $server = "http://localhost";
+  }
+  $reportnumber = sprintf("%s%d", strtolower(substr($rfc_data['DOC-ID'],0,3)),substr($rfc_data['DOC-ID'], 3)); // rfc123
 
-
+  $meta_header = $author_tag .
+      '      <meta name="citation_publication_date" content="' . htmlspecialchars($date_published) . '"/>
+      <meta name="citation_title" content="'.htmlspecialchars($rfc_data['TITLE']).'"/>
+      <meta name="citation_doi" content="'.htmlspecialchars($rfc_data['DOI']).'"/>
+      <meta name="citation_issn" content="2070-1721"/>
+      <meta name="citation_technical_report_number" content="' . $reportnumber . '">
+      <meta name="citation_pdf_url" content="' .  htmlspecialchars($server . generate_url_by_format($rfc_data['DOC-ID'], 'ASCII, PDF')) . "\"/>\n";
 
    if ($debug_html_header === TRUE) {
       print "Inside get_meta_header";
@@ -467,7 +475,7 @@ function get_meta_header($rfc_data,$display,$in_num){
    $html_first_line .= ' ['.$url.'] ';
 
    if ($display == 'rfc'){
-       $html_first_line .= '[<a href=\'https://datatracker.ietf.org/doc/' . htmlspecialchars($display.$in_num) . '\' title=\'IETF Datatracker information for this document\'>Tracker</a>] [<a href="https://datatracker.ietf.org/ipr/search/?rfc=' . htmlspecialchars($in_num) . '&submit=' . htmlspecialchars($display) . '" title="IPR disclosures related to this document">IPR</a>]';
+       $html_first_line .= '[<a href=\'https://datatracker.ietf.org/doc/' . htmlspecialchars($display.$in_num) . '\' title=\'IETF Datatracker information for this document\'>Tracker</a>] [<a href="https://datatracker.ietf.org/ipr/search/?rfc=' . htmlspecialchars($in_num) . '&amp;submit=' . htmlspecialchars($display) . '" title="IPR disclosures related to this document">IPR</a>]';
    }
 
    $html_first_chars = 0 + 11; // For [RFC Home] and a space
@@ -513,8 +521,8 @@ function get_meta_header($rfc_data,$display,$in_num){
 
    $obsoleted_by_txt = "";
    $updated_by_txt = "";
-   $multiline_obsolete_txt = "";
-   $multiline_update_txt = "";   
+   $multiline_obsoleted_txt = "";
+   $multiline_updated_txt = "";   
    $obsoleted_pad_count = 0;
    $updated_pad_count = 0;
 
@@ -527,7 +535,7 @@ function get_meta_header($rfc_data,$display,$in_num){
             $obsoleted_by_txt = 'Obsoleted by: '.$obsoleted_by_txt;
             $obsoleted_pad_count = $obsoleted_length + 14; //For length of Obsoleted by: and a space
        }elseif ($obsoleted_txt_len > 61){#Case where OBSOLETED BY has more values
-             $multiline_obsolete_txt = "";
+             $multiline_obsoleted_txt = "";
              $obsoleted_txt_array = str_split($in_data['OBSOLETED-BY'],62);
              $obsoleted_txt_array_count = count($obsoleted_txt_array);
             for ($i = 0 ; $i <= $obsoleted_txt_array_count; $i++){
@@ -708,9 +716,8 @@ function get_meta_header($rfc_data,$display,$in_num){
           $status_len = strlen($in_data['STATUS']);
           $remaining_max_length = 72 - $status_len;   
           $html_third_filler_num = $remaining_max_length - $obsoleted_pad_count;
-          for ($i=0;$i< $html_third_filler_num;$i++){
-              $html_third_filler_pad .= " "; 
-          }
+	  $html_third_filler_pad = str_repeat(" ", $html_third_filler_num);
+
           if ($obsoleted_by_txt != ""){
           $html_var .= '<span class="pre noprint docinfo">'.$obsoleted_by_txt.$html_third_filler_pad.$in_data['STATUS'].'</span><br />';
           }
@@ -721,18 +728,16 @@ function get_meta_header($rfc_data,$display,$in_num){
           $status_len = strlen($in_data['STATUS']);
           $remaining_max_length = 72 - $status_len;   
           $html_third_filler_num = $remaining_max_length - $obsoleted_pad_count;
-          for ($i=0;$i< $html_third_filler_num;$i++){
-              $html_third_filler_pad .= " "; 
-          }
-          $html_var .= '<span class="pre noprint docinfo">'.$obsoleted_by_txt.$html_third_filler_pad.$in_data['STATUS'].'</span><br />';
+	  $html_third_filler_pad = str_repeat(" ", $html_third_filler_num);
+
+	  $html_var .= '<span class="pre noprint docinfo">'.$obsoleted_by_txt.$html_third_filler_pad.$in_data['STATUS'].'</span><br />';
         #2.Print single line updated by text + Errata status add to html_var
           $errata_length = 12; //The length of string Errata Exist
           if ($errata_txt != ""){
              $remaining_max_length = 72 - $errata_length;//Get the max length by excluding errata length
              $html_fourth_filler_num = $remaining_max_length - $updated_pad_count;
-             for ($i=0;$i< $html_fourth_filler_num;$i++){
-                $html_fourth_filler_pad .= " "; 
-             }
+	     $html_fourth_filler_pad = str_repeat(" ", $html_fourth_filler_num);
+
              $html_var .= '<span class="pre noprint docinfo">'.$update_by_txt.$html_fourth_filler_pad.'<span style=\'color: #C00;\'>Errata Exist</span></span>';
           }else {
                $html_fourth_filler_num = 72 - $updated_pad_count; //Now no errata so take max value
@@ -760,6 +765,7 @@ function get_padded_data($in_chars){
 global $debug_html_header;
 
    $html_pad_value = 0;
+   $html_pad_line = '';
    if ($debug_html_header === TRUE) {
           print("<h4>get_padded_data</h4><pre>\n");
           var_dump($in_chars);
@@ -998,7 +1004,7 @@ function check_for_subseries($in_display,$in_doc_id,$in_number){
       $case = 0;
 
       try { 
-          $query = "SELECT `DOC-ID`,`AUTHORS`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY` from `index` where `DOC-ID` =:doc_id";
+          $query = "SELECT `DOC-ID`,`AUTHORS`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY`,`DOI` from `index` where `DOC-ID` =:doc_id";
           $stmt = $pdo->prepare($query);
           $stmt->bindParam('doc_id',$doc_id);
           $stmt->execute();
@@ -1028,7 +1034,7 @@ function get_subseries_data($doc_id){
       $case = 1;
       
       try {
-          $query = "SELECT `DOC-ID`,`AUTHORS`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY` from `index` where `DOC-ID` =:doc_id";
+          $query = "SELECT `DOC-ID`,`AUTHORS`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY`,`DOI` from `index` where `DOC-ID` =:doc_id";
           $stmt = $pdo->prepare($query);
           $stmt->bindParam('doc_id',$doc_id);
           $stmt->execute();
@@ -1052,7 +1058,7 @@ function get_subseries_data($doc_id){
       } else {
 
              try {
-                 $see_also_query = "SELECT `DOC-ID`,`AUTHORS`,`DATE_RECEIVED`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY` from `index` where `SEE-ALSO` =:doc_id";
+                 $see_also_query = "SELECT `DOC-ID`,`AUTHORS`,`DATE_RECEIVED`,`PUB-DATE`,`FORMAT`,`STATUS`,`TITLE`,`OBSOLETES`,`OBSOLETED-BY`,`UPDATED-BY`,`DOI` from `index` where `SEE-ALSO` =:doc_id";
                  $stmt = $pdo->prepare($see_also_query);
                  $stmt->bindParam('doc_id',$doc_id);
                  $stmt->execute();
@@ -1076,7 +1082,7 @@ function get_subseries_data($doc_id){
 /***********************************************************/
  function split_rfc($in_value){
 
-         global $debug_html_header;
+         global $debug_html_header, $debug_add_header;
          $length = strlen($in_value);
 
          $out_name = "";
