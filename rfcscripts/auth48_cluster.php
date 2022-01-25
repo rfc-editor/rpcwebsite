@@ -11,6 +11,8 @@
 /* Apr 2020 : Added a condition to supress display of PUB documents only for C238 -PN */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
 /* June 2021 : Modified the script for server upgrade - PN                            */
+/* January 2022 : Modified script to use get_draft_exact_data instead of              */
+/*                  get_draft_data - PN                                               */
 /**************************************************************************************/
 include("config.php");
 include('cluster_lib.php');
@@ -154,7 +156,7 @@ add_action('body_class','add_body_class_function');
      #$draft_list = get_cluster($cid);
      print "<p><ul>";
      foreach ($draft_list as $draft_base) {
-          $draft_data = get_draft_data($pdo,$draft_base);
+          $draft_data = get_draft_exact_data($pdo,$draft_base);
           $draft_data['draft_base'] = $draft_base;
           $draft_data['cid'] = $cid;
           $rfc_to_be = substr($draft_data['doc-id'],3);
@@ -177,7 +179,7 @@ add_action('body_class','add_body_class_function');
      print "</ul></p>";
      print "<hr>";
      foreach ($draft_list as $draft_base) {
-         $draft_data = get_draft_data($pdo,$draft_base);
+         $draft_data = get_draft_exact_data($pdo,$draft_base);
          if (($draft_data['state_id'] == '2') || ($draft_data['state_id'] == '23')){          
 	         $dbstatus = auth48_approvals_display($pdo,substr($draft_data['doc-id'],3));
         	 if ($dbstatus === FALSE) {

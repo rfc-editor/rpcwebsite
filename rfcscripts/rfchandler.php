@@ -19,11 +19,15 @@
 /*               - PN                                                                      */
 /*May 2019     : Modified the script to handle the case where document is not publised     */
 /*               .html file does not exist - PN                                            */
+/* Jan 2022    : change tags for Google Scholar, fix broken html, misc bugs - JRL          */
 /*******************************************************************************************/
 
 include('handler_lib.php');
 include('format_html_header.php');
- 
+
+/* hack to take CGI args from the command line */
+// parse_str(implode('&', array_slice($argv, 1)), $_GET);
+
 $debug_handler= FALSE;
 
 
@@ -79,7 +83,8 @@ if ($debug_handler === TRUE) {
             if ($in_num <= '8649') {
                 $html_header = get_html_header($in_num,$display,$type);
                 print $html_header;
-                include($output_file); 
+		include($output_file);
+		print "\n</body>\n</html>\n"; // close off HTML
             }else {
 /*                header('Content-Description: File Transfer');
                 header('Content-Type: text/html');
@@ -111,3 +116,4 @@ if ($debug_handler === TRUE) {
  
  
 ?>
+

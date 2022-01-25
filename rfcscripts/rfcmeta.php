@@ -36,6 +36,7 @@
  * December 2020 : Modified the the link for the definition of Stream from RFC 4844 to RFC 8729 - PN            
  * February 2021 : Removed the Download PDF Reader link from the page - PN            
  * October 2021 : Added link to the datatracker - PN
+ * January 2022 : Removed meta tag citation_ for Google Scholar - PN
 */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -118,7 +119,8 @@ function rfcmeta_header($rfcnum,$display) {
     if ($display == 'RFC'){/*Build the meta tag*/
 	$meta_in_data = get_rfcmeta_data($rfcnum);
 #	$meta = generate_meta_data($in_data);
-        add_action('wp_head','generate_meta_data');
+#        add_action('wp_head','generate_meta_data'); #removed the meta tag citation_ Google Scholar
+     add_action('wp_head','add_body_class_funtion');
     }
     /*else {
 	Handle the other cases not conidered now
