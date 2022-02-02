@@ -12,6 +12,7 @@
 import argparse
 import xml.etree.ElementTree as ET
 import datetime
+import os
 
 # these are not in the standard library
 import requests
@@ -27,7 +28,7 @@ txtpdfurl = urlbase + "/rfc/pdfrfc/rfc{0}.txt.pdf"
 htmlurl = urlbase + "/rfc/rfc{0}.html"
 psurl = urlbase + "/rfc/rfc{0}.ps"
 pdfurl = urlbase + "/rfc/rfc{0}.pdf"
-xmlurl = urlbase + "/rfc/rfc{0}.pdf"
+xmlurl = urlbase + "/rfc/rfc{0}.xml"
 
 bcpurl = urlbase + "/info/bcp{0}"
 stdurl = urlbase + "/info/std{0}"
@@ -62,6 +63,8 @@ doindent = 'indent' in ET.__dict__
 
 # some parameters
 debug = False
+# site map times
+rfctime = bcptime = misctime = None
 
 parser = argparse.ArgumentParser(description='Create site maps')
 parser.add_argument('-d', action='store_true', help="debug")
@@ -84,7 +87,6 @@ xmlindex = ET.parse(args.infile)
 # no prefixes on our sitemapes
 ET.register_namespace('', 'http://www.sitemaps.org/schemas/sitemap/0.9')
 
-sess = requests.Session()
 checkurl = args.c
 
 # these globals change when we change maps
@@ -103,7 +105,7 @@ def addref(urlpat, rfcno, refdate):
     map is in curmap, update rate in freq
     """
 
-    global curmap, freq, numrefs, sess
+    global curmap, freq, numrefs
 
     if rfcno is not None:
         rurl = urlpat.format(rfcno)
@@ -111,11 +113,14 @@ def addref(urlpat, rfcno, refdate):
         rurl = urlpat
 
     if checkurl:    # see if this URL exists
-        r = sess.head(rurl)
-        if debug:
-            print(".", sep="", end="", flush=True)
-        if r.status_code != 200:
-            print("missing",rurl)
+        try:
+            r = requests.head(rurl)
+            if debug:
+                print(".", sep="", end="", flush=True)
+            if r.status_code != 200:
+                print("missing",rurl)
+        except requests.exceptions.ConnectionError as err:
+            print("barf",rurl,err)
         
     url = ET.Element("url")
                 
@@ -161,7 +166,8 @@ for rfc in xmlindex.findall('r:rfc-entry', ns):
 
     if 'text' in formats or 'ascii' in formats:
         addref(txturl, rfcno, rdate)
-        addref(txtpdfurl, rfcno, rdate)
+        if 'xml' not in formats:
+            addref(txtpdfurl, rfcno, rdate)
 
     if 'html' in formats:
         addref(htmlurl, rfcno, rdate)
@@ -188,6 +194,7 @@ if args.r:
         rfcet.write(fo, encoding="UTF-8", xml_declaration=True)
         fo.write(b'\n')
     print("Wrote rfc map", args.rmap)
+    rfctime = datetime.datetime.now(tz=datetime.timezone.utc)
 
 # BCPs and STDs
 # create entry for each BCP or STD that corresponds to RFCs
@@ -251,6 +258,7 @@ if args.b:
         bcpet.write(fo, encoding="UTF-8", xml_declaration=True)
         fo.write(b'\n')
     print("Wrote bcp,std map", args.bmap)
+    bcptime = datetime.datetime.now(tz=datetime.timezone.utc)
 
 # scrape site map web page
 if args.m:
@@ -259,7 +267,7 @@ if args.m:
     mdstr = str(mdate)
 
     # slurp in the HTML site index
-    r = sess.get(mapurl)
+    r = requests.get(mapurl)
     r.raise_for_status()
     sm = BeautifulSoup(r.content, 'html.parser') 
 
@@ -293,22 +301,32 @@ if args.m:
         miscet.write(fo, encoding="UTF-8", xml_declaration=True)
         fo.write(b'\n')
     print("Wrote misc map", args.mmap)
+    misctime = datetime.datetime.now(tz=datetime.timezone.utc)
 
 # rebuild the site index
 siteindex = ET.fromstring(indexbase)
-# modified today
-mdstr = str(datetime.date.today())
 
 # add 
-for u in (args.mmap, args.rmap, args.bmap):
+for ufile,utime in ((args.mmap, misctime), (args.rmap, rfctime), (args.bmap, bcptime)):
     smap = ET.Element("sitemap")
                 
     l = ET.Element("loc")
-    l.text = urlbase + '/' + u
+    l.text = urlbase + '/' + ufile
     smap.append(l)
 
+    if not utime:   # use time for existing file
+        try:
+            ft = os.stat(ufile)
+            utime = datetime.datetime.fromtimestamp(int(ft.st_mtime), tz=datetime.timezone.utc)
+            if debug:
+                print(f"utime of {ufile} is {utime}")
+        except FileNotFoundError:
+            utime = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(days=1)
+            print(f"Cannot find {ufile}, guessing it was updated yesterday {utime}")
+    utime = utime.replace(microsecond=0)   # lose the microseconds in the output
+
     l = ET.Element("lastmod")
-    l.text = mdstr
+    l.text = utime.isoformat()
     smap.append(l)
 
     siteindex.append(smap)
