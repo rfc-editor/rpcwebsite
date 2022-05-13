@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved               */
-  /* $Id: errata_report.php,v 1.11 2021/10/08 20:35:42 priyanka Exp $ */
+  /* $Id: errata_report.php,v 1.12 2022/04/12 01:07:33 priyanka Exp $ */
   //
   //       2010/04/14 rcross: added server-side validations.  errata_confirm.php has been 
   //                          absorbed into this script so we can validate and hand off to 
@@ -13,7 +13,7 @@
  /* January 2021 : Made Original and corrected text and Notes required in Errata report form - PN */
  /* June 2021 : Modified the script for server upgrade - PN                            */
  /* October 2021 : Modified the script to increase maxlength for section - PN                            */
-
+ /* April 2022 : Removed the Math problem and added Google re-Captcha to handle bot submission - PN */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -40,6 +40,15 @@ return array ('newerratareport');
 
 add_action('body_class','add_body_class_function');
 
+/*Function required to use the google re-Captcha has to present before closing the html head tag*/
+function add_google_captcha_js() {
+    echo '<script src=
+        "https://www.google.com/recaptcha/api.js" async defer>
+    </script>';
+
+}
+
+
 /*Stripping the Wordpress additional slashes from GLOBAL vaiables*/
 $_POST = array_map( 'stripslashes_deep', $_POST);
 $_GET = array_map( 'stripslashes_deep', $_GET);
@@ -47,15 +56,6 @@ $_COOKIE    = array_map( 'stripslashes_deep', $_COOKIE );
 $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
 
 $debug_ersub = false;
-
-/*Math problem for form submission security*/
-
-$ra1 = rand(1,9);
-$ra2 = rand(1,9);
-
-$ra = $ra1+$ra2;
-
-$ma = "$ra1"." + "."$ra2"." =";
 
 /*Format possible values*/
 $format_list = array('TEXT','PDF','HTML');
@@ -67,6 +67,8 @@ function display_confirm(){
     //Add title specifying the dynamic page 
     add_filter( 'wp_title', 'wp_title_rfc_errata_report', 10, 3 );
     add_action('body_class','add_body_class_function');
+    //Adding google reCaptcha ajax call
+    add_action('wp_head',add_google_captcha_js);
 
     /*Get the wordpress header and sidebar*/
     get_header();
@@ -90,31 +92,48 @@ may select the edit button to continue editing this report.
 </p>
 <hr />';
 
-	 report_header($rfcid,$title,$pub_date);
- 	 display_record($_POST);
-	 print("<table>\n<tr>\n");
-	 print("<td>\n");
-	 edit_report_again_form($_POST);
-
-         print("\n</td>\n");
-	 print("<td>\n");
-	 insert_report_form($_POST);
-
-         print("\n</td>\n");
-	 print("<td>\n");
-	 insert_report_form($_POST, true);
-
-         print("\n</td>\n");
-	 print("<td>\n");
-	 print<<<END
+         report_header($rfcid,$title,$pub_date);
+         display_record($_POST);
+         print("<table>\n<tr>\n");
+         print("<td><p>");
+         edit_report_again_form($_POST);
+         print("</p></td>\n");
+         print("<td><p>");
+         print<<<END
 <form name="abort" action="errata.php" method="post">
     <input type="submit" name="cancel" value="Cancel">
 </form>
 END;
-	 print("\n</td>\n");
+         print("</p></td>\n");
+         print("\n</tr></table>\n");
 
-	 print("\n</tr></table>\n");
+         print "<div class=\"special_hr\"></div>";
 
+         print '<form action="errata_insert.php" method="post">';
+         print("<table border='0'>\n<tr>\n");
+         print("<td>\n");
+?>
+         <td><p>
+         <!-- PLEASE NOTE AT ANY TIME RECAPTCHA DIV TAG HAS TO BE INSIDE FORM TAG AND IF THERE IS A TABLE TAG
+              IT HAS TO BE INSIDE THE FORM SO THE SEQUENCE HAS TO BE FORM-TABLE-DIV for reCatcha -->
+
+         <!-- div to show reCAPTCHA -->
+         <div class="g-recaptcha" style="transform: scale(0.77);  transform-origin: 0 0;"   
+                data-sitekey="6Lc-ruweAAAAAHsRP4qOeVN0qeWe8zRkuy9i-Vj4">
+          </div>
+        </p></td>
+<?php
+         insert_report_captcha_form($_POST);
+         print("<td>");
+         print<<<END
+<input type="submit" name="submit" value="Submit this Report" />
+                <input type="hidden" name="next" value="thanks" />
+END;
+
+         print("</td>\n");
+         print("\n</tr></table>\n");
+         print "</form>";
+    
     } else {
 	 print("<p>There's nothing for me to do here!</p>");
     }
@@ -217,19 +236,8 @@ if (isset($_POST['doc-id']) && ($_POST['submit'] != "Edit this Errata Report")) 
     }
 
     if (empty($errmsg)) {
-
-//Math problem checking 
-
-        if (empty($_POST['ua'])){
-
-            $errmsg = $errmsg . "ERROR: Please solver the equation below<br>";
-        } elseif ($_POST['ua'] != $_POST['ra']){
-            $errmsg = $errmsg . "ERROR: Incorrect values<br>";
-        } else {
            display_confirm();
            exit;
-        }
-        
     } 
 }
 
@@ -368,7 +376,6 @@ END;
      textarea_input("Notes", "notes", $notes, true, 5,80,'Enter any explanatory notes or rationale for the suggested correction.');
      #textarea_input("Notes", "notes", $notes, false, 5);
 
-     print ('<tr><td>Please solve this:<br>' . htmlspecialchars($ma) . '</td><td><input type="text" name="ua" value=""></td></tr>');
      print '
       <tr>
         <td>
@@ -376,7 +383,6 @@ END;
            <input type="hidden" name="doc-id" value="' . htmlspecialchars($rfcid) . '" />
            <input type="hidden" name="pub-date" value="' . htmlspecialchars($pub_date) . '" />
            <input type="hidden" name="title" value="' . htmlspecialchars($title) . '" />
-           <input type="hidden" name="ra" value="' . htmlspecialchars($ra) . '" />
         </td>
         <td>
            <input type="submit" name="submit" value="Preview" />
