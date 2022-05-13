@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.17 2021/10/08 20:35:42 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.18 2022/04/12 01:07:33 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -12,6 +12,7 @@
    * November 2020 : Modified the script to use PDO prepared statements - PN            
    * June 2021 : Modified the script for server upgrade - PN                            
    * October 2021 : Modified the script to increase maxlength for section - PN                            
+   * April 2022 : Added function insert_report_captcha_form Removed for form submission part to handle bot submission - PN 
    */
 
 include_once("db_connect.php");
@@ -1745,25 +1746,14 @@ function edit_report_again_form($form_data, $dest="errata_report.php") {
      print("</form>\n");
 }
 
+
 /*
- * This function write a form out with just the submit button visible.
- * If $another_report is set true, the insert script will start another
- * report form. Otherwise, the insert form should just print a thank you.
+ * This function write part of a form with filled values before
+ * user decides to cancel/edit the form or submit it by sloving
+ * captcha..
  */
-function insert_report_form($form_data, $another_report=false, $dest="errata_insert.php") {
+function insert_report_captcha_form($form_data, $dest="errata_insert.php") {
      global $errata_columns;
-     
-     if ($another_report) {
-          print '
-             <form action="' . htmlspecialchars($dest) . '" method="post">
-                <input type="submit" name="submit" value="Submit and Start Another Errata Report" />
-                <input type="hidden" name="next" value="another" />';
-     } else {
-          print '
-             <form action="' . htmlspecialchars($dest) . '" method="post">
-                <input type="submit" name="submit" value="Submit this Report" />
-                <input type="hidden" name="next" value="thanks" />';
-     }
 
      // This happens because some fields have ambiguous syntax
      // because of the dash.
@@ -1789,7 +1779,7 @@ function insert_report_form($form_data, $another_report=false, $dest="errata_ins
                switch ($key) {
                case 'format':
                     print('value="' . htmlspecialchars(json_encode($form_data[$key])) . '" />' . "\n");
-                    break; 
+                    break;
                case 'orig_text':
                case 'correct_text':
                     print('value="' . htmlspecialchars($form_data[$key],ENT_QUOTES) . '" />' . "\n");
@@ -1800,15 +1790,8 @@ function insert_report_form($form_data, $another_report=false, $dest="errata_ins
                }
           }
      }
-    
-    //For super user entry need this variable     
-     if ($dest == 'errata_dataentry_insert.php'){
-     print'<input type="hidden" name="super_user" value="yes" />';
-     }
 
-     print("</form>\n");
 }
-
 
 /*
  * Format one row for display on page.

@@ -26,9 +26,9 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   }
   return $theValue; } }
 
-$dataname = "rfced";
-$username = "rfcapp";
-$password = "rfcrfc";
+$dataname = "rfcdev";
+$username = "rfcdev";
+$password = "dev";
 $idata = array();
 $cy=intval($_GET['y']); if ($cy<2013) die();
 $cm=intval($_GET['m']); if (($cm<1)||($cm>12)) die() ;

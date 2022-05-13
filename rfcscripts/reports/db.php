@@ -10,7 +10,7 @@ $db_name = "rfcdev";
 $db_user = "rfcdev";
 
 
-$db_passwd = "rfcrfc";
+$db_passwd = "dev";
 
 # Open a connection to the db, leaving the connection in dbh, unless such a 
 # connection already exists.
