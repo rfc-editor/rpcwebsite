@@ -7,12 +7,8 @@ $db_host = "localhost";
 #error_log("db: " . $_SERVER['HTTP_HOST'] . " -> " . $web_host . " using " . $db_host . " as database server");
 
 
-/*$db_name = "rfcdev";
+$db_name = "rfcdev";
 $db_user = "rfcdev";
-*/
-
-$db_name = "rfced";
-$db_user = "rfcapp";
 
 $db_passwd = "rfcrfc";
 
