@@ -1,10 +1,11 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: rfc_state_lib.php,v 2.14 2020/11/11 01:03:17 priyanka Exp $
-# $Id: rfc_state_lib.php,v 2.14 2020/11/11 01:03:17 priyanka Exp $
-# $Id: rfc_state_lib.php,v 2.14 2020/11/11 01:03:17 priyanka Exp $
+# $Id: rfc_state_lib.php,v 2.16 2022/05/26 21:41:08 priyanka Exp $
+# $Id: rfc_state_lib.php,v 2.16 2022/05/26 21:41:08 priyanka Exp $
+# $Id: rfc_state_lib.php,v 2.16 2022/05/26 21:41:08 priyanka Exp $
 
-/* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/* November 2020 : Modified the script to use PDO prepared statements - PN  */
+/* May 2022 : Modified the script change the subject line - PN  */
 
 include_once("ams_util_lib.php");
 
@@ -398,7 +399,7 @@ function send_rfc_state_msg_edit() {
 				  substr($_POST['draft'],0,(strlen($_POST['draft'])-3)),
 				  $body);
 
-	     $subject = "[RFC State] <" . $_POST['draft'] . "> has been added to the RFC Editor database";
+	     $subject = "[RFC State] <" . $_POST['draft'] . "> has been added to the RFC Editor queue";
 
      }	
 
@@ -474,7 +475,7 @@ function send_rfc_state_msg_add() {
                           substr($_POST['draft'],0,(strlen($_POST['draft'])-3)),
                           $body);
 
-     $subject = "[RFC State] <" . $_POST['draft'] . "> has been added to the RFC Editor database";
+     $subject = "[RFC State] <" . $_POST['draft'] . "> has been added to the RFC Editor queue";
      $to = $_POST['e_mail'];
      $cc =  retrieve_cc_emails();
      $headers  = "From: rfc-editor@rfc-editor.org\n";

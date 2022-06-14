@@ -1,7 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: Auth48Email.php,v 2.12 2020/11/11 01:03:17 priyanka Exp $ */
+  /* $Id: Auth48Email.php,v 2.14 2022/05/31 23:54:44 priyanka Exp $ */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/* May 2022 : Modified the script to add auth48archive@rfc-editor.org to CC field and modify the subject line for Auth48 Email - PN   */
 
 $debug_a48 = false;
 #$templateDir = "/nfs/jade/rfc-ed/Templates/AUTH48-Msgs/";
@@ -249,8 +250,8 @@ if ($flag1 <> "1")
        $today = date("Y/m/d");       
        $draft_name_txt = strtolower($record['DRAFT']) . ".txt";
        $pe = get_primary_editor($record['internal_key']);
-       $sub="AUTH48 [$pe]: RFC ". substr($record['DOC-ID'],3) . " <".$draft_name_txt."> NOW AVAILABLE";
-        
+       $sub="AUTH48: RFC-to-be ". substr($record['DOC-ID'],3) . " <".$record['DRAFT']."> for your review";       
+ 
        $Auth48Template = getTemplateFilename($template);
        $Auth48File = fopen($Auth48Template, 'r');
        if ($Auth48File === false) {
@@ -284,6 +285,8 @@ if ($flag1 <> "1")
        if (!empty($record['IESG_CONTACT'])) {
            $cc .= ", " . $record['IESG_CONTACT'];
        }
+       //Add auth48archive@rfc-editor.org to CC 
+       $cc .= ", auth48archive@rfc-editor.org";
 
        if ($debug_a48) {
            print("<h3>Body After Substitutions</h3>\n<pre>$body</pre><br />\n");
