@@ -1,11 +1,12 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved                 */
-  /* $Id: errata_mail_lib.php,v 1.10 2022/02/10 19:21:20 priyanka Exp $ */
+  /* $Id: errata_mail_lib.php,v 1.11 2022/07/29 01:50:59 priyanka Exp $ */
   /* May 2017 Updates : Removed rfcid from function generate_rfc_errata_search_query - PN*/ 
   /* June 2020 Updates : Added check for 'None' in the email address to avoild sending email to None - PN*/
   /* July 2021 Updates : Added the changes to Make Editorial errata notification go to rfc-ed only - PN*/
   /* October 2021 : Modified the script to remove unwanted print - PN   */  
   /* February 2022 Updates : Added the IANA email for Verified Errata - PN*/
+  /* July 2022 Updates : Added the check for CC authors before adding it to the CC email list - PN*/
 // Set dev_mode 
 include_once("ams_util_lib.php");
 include("config.php");
@@ -261,7 +262,9 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
               }
           } else {
               $headers .=  "Cc: " . $form_data['submitter_email']; // Start Cc: of header
-              $headers .= ", ".$cc_authors;
+              if ($cc_authors){
+                 $headers .= ", ".$cc_authors;
+              }
               // Add the working group list address if recorded and WG "open"
               if ($use_wg_email && $db_data['wg_email'] != null && $db_data['wg_status'] == 'open') {
                  $headers .= ", " . $db_data['wg_email'];

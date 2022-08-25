@@ -37,6 +37,8 @@
  * February 2021 : Removed the Download PDF Reader link from the page - PN            
  * October 2021 : Added link to the datatracker - PN
  * January 2022 : Removed meta tag citation_ for Google Scholar - PN
+ * August 2022 : Modified the XML link for Cite this RFC - PN
+ * August 2022 : Added 'Editorial' stream to the script - PN 
 */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -242,7 +244,8 @@ function display_citation_links($num,$prefix,$doi) {
      $numwithzeros = substr($num, -4);
      $prefix_low = strtolower($prefix);
      $str_num = ltrim($numwithzeros, '0');
-
+     global $bib_link_base;
+     
      $doistring = "";
      if($doi > "") $doistring = "<b>DOI</b>: &nbsp;$doi"; 
      
@@ -251,7 +254,7 @@ function display_citation_links($num,$prefix,$doi) {
 <p>
 <b>Cite this $prefix</b>: 
 <a href="/refs/ref$numwithzeros.txt">TXT</a> &nbsp;|</b>&nbsp;
-<a href="/refs/bibxml/reference.RFC.$numwithzeros.xml">XML</a>
+<a href="$bib_link_base/public/rfc/bibxml/reference.RFC.$numwithzeros.xml">XML</a>
 </p><p>
 $doistring
 </p>
@@ -669,6 +672,9 @@ function format_stream_data($data) {
 		     case '6':
         		  $stream = sprintf('<a href="%s">%s</a>', $data['ssp_webpage'],$data['source']);
 		          break;
+                     case '8':
+                          $stream = sprintf('<a href="%s">%s</a>', $data['ssp_webpage'],$data['source']);
+                          break;
 		     default: 
                           if ($data['source'] == 'Legacy'){
                           $stream = "[Legacy]";    

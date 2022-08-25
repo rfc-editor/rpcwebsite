@@ -1,11 +1,12 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_search_lib.php,v 1.6 2020/11/11 01:03:39 priyanka Exp $ */
+  /* $Id: errata_search_lib.php,v 1.8 2022/08/16 22:28:32 priyanka Exp $ */
   /* 
    * Routines to support the Advanced Search form for Errata 2
    * 
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
    * November 2020 : Modified the script to use PDO prepared statements - PN           
+   * August 2022 : Modified the script for Editorial stream - PN 
    */
 include_once("errata_lib.php");
 
@@ -181,7 +182,7 @@ END;
 
 function add_stream_names($criteria) {
 
-     $stream_names = array('IAB','INDEPENDENT','IRTF','Legacy');
+     $stream_names = array('IAB','INDEPENDENT','IRTF','Legacy','Editorial');
 
      print<<<END
        <td>

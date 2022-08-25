@@ -14,6 +14,8 @@
 /* October 2019 : Modified link for v3PDF file format - PN                                                                                                                 */
 /* February 2020 : Added the inline errata format(if available) to the format list - PN                                                                                    */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                */
+/* June 2021 : Modified the script for server upgrade - PN                                                                                                              */
+/* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                               */
 /***************************************************************************************************************************************************************************/
 include_once('db_connect.php');
 include('search_config.php');
@@ -195,7 +197,7 @@ END;
 /*********************************************************************************/
 
 function add_stream_names($criteria){
-     $stream_names = array('IETF','IRTF','IAB','Independent','Legacy');
+     $stream_names = array('IETF','IRTF','IAB','Independent','Editorial','Legacy');
 /*	 <p>
 	 <div class="menuheader">
        <label for = "stream_name" class="content"> Stream:</label>
@@ -281,7 +283,7 @@ END;
              ORDER BY area_acronym";
 
          $stmt = $pdo->prepare($query);
-         $stmt->bindValue('area_status',open);
+         $stmt->bindValue('area_status','open');
          $stmt->execute();
          $num_of_rows = $stmt->rowCount();
      } catch (PDOException $pe){
@@ -1084,7 +1086,7 @@ function add_parameters($in_stmt,$in_criteria){
 		     $in_stmt->bindValue('source','Legacy');
 		 }else if ($value == 'IRTF'){  
 		     $in_stmt->bindValue('ssp_id',4);
-		 } elseif ($value == 'Legacy'|| $value == 'IAB' || $value == 'Independent') {
+		 } elseif ($value == 'Legacy'|| $value == 'IAB' || $value == 'Independent' || $value == 'Editorial') {
                      $source = $value;
 		     $in_stmt->bindParam('source',$source);
 		 }
@@ -1759,7 +1761,7 @@ function concat_criteria($criteria) {
 		     $adv_query .= " AND s.`stream_name` = :stream_name AND i.`SOURCE` NOT IN (:source)\n"; 
 		 }elseif ($value == 'IRTF'){  
 		     $adv_query .= " AND w.ssp_id = :ssp_id \n ";
-		 } elseif ($value == 'Legacy'|| $value == 'IAB' || $value == 'Independent') {
+		 } elseif ($value == 'Legacy'|| $value == 'IAB' || $value == 'Independent' || $value == 'Editorial') {
 		     $adv_query .= " AND i.`SOURCE` = :source \n";
 		 }
                  break;			
