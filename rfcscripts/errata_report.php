@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved               */
-  /* $Id: errata_report.php,v 1.12 2022/04/12 01:07:33 priyanka Exp $ */
+  /* $Id: errata_report.php,v 1.13 2022/07/29 01:50:59 priyanka Exp $ */
   //
   //       2010/04/14 rcross: added server-side validations.  errata_confirm.php has been 
   //                          absorbed into this script so we can validate and hand off to 
@@ -14,6 +14,7 @@
  /* June 2021 : Modified the script for server upgrade - PN                            */
  /* October 2021 : Modified the script to increase maxlength for section - PN                            */
  /* April 2022 : Removed the Math problem and added Google re-Captcha to handle bot submission - PN */
+ /* July 2022 : Added the Javascript required warning to Errata report form  - PN */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -119,7 +120,7 @@ END;
 
          <!-- div to show reCAPTCHA -->
          <div class="g-recaptcha" style="transform: scale(0.77);  transform-origin: 0 0;"   
-                data-sitekey="6Lc-ruweAAAAAHsRP4qOeVN0qeWe8zRkuy9i-Vj4">
+                data-sitekey="6Lc-ruweABBAAHsRP4qOeVN0qeWe8zRkuy9i-Vj4">
           </div>
         </p></td>
 <?php
@@ -290,7 +291,7 @@ if ($rfcid == null) {
 
 //show_db_host();
      print<<<END
-<br>
+<p>(JavaScript required)</p>
 <form name="errata_report" id="errata_report" action="$action"
        method="post" onSubmit="return validateReportFields(document.errata_report);">
    <table align="center" class="erratasearch" border="0">

@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.18 2022/04/12 01:07:33 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.19 2022/08/16 22:28:32 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -13,6 +13,7 @@
    * June 2021 : Modified the script for server upgrade - PN                            
    * October 2021 : Modified the script to increase maxlength for section - PN                            
    * April 2022 : Added function insert_report_captcha_form Removed for form submission part to handle bot submission - PN 
+   * August 2022 : Modified the script for Editorial stream - PN 
    */
 
 include_once("db_connect.php");
@@ -2468,6 +2469,7 @@ function get_rfc_source_acronyms($doc_id) {
 	     case 'IAB':
 	     case 'INDEPENDENT':
 	     case 'IRTF':
+             case 'Editorial':
 	          $source_acronym = $row['source'];
         	  break;
 	     case 'Legacy':

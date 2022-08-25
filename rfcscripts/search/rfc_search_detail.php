@@ -7,6 +7,7 @@
 /* August 2020  : Added checking for from_year, to_year, from_month, to_month to the script - PN                                                                          */
 /* August 2020  : Added checking for pubstatus to the script - PN                                                                                                         */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                */
+/* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                               */
 /***************************************************************************************************************************************************************************/
 
 include("rfc_headers.php");
@@ -543,7 +544,7 @@ function getErrors($getData){
 
                         case 'stream_name':
 
-                                                $stream_names = array('IETF','IRTF','IAB','Independent','Legacy');
+                                                $stream_names = array('IETF','IRTF','IAB','Independent','Editorial','Legacy');
                                           	if (($value != null) or ($value != "")){
 							  if (strlen($value) > '11'){
 								  $errors[] = 'Stream name should not be more than 10';

@@ -44,8 +44,9 @@ $www_path = "/a/www/rfc/htdocs";
 /*****And errata.php*******/
 /*********************************************************/
 $datatracker_base = "https://datatracker.ietf.org";
-$ietf_base = "http://www.ietf.org";
+$ietf_base = "https://www.ietf.org";
 $tools_ietf = "http://tools.ietf.org";
+$bib_link_base = "https://bib.ietf.org";
 
 /*********************************************************/
 /*For current queue external                             */

@@ -1,8 +1,10 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: Auth48Email.php,v 2.14 2022/05/31 23:54:44 priyanka Exp $ */
+  /* $Id: Auth48Email.php,v 2.16 2022/08/16 22:33:36 priyanka Exp $ */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
 /* May 2022 : Modified the script to add auth48archive@rfc-editor.org to CC field and modify the subject line for Auth48 Email - PN   */
+/* July 2022 : Modified the script to take care of Non Empty DOC_SHEPHERD and IESG_CONTACT values which are causing failure at archieve at mailarchive.ietf.org - PN */
+/* August 2022 : Modified the script for Editorial Stream - PN   */
 
 $debug_a48 = false;
 #$templateDir = "/nfs/jade/rfc-ed/Templates/AUTH48-Msgs/";
@@ -203,6 +205,9 @@ if ($flag1 <> "1")
            case "INDEPENDENT":
                $cc_chairs= "rfc-ise@rfc-editor.org";
                break;
+           case "Editorial":
+               $cc_chairs='rsab@rfc-editor.org';
+               break;
            case "IETF - NON WORKING GROUP":
            case "rfc-editor":
                break; // leave $cc_ads and $cc_chairs null
@@ -279,10 +284,13 @@ if ($flag1 <> "1")
        $cc = "rfc-editor@rfc-editor.org";
        if ($cc_ads) { $cc .= ", " . $cc_ads; } 
        if  ($cc_chairs) { $cc .= ", " . $cc_chairs; }
-       if (!empty($record['DOC_SHEPHERD'])) {
+       $record['DOC_SHEPHERD'] = trim($record['DOC_SHEPHERD']);
+       if ($record['DOC_SHEPHERD'] != NULL || $record['DOC_SHEPHERD'] != '') {
            $cc .= ", " . $record['DOC_SHEPHERD'];
        }
-       if (!empty($record['IESG_CONTACT'])) {
+       $record['IESG_CONTACT'] = trim($record['IESG_CONTACT']);
+       if ($record['IESG_CONTACT'] != NULL || $record['IESG_CONTACT'] != '') {
+
            $cc .= ", " . $record['IESG_CONTACT'];
        }
        //Add auth48archive@rfc-editor.org to CC 
