@@ -23,6 +23,7 @@
 /*November 2021 : Modified the script to add info link in the first line of HTML       */
 /*               header - PN                                                           */
 /*January 2022  : Change tags to make Google Scholar happy, fix broken HTML - JRL      */
+/*August 2022  : Modified CSS to comment the line-height  - PN                         */
 /***************************************************************************************/
 
 
@@ -226,7 +227,7 @@ function get_meta_header($rfc_data,$display,$in_num){
         }
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	    font-weight: bold;
-            line-height: 0pt;
+           /* line-height: 0pt; */
             display: inline;
             white-space: pre;
             font-family: monospace;
