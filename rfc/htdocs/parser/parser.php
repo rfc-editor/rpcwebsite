@@ -7,6 +7,7 @@
 /*             of position                                                                              */
 /*Sept 2022  : Modified script to hanlde the value for IESG contact based on different streams and added*/
 /*             the "Editorial" stream condition to the script - PN                                      */
+/*Sept 2022  : Corrected the stream name for Editorial stream - PN                                      */
 /********************************************************************************************************/
 include('/a/www/staff/insert_draft.php');
 include('/a/www/staff/json_msg_lib.php');
@@ -258,7 +259,7 @@ if (array_key_exists('draft',$_POST)){//If all the required field are entered
 							  break;
 				case 'ad':/*GIVES THE iesg_contact INFORMATION*/
                                                 if ($value){ 
-                                                        if (($stream == 'IAB') || ($stream == 'IRTF') || ($stream == 'ISE') || ($stream == 'RSAB')) { # Covering conditions for source 'IAB'/'IRTF'/'Independent'/'Editorial' 
+                                                        if (($stream == 'IAB') || ($stream == 'IRTF') || ($stream == 'ISE') || ($stream == 'Editorial')) { # Covering conditions for source 'IAB'/'IRTF'/'Independent'/'Editorial' 
                                                                 $fields['iesg_contact']= ''; 
                                                                 $format_value = "Original value $value and format not set as $type "; 
  
@@ -320,7 +321,7 @@ if (array_key_exists('draft',$_POST)){//If all the required field are entered
 			 }elseif ($stream == 'ISE'){
 			     $fields['source'] = 'INDEPENDENT';
 			     $fields['consensus'] = 'N/A';	
-			 }elseif ($stream == 'RSAB'){
+			 }elseif ($stream == 'Editorial'){
                              $fields['source'] = 'Editorial';
                          }
 
