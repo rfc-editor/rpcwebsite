@@ -320,7 +320,10 @@ if (array_key_exists('draft',$_POST)){//If all the required field are entered
 			 }elseif ($stream == 'ISE'){
 			     $fields['source'] = 'INDEPENDENT';
 			     $fields['consensus'] = 'N/A';	
-			 }
+			 }elseif ($stream == 'RSAB'){
+                             $fields['source'] = 'Editorial';
+                         }
+
 
 		         /*State us Edit for the draft*/
 
