@@ -5,6 +5,8 @@
 /*             json record version. - PN                                                                */
 /*             Further detiled changes will be followed in the next release to make this independant    */
 /*             of position                                                                              */
+/*Sept 2022  : Modified script to hanlde the value for IESG contact based on different streams and added*/
+/*             the "Editorial" stream condition to the script - PN                                      */
 /********************************************************************************************************/
 include('/a/www/staff/insert_draft.php');
 include('/a/www/staff/json_msg_lib.php');
@@ -255,25 +257,26 @@ if (array_key_exists('draft',$_POST)){//If all the required field are entered
 							  $fields['STATUS'] = $value;
 							  break;
 				case 'ad':/*GIVES THE iesg_contact INFORMATION*/
-						if ($value){
-							if  ($type != 'WG'){ 	  		
-								$format_value = get_value($value,$key);
-								$iesg_contact_arr =  preg_split('/&lt;/',$format_value);	
-								$format_value = $iesg_contact_arr[1];
-								$format_value = str_replace("&gt;","",$format_value);
-								$format_value = str_replace("<br/>","",$format_value);
-								$format_value = rtrim($format_value);
-								$fields['iesg_contact']= $format_value;
-								$format_value = "Original value $value and formatted is $format_value";						                                     }else {
- 								$fields['iesg_contact']= '';
-								$format_value = "Original value $value and format not set as $type ";
-							}
-						  }else {
-							$fields['iesg_contact']= $value;
-							$format_value = $value;
-						  }
-
-						break;
+                                                if ($value){ 
+                                                        if (($stream == 'IAB') || ($stream == 'IRTF') || ($stream == 'ISE') || ($stream == 'RSAB')) { # Covering conditions for source 'IAB'/'IRTF'/'Independent'/'Editorial' 
+                                                                $fields['iesg_contact']= ''; 
+                                                                $format_value = "Original value $value and format not set as $type "; 
+ 
+                                                        } else { 
+                                                                $format_value = get_value($value,$key); 
+                                                                $iesg_contact_arr =  preg_split('/&lt;/',$format_value);         
+                                                                $format_value = $iesg_contact_arr[1]; 
+                                                                $format_value = str_replace("&gt;","",$format_value); 
+                                                                $format_value = str_replace("<br/>","",$format_value); 
+                                                                $format_value = rtrim($format_value); 
+                                                                $fields['iesg_contact']= $format_value; 
+                                                                $format_value = "Original value $value and formatted is $format_value";  
+                                                        } 
+                                                } else { 
+                                                        $fields['iesg_contact']= $value; 
+                                                        $format_value = $value; 
+                                                } 
+                                                break;
 #				case 'iana_action_state': /*GIVES THE iana_action_state*/
 /*							  $format_value = get_value($value,$key);
 							  $iana_flag = get_iana_flag($value);
