@@ -6,6 +6,8 @@
 /*Description : The script gets the desired field from the errata database table and   */
 /*              creates the json file with the output using the json_encode function   */
 /*December 2018 : Created the script - PN                                              */
+/*September 2022: Updated script to remove 99 in section data and JSON_NUMERIC_CHECK   */
+/*                From json_encode - PN                                                */
 /***************************************************************************************/
 include('dbi.php');
 
@@ -30,7 +32,10 @@ global $debug_element;
 
          $errata_data = array();
          while ( $line = mysqli_fetch_assoc($result)) {
-
+         //Check for 99 in front of section and remove that before JSON creation
+                          if (preg_match("/^99/",$line['section'])) {
+                              $line['section'] = preg_replace('/99/','',$line['section']);
+                          }
                           $errata_data[] = $line;  
          }
 
@@ -40,7 +45,7 @@ global $debug_element;
      }
 
       /*Get the Numeric fields from the data as Numeric*/ 
-       $json = json_encode($errata_data,JSON_NUMERIC_CHECK);
+       $json = json_encode($errata_data);
        if ($debug_element === true) {
             print "/******************The JSON DATA IS AS FOLLOWS ************************/\n\n";
            print $json;
