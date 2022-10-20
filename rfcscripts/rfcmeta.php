@@ -39,6 +39,7 @@
  * January 2022 : Removed meta tag citation_ for Google Scholar - PN
  * August 2022 : Modified the XML link for Cite this RFC - PN
  * August 2022 : Added 'Editorial' stream to the script - PN 
+ * October 2022 : Corrected links about Working group under Source - PN 
 */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -728,8 +729,8 @@ function format_source_data($data) {
                           $formatted_source = $data['source'];
                         }
                     else {
-		          $formatted_source = sprintf('<a href="//datatracker.ietf.org/wg/%s/charter/">%s</a> 
-                                      (<a href="//datatracker.ietf.org/wg/#%s/">%s</a>)', 
+		          $formatted_source = sprintf('<a href="//datatracker.ietf.org/wg/%s/about/">%s</a> 
+                                      (<a href="//datatracker.ietf.org/wg/#%s">%s</a>)', 
                                       $data['wg_acronym'], $data['wg_acronym'],
                                       $data['area_acronym'],$data['area_acronym'] );
 			} 
