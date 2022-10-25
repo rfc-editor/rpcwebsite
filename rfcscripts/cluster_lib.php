@@ -1,5 +1,5 @@
 <?php
-  /* $Id: cluster_lib.php,v 1.10 2021/10/01 06:41:54 priyanka Exp $ */
+  /* $Id: cluster_lib.php,v 1.11 2022/10/25 21:59:25 priyanka Exp $ */
 /**************************************************************************************/
 /* Copyright The IETF Trust 2020 All Rights Reserved                                  */
 /* March 2020 : Modified the script to change the order of cluster detail based on    */
@@ -8,6 +8,7 @@
 /* July 2020 : Added PDO related changes  - PN and XSS changes are done by - ZX       */
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
 /* September 2021 : Added get_draft_exact_data to script - PN                         */
+/* October 2022 : Added horizontal line between drafts for special case - PN          */
 /**************************************************************************************/
 #
 #+
@@ -509,7 +510,7 @@ function display_draft_data($draft_data) {
                print("<b>Title:</b>&nbsp;&nbsp;\"" . htmlspecialchars($draft_data['title']) . "\"");
                print "</p><p>"; 
                printf("<b>Bytes:</b> %d\n", $draft_data['char-count']);
-               print "</p><p>";
+               print "</p>";
                #Get the ssp_id for the draft
                $ssp_id = get_wg_ssp_id($pdo,$draft_data['draft']); 
 	       if ($ssp_id == 4){
@@ -528,10 +529,11 @@ function display_draft_data($draft_data) {
                case "IRTF": 
                case "INDEPENDENT":
                     /* Do Nothing */
+                         print("<div class=\"special_hr\"></div>");
                     break;
                default:
                    # if (strpos($draft_data['pub-status'],"STANDARD") !== false) {
-                         print("<b>Working Group:</b> " . htmlspecialchars($draft_data['source']) . "\n</p> <div class=\"special_hr\"></div>");
+                         print("<p><b>Working Group:</b> " . htmlspecialchars($draft_data['source']) . "\n</p> <div class=\"special_hr\"></div>");
                    # }
                     break;
                }
