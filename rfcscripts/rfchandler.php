@@ -20,10 +20,16 @@
 /*May 2019     : Modified the script to handle the case where document is not publised     */
 /*               .html file does not exist - PN                                            */
 /* Jan 2022    : change tags for Google Scholar, fix broken html, misc bugs - JRL          */
+/* November 2022    : Modified the script to handle 404  request - PN                      */
 /*******************************************************************************************/
 
 include('handler_lib.php');
 include('format_html_header.php');
+
+
+define('WP_USE_THEMES', false);
+//require('/a/wordpress/wp-blog-header.php');
+require_once ('/a/wordpress/wp-load.php');
 
 /* hack to take CGI args from the command line */
 // parse_str(implode('&', array_slice($argv, 1)), $_GET);
@@ -99,19 +105,15 @@ if ($debug_handler === TRUE) {
                 include($output_file);
             }
        }else {
-           $html_error_header = get_error_header($in_num,$display,$type);
-           print $html_error_header; 
-           print "<br>"; 
-           $display = strtoupper($display);
-           print "<h1>HTML file does not exist</h1>";
- 
+           http_response_code(404);
+           include('page_not_found.php');
+           die(); 
        }
   }else { //  When the document is present in the database as un-published document no need to display HTML instead display this.
-           $html_error_header = get_error_header($in_num,$display,$type);
-           print $html_error_header;
-           $display = strtoupper($display);
-           print "<br>"; 
-           print "<h1>HTML file does not exist</h1>";
+
+           http_response_code(404);
+           include('page_not_found.php');
+           die();
   }
  
  
