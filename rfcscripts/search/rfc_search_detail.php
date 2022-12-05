@@ -1,14 +1,15 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-/***************************************************************************************************************************************************************************/
+/**************************************************************************************************************************************************************************/
 /* script name : rfc_search_detail.php                                                                                                                                    */
 /* June 2018  : Added security feature to the script - PN                                                                                                                 */
 /* May 2019  : Added security feature to the script - PN                                                                                                                  */
 /* August 2020  : Added checking for from_year, to_year, from_month, to_month to the script - PN                                                                          */
 /* August 2020  : Added checking for pubstatus to the script - PN                                                                                                         */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                */
-/* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                               */
-/***************************************************************************************************************************************************************************/
+/* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                              */
+/* December 2022 : Modified the script to handle search when only rfc or RFC is entered - PN                                                                              */
+/**************************************************************************************************************************************************************************/
 
 include("rfc_headers.php");
 include("rfc_lib_new.php");
@@ -478,7 +479,7 @@ function getErrors($getData){
  											 }								
 											 break;
 									case '3':
-											if (!(preg_match('/^([0-9][0-9][0-9])$|^(bcp|BCP|fyi|FYI|std|STD)$/',$value))){
+											if (!(preg_match('/^([0-9][0-9][0-9])$|^(rfc|RFC|bcp|BCP|fyi|FYI|std|STD)$/',$value))){
 #												 $errors[] = 'Error: Invalid input :'. $value .'  Please enter an RFC or subseries number, optionally preceded by RFC, BCP, FYI, or STD '; 	 
 												 												 $error_message = $standard_error. $standard_message; 	 	
 												 $errors[] = $error_message; 
