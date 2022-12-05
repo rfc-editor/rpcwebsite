@@ -13,9 +13,10 @@
 /* May 2019 : Modified file formats part to handle the new Publication formats like XML, HTML, v3PDF, Text with ASCII - PN                                                 */
 /* October 2019 : Modified link for v3PDF file format - PN                                                                                                                 */
 /* February 2020 : Added the inline errata format(if available) to the format list - PN                                                                                    */
-/* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                */
-/* June 2021 : Modified the script for server upgrade - PN                                                                                                              */
+/* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                 */
+/* June 2021 : Modified the script for server upgrade - PN                                                                                                                 */
 /* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                               */
+/* December 2022 : Added space in the final query formation to handle the error while searching the RFCs along with number - PN                                            */
 /***************************************************************************************************************************************************************************/
 include_once('db_connect.php');
 include('search_config.php');
@@ -807,7 +808,7 @@ function rfc_adv_lookup($criteria){
              break;
      }
 
-     $final_query .= "$orderby $original_sort";
+     $final_query .= " $orderby $original_sort";
 
      try {
          $stmt = $pdo->prepare($final_query);
