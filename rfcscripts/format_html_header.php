@@ -24,6 +24,7 @@
 /*               header - PN                                                           */
 /*January 2022  : Change tags to make Google Scholar happy, fix broken HTML - JRL      */
 /*August 2022  : Modified CSS to comment the line-height  - PN                         */
+/*January 2023  : Added closing tag for citation_technical_report_number - PN          */
 /***************************************************************************************/
 
 
@@ -170,7 +171,7 @@ function get_meta_header($rfc_data,$display,$in_num){
       <meta name="citation_title" content="'.htmlspecialchars($rfc_data['TITLE']).'"/>
       <meta name="citation_doi" content="'.htmlspecialchars($rfc_data['DOI']).'"/>
       <meta name="citation_issn" content="2070-1721"/>
-      <meta name="citation_technical_report_number" content="' . $reportnumber . '">
+      <meta name="citation_technical_report_number" content="' . $reportnumber . '"/>
       <meta name="citation_pdf_url" content="' .  htmlspecialchars($server . generate_url_by_format($rfc_data['DOC-ID'], 'ASCII, PDF')) . "\"/>\n";
 
    if ($debug_html_header === TRUE) {
