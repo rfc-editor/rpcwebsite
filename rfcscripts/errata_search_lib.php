@@ -1,12 +1,13 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_search_lib.php,v 1.8 2022/08/16 22:28:32 priyanka Exp $ */
+  /* $Id: errata_search_lib.php,v 1.9 2023/03/09 19:46:36 priyanka Exp $ */
   /* 
    * Routines to support the Advanced Search form for Errata 2
    * 
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
    * November 2020 : Modified the script to use PDO prepared statements - PN           
-   * August 2022 : Modified the script for Editorial stream - PN 
+   * August 2022 : Modified the script for Editorial stream - PN
+   * March 2023 : Modified the link for Status Definitions - PN  
    */
 include_once("errata_lib.php");
 
@@ -398,7 +399,7 @@ function display_table_row($row,$class=null,$edit_eid=false) {
  * Write a section header for a status code, with count.
  */
 function section_header($status, $count) {
-     print("<h2>Status: <a href=\"status_type_desc.html\">" . htmlspecialchars($status) . "</a> (" . htmlspecialchars($count) . ")</h2>\n");
+     print("<h2>Status: <a href=\"errata-definitions/\">" . htmlspecialchars($status) . "</a> (" . htmlspecialchars($count) . ")</h2>\n");
 }
 
 /*
