@@ -40,7 +40,9 @@
  * August 2022 : Modified the XML link for Cite this RFC - PN
  * August 2022 : Added 'Editorial' stream to the script - PN 
  * October 2022 : Corrected links about Working group under Source - PN 
-*/
+ * March 2033 : Added Not prepped XML file link, bib tex link , words "the mailing list" if it precedes a mailing list address
+                and handled the special Author names ( with II, III) - PN
+ */
 include_once("db_connect.php");
 include_once("core_lib.php");
 include_once("rfc_subseries_lib.php");
@@ -236,6 +238,26 @@ END;
 
 
 }
+
+
+/*   
+ * Insert the line for the not prepped XML for v3 files
+ */  
+          
+function display_notprepped_xml($doc_id,$in_prefix,$in_number){
+               
+    global $document_root;
+    $prefix_low = strtolower($in_prefix);
+    if ($in_number >= '8650'){ 
+    print<<<END
+<dt> 
+<dd><b>Also available: </b><a href="$document_root/prerelease/$prefix_low$in_number.notprepped.xml">XML file for editing</a></dd> &nbsp;
+         
+END;      
+}    
+     
+}    
+
 /*
  * Insert the line for the citation links
  */
@@ -246,7 +268,8 @@ function display_citation_links($num,$prefix,$doi) {
      $prefix_low = strtolower($prefix);
      $str_num = ltrim($numwithzeros, '0');
      global $bib_link_base;
-     
+     global $datatracker_base;    
+ 
      $doistring = "";
      if($doi > "") $doistring = "<b>DOI</b>: &nbsp;$doi"; 
      
@@ -255,7 +278,8 @@ function display_citation_links($num,$prefix,$doi) {
 <p>
 <b>Cite this $prefix</b>: 
 <a href="/refs/ref$numwithzeros.txt">TXT</a> &nbsp;|</b>&nbsp;
-<a href="$bib_link_base/public/rfc/bibxml/reference.RFC.$numwithzeros.xml">XML</a>
+<a href="$bib_link_base/public/rfc/bibxml/reference.RFC.$numwithzeros.xml">XML</a> &nbsp;| &nbsp;
+<a href="$datatracker_base/doc/rfc$str_num/bibtex/">BibTeX</a>
 </p><p>
 $doistring
 </p>
@@ -326,7 +350,8 @@ function display_mailing_list($in_data) {
              $prefix = substr($in_data['doc-id'],0,3);
 
 
-             print "<p><b>Discuss this RFC</b>: Send questions or comments to <a href=\"mailto:$mailing_list?subject=Question regarding $prefix $rfcnum \">$mailing_list</a></p>";
+             print "<p><b>Discuss this RFC</b>: Send questions or comments to the mailing list <a href=\"mailto:$mailing_list?subject=Question regarding $prefix $rfcnum \">$mailing_list</a></p>";
+
 
 }
 
@@ -531,7 +556,11 @@ function display_issued_rfcmeta($data) {
 
      //Now get the file formats
      display_dt("File formats:", generate_canonical_url_dt($data));
-    
+   
+     $prefix = substr($data['doc-id'],0,3);
+     $number = substr($data['doc-id'],3);
+
+     display_notprepped_xml($data['doc-id'],$prefix,$number); 
   
      display_dt("Status:",format_status($data['status'], $data['pub-status'],$data['internal_key']));
 
@@ -550,6 +579,9 @@ function display_issued_rfcmeta($data) {
      }
 
      $data['authors'] = preg_replace('/, Ed\./', '; Ed.', $data['authors']);
+     $data['authors'] = preg_replace('/, II/', '; II', $data['authors']);
+     $data['authors'] = preg_replace('/, III/', '; III', $data['authors']);
+
      $csv = strpos($data['authors'],',');
      if ($csv === FALSE) {
           display_dt("Author:",format_author_list($data['authors']));
@@ -568,9 +600,6 @@ function display_issued_rfcmeta($data) {
    
      print("</dl>\n");           // End the Definition List structure
 
-
-     $prefix = substr($data['doc-id'],0,3);
-     $number = substr($data['doc-id'],3);
 
      display_citation_links($data['doc-id'],$prefix,$data['DOI']);
      display_mailing_list($data);
@@ -863,6 +892,9 @@ function format_author_list($author_list) {
      }
  
      $formatted_authors = preg_replace('/; Ed\./', ', Ed.', $formatted_authors);
+     $formatted_authors = preg_replace('/; II/', ', II', $formatted_authors);
+     $formatted_authors = preg_replace('/; III/', ', III', $formatted_authors);
+
  
     if ($debug_rmeta === TRUE) {
           print("<pre>\n");
@@ -1263,6 +1295,10 @@ function display_issued_one_to_one($data){
     //Now get the file formats
      display_dt("File formats:", generate_canonical_url_dt($data));
 
+     $prefix = substr($data['see-also'],0,3);
+     $number = substr($data['see-also'],3);
+          
+     display_notprepped_xml($data['see-also'],$prefix,$number);
 
      #display_dt("Canonical URL:", generate_canical_url($data['see-also'],$data['format']));
      display_dt("Status:",format_status($data['status'], $data['pub-status'],$data['internal_key']));
@@ -1300,8 +1336,6 @@ function display_issued_one_to_one($data){
    
      print("</dl>\n");           // End the Definition List structure
 
-     $prefix = substr($data['see-also'],0,3);
-     $number = substr($data['see-also'],3);
 
      display_citation_links($data['see-also'],$prefix,$data['DOI']);
      display_mailing_list($data);
