@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.19 2022/08/16 22:28:32 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.20 2023/04/24 18:59:00 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -14,6 +14,7 @@
    * October 2021 : Modified the script to increase maxlength for section - PN                            
    * April 2022 : Added function insert_report_captcha_form Removed for form submission part to handle bot submission - PN 
    * August 2022 : Modified the script for Editorial stream - PN 
+   * April 2023 : Modified the script to prevent submission against a not issued doc-id - PN 
    */
 
 include_once("db_connect.php");
@@ -1556,7 +1557,13 @@ function get_title_pub_date($rfc) {
           break;
      case 1:
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          $rfchead = array("pub-date" => $row['pub-date'], "title" => trim($row['title']));
+          $doc_title = trim($row['title']);
+          if ($doc_title == 'Not Issued') {
+              $rfchead = false;
+              $_SESSION['errata_lib_error'] = "RFC". $rfc . ": Not issued. It is not possible to submit errata for an RFC that does not exist.";
+          } else {
+              $rfchead = array("pub-date" => $row['pub-date'], "title" => trim($row['title']));
+          } 
           break;
      default:
           $_SESSION['errata_lib_error']  = "Multiple matches for RFC" . $rfc . ". ";
