@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.20 2023/04/24 18:59:00 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.21 2023/05/26 19:45:09 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -15,7 +15,8 @@
    * April 2022 : Added function insert_report_captcha_form Removed for form submission part to handle bot submission - PN 
    * August 2022 : Modified the script for Editorial stream - PN 
    * April 2023 : Modified the script to prevent submission against a not issued doc-id - PN 
-   */
+   * May 2023 : Modified the script to change the URL from .txt to info page for RFC Number and modified the styling of link - PN 
+  */
 
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -2019,10 +2020,10 @@ function display_posted_date($rec) {
 function report_header($rfcid,$rfctitle,$rfcdate) {
      global $debug_erlib;
      global $source_of_rfc;
-     print('<h3>' . build_rfc_anchor($rfcid) . ', ');
+     print('<h4>' . build_rfc_anchor($rfcid) . ', ');
      print('"' . htmlspecialchars(trim($rfctitle)) . '", ');
      print(format_date($rfcdate));
-     print("</h3>\n");
+     print("</h4>\n");
      # get_rfcmeta_data takes number portion of id only
      $rfcnum = substr($rfcid,3,4);
      $metadata = get_rfcmeta_data($rfcnum);
@@ -2071,10 +2072,10 @@ function display_field($label, $rec, $separator='<br />') {
  */
 function build_rfc_anchor($rfcid) {
 #     $ftp_url = generate_ftp_url($rfcid);
-     $ftp_url = generate_http_url($rfcid);
+     $http_url = generate_http_url($rfcid);
      list($rfc_name,$rfc_number,$length) = split_rfc($rfcid); 
      $formatted_rfc_number = sprintf('%s&nbsp;%d', htmlspecialchars($rfc_name), htmlspecialchars($rfc_number));
-     $anchor  = '<a href="' . htmlspecialchars($ftp_url) . '" target="_blank">';
+     $anchor  = '<a href="' . htmlspecialchars($http_url) . '" target="_blank">';
      $anchor .= $formatted_rfc_number. "</a>";
 
      return $anchor;
@@ -2095,7 +2096,7 @@ function generate_ftp_url($rfcid) {
 function generate_http_url($rfcid) {
     $rfc_number = substr($rfcid,3); // rfcid is RFCXXXX
     $rfctxt = sprintf("rfc%d",$rfc_number); // URL is rfcX.txt
-    $http_url = 'http://www.rfc-editor.org/rfc/' . $rfctxt . '.txt';
+    $http_url = 'http://www.rfc-editor.org/rfc/' . $rfctxt;
     return $http_url;
 }
 
