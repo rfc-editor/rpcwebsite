@@ -1,0 +1,55 @@
+{% extends "rpc/base.html" %}
+{% load static %}
+{% block title %}Errata{% endblock %}
+{% block head %}<script src="{% static "canvasjs.min.js" %}"></script>{% endblock %}
+
+{% block content %}
+<h1>RFC Errata Summary by Source</h1>
+<h2>Total of {{etotal}} errata</h2>
+
+<p class="center">Deep link url is
+{% if request.META.HTTP_ORIGIN %}{{ request.META.HTTP_ORIGIN }}{% else %}https://{{ request.META.HTTP_HOST }}{% endif %}{% url 'rpc:deeplink' chart=dl.chart hash=dl.hash args=dl.args %}</p>
+
+<script type="text/javascript">
+  window.onload = function () {
+    var areachart = new CanvasJS.Chart("areachartarea",
+    {
+      title:{
+        text: "Reported Technical Errata by Source as of {% now "Y-m-d" %}",
+        fontSize: 20
+      },
+      data: [
+	{
+	     type: "pie",
+	     startAngle: -90,
+	     /* showInLegend: true, */
+	     legendText: "{indexLabel}",
+	     toolTipContent: "{y} - #percent %",
+	     dataPoints: [{{areadata|safe}}
+		   ],
+	}
+      ]
+    });
+
+    areachart.render();
+
+  }
+</script>
+
+<p class="note">
+This is only type Technical, status Reported
+<br />
+IND is Independent
+<br/>
+All RGs added into IRTF count
+<br/>
+APP and RAI added into ART count
+<br/>
+Mouse over the charts to see counts and percentages.
+</p>
+
+<div id="areachartarea" class="piechart">
+area chart here
+</div>
+
+{% endblock %}

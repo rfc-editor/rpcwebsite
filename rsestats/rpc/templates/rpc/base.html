@@ -1,0 +1,13 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+{% load static %}
+<html>
+<head>
+<title>{% block title %}A generic page{% endblock %}</title>
+<link rel=stylesheet type="text/css" href="{% static "rpc.css" %}" />
+{% block head %}{% endblock %}
+</head>
+<body>
+{{ bpnav|safe }}
+{% block content %}{% endblock %}
+</body>
+</html>

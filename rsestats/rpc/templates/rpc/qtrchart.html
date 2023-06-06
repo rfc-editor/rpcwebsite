@@ -1,0 +1,88 @@
+{% extends "rpc/base.html" %}
+{% load static %}
+{% block title %}Statistics{% endblock %}
+{% block head %}<script src="{% static "canvasjs.min.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<p class="center">Deep link url is
+   {% if request.META.HTTP_ORIGIN %}{{ request.META.HTTP_ORIGIN }}{% else %}https://{{ request.META.HTTP_HOST }}{% endif %}{% url 'rpc:deeplink' chart=dl.chart hash=dl.hash args=dl.args %}</p>
+
+<script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Page counts from {{ min }} to {{max}}",
+        fontSize: 24
+      },
+      legend: {
+	horizontalAlign: "right", // "center" , "right"
+	verticalAlign: "top",  // "top" , "bottom"
+	// dockInsidePlotArea: true,
+	fontSize: 16
+     },
+     axisX:{
+	labelFontSize: 16,
+	titleFontSize: 16,
+    },
+     axisY:{
+{% if doslabands %}
+	stripLines:[
+	  {                
+	     startValue:1,
+	     endValue:1950,
+	     color:"#ffffe0",
+	  },
+	  {                
+	     startValue:1950,
+	     endValue:3072,
+	     color:"#e0ffff",
+	  }
+	],
+{% endif %}
+      title: "Tier1                  Pages                   Tier2",
+      titleFontSize: 18,
+      labelFontSize: 16
+      },
+
+      data: [
+{% if dopgte %}
+	    {        
+		type: "{{ charttype }}",
+		name: "PGTE",
+		showInLegend: true,
+		dataPoints: {{ chart.pgte|safe }}
+	    },
+{% endif %}
+{% if dosubpages %}
+
+	    {        
+		type: "{{ charttype }}",
+		name: "Submitted",
+		showInLegend: true,
+		dataPoints: {{ chart.subpages|safe }}
+	    },
+{% endif %}
+{% if dopubpages %}
+	    {        
+		type: "{{ charttype }}",
+		name: "Published",
+		showInLegend: true,
+		dataPoints: {{ chart.pubpages|safe }}
+	    },
+{% endif %}
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+
+<p class="note">
+   This looks a lot nicer with smoothed lines.
+</p>
+
+<div id="chartContainer" class="chart" />
+
+{% endblock %}

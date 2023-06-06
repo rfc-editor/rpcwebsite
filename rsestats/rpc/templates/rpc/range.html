@@ -1,0 +1,18 @@
+{% extends "rpc/base.html" %}
+{% block title %}List of RFCs{% endblock %}
+
+{% block content %}
+<center>
+   <h3>Total RFCs: {{ count }}</h3>
+   <table>
+   <tr><th class="center" colspan="3">RFCs from {{ mindate }} to {{ maxdate }}</th><tr>
+   <tr><th class="center">Number</th><th class="center">Date</th><th class="center">Name</th></tr>
+{% for rfc in rfcs %}
+   <tr class="s"><td class="e"><a href="{% url 'rpc:showrfc' rfcno=rfc.doc_id %}">{{ rfc.doc_id }}</a></td>
+    <td class="s">{{ rfc.pub_date }}</td>
+    <td class="s">{{ rfc.title }}</td>
+   </tr>
+{% endfor %}
+   </table>
+</center>
+{% endblock %}

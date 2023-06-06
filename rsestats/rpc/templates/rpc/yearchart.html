@@ -1,0 +1,85 @@
+{% extends "rpc/base.html" %}
+{% load static %}
+{% block title %}Statistics{% endblock %}
+{% block head %}<script src="{% static "canvasjs.min.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<p class="center">Deep link url is
+{% if request.META.HTTP_ORIGIN %}{{ request.META.HTTP_ORIGIN }}{% else %}https://{{ request.META.HTTP_HOST }}{% endif %}{% url 'rpc:deeplink' chart=dl.chart hash=dl.hash args=dl.args %}</p>
+
+<script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+//      zoomEnabled: true,
+      title: {
+		     {% if dopages %}
+        text: "RFC page counts from {{ minyear }} to {{ maxyear }}",
+	      {% else %}	
+        text: "RFCs published from {{ minyear }} to {{ maxyear }}",
+	      {% endif %}	
+        fontSize: 24
+      },
+      legend: {
+	horizontalAlign: "right", // "center" , "right"
+	verticalAlign: "top",  // "top" , "bottom"
+	dockInsidePlotArea: true,
+	fontSize: 15
+     },
+     axisY:{
+		     {% if dopages %}
+       title: "Number of pages",
+	      {% else %}	
+       title: "Number of RFCs",
+	      {% endif %}	
+       titleFontSize: 16,
+       labelFontSize: 16
+	     },
+     axisX:{
+       labelFontSize: 14,
+	interval: 2,
+        labelAngle: 90
+	     },
+     data: [
+	    {        
+		type: "{{ charttype }}",
+		showInLegend: true, 
+		name: "Published",
+		color: "blue",
+		dataPoints: [
+		{% for p in rby %}
+		      { label: {% if p.pubyear == thisyear %}"{{ p.pubyear }} YTD"{% else %}"{{ p.pubyear }}"{% endif %}, y: {{ p.numrfcs }} },
+	        {% endfor %}  
+		      ]
+	    },
+	    {% if sby %}
+	    {        
+		type: "{{ charttype }}",
+		color: "red",
+		showInLegend: true, 
+		name: "Submitted",
+		dataPoints: [
+		{% for p in sby %}
+		      { label: {% if p.subyear == thisyear %}"{{ p.subyear }} YTD"{% else %}"{{ p.subyear }}"{% endif %}, y: {{ p.numrfcs }} },
+	        {% endfor %}  
+		      ]
+	    },
+	    {% endif %}
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+<p class="note">
+Should match existing chart.
+Resize your browser window and see the labels appear or disappear.
+<br />
+Submitted dates only start in 1996, reported as zero before that.
+</p>
+  
+<div id="chartContainer" class="chart" />
+
+{% endblock %}

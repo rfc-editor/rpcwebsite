@@ -1,0 +1,17 @@
+{% extends "rpc/base.html" %}
+{% block title %}RFCs by date{% endblock %}
+
+{% block content %}
+<h1>Choose dates</h1>
+<center>
+<form action="{% url 'rpc:range' %}" method="post">
+   <table>
+   <tr><th class="center" colspan="2">Enter begin and end dates</th></tr>
+   {% csrf_token %}
+   {{ form.as_table }}
+   <tr><td class="e" colspan="2"><input type="submit" value="Look Up" /></td>
+   </tr>
+   </table>
+</form>
+</center>
+{% endblock %}

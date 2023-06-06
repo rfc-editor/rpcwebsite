@@ -1,0 +1,21 @@
+{% extends "rpc/base.html" %}
+{% load static %}
+{% block title %}Statistics{% endblock %}
+{% block head %}<script src="{% static "Chart.bundle.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<p class="center">Deep link url is
+{% if request.META.HTTP_ORIGIN %}{{ request.META.HTTP_ORIGIN }}{% else %}https://{{ request.META.HTTP_HOST }}{% endif %}{% url 'rpc:deeplink' chart=dl.chart hash=dl.hash args=dl.args %}</p>
+
+<p class="note">
+No more zooming and scrolling, but the labels look OK.
+<br/>
+The bar charts look strange, but the area charts seem OK.
+</p>
+<div class="chart">
+<canvas id="chartContainer" class="cjs"></canvas>
+</div>
+{% include "rpc/histjs" %}  
+{% endblock %}
