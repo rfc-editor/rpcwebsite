@@ -1,0 +1,85 @@
+{% extends "rpc/deepbase.html" %}
+{% load static %}
+{% block title %}Statistics{% endblock %}
+{% block head %}<script src="{% static "canvasjs.min.js" %}"></script>
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+    {% if dodocs %}
+        text: "Document counts from {{ min }} to {{max}}",
+    {% else %}
+        text: "Page counts from {{ min }} to {{max}}",
+    {% endif %}
+        fontSize: 24
+      },
+      legend: {
+	horizontalAlign: "right", // "center" , "right"
+	verticalAlign: "top",  // "top" , "bottom"
+	// dockInsidePlotArea: true,
+	fontSize: 16
+     },
+     axisX:{
+	labelFontSize: 16,
+    },
+     axisY:{
+{% if doslabands %}
+	stripLines:[
+	  {                
+	     startValue:1,
+	     endValue:1950,
+	     color:"#ffffe0",
+	  },
+	  {                
+	     startValue:1950,
+	     endValue:3072,
+	     color:"#e0ffff",
+	  }
+	],
+{% endif %}
+    {% if dodocs %}
+      title: "Docs",
+    {% else %}
+      title: "Pages",
+    {% endif %}
+      titleFontSize: 18,
+      labelFontSize: 16
+      },
+
+      data: [
+{% if dopgte %}
+	    {        
+		type: "{{ charttype }}",
+		name: "PGTE",
+		showInLegend: true,
+		dataPoints: {{ chart.pgte|safe }}
+	    },
+{% endif %}
+{% if dosubpages %}
+
+	    {        
+		type: "{{ charttype }}",
+		name: "Submitted",
+		showInLegend: true,
+		dataPoints: {{ chart.subpages|safe }}
+	    },
+{% endif %}
+{% if dopubpages %}
+	    {        
+		type: "{{ charttype }}",
+		name: "Published",
+		showInLegend: true,
+		dataPoints: {{ chart.pubpages|safe }}
+	    },
+{% endif %}
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+<div id="chartContainer" class="deepchart" />
+{% endblock %}

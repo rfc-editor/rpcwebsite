@@ -1,0 +1,24 @@
+{% extends "rpc/base.html" %}
+{% block title %}{{ rfc.doc_id }}{% endblock %}
+
+{% block content %}
+<h1>{{ rfc.doc_id }} {{rfc.title}}</h1>
+
+<p><ul>
+    <li>Number: {{ rfc.doc_id }} ({{rfc.internal_key}})</li>
+    <li>Received: {{ rfc.date_received }}</li>
+    <li>Date: {{ rfc.pub_date }}</li>
+    <li>Pages: {{ rfc.page_count }}</li>
+ </ul></p>
+<p>
+ <table>
+    <tr><th class="center">Date</th><th class="center">oldstate:newstate version
+       flags</th><th class="center">Days</th></tr>
+    {% for s in states %}
+ <tr class="s"><td class="s">{{ s.date }}</td>
+    <td class="s">{{s.oldstate}}:{{ s.state }}
+       {{s.version}} {{s.iana|yesno:"IANA,"}} {{s.ref|yesno:"Ref,"}}</td>
+    <td class="s">{{ s.days }}</td></tr>
+ {% endfor %}
+ </table></p>
+ {% endblock %}

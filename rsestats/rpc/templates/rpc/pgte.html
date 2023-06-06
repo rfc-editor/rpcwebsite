@@ -1,0 +1,14 @@
+{% extends "rpc/base.html" %}
+{% block title %}PGTE docs{% endblock %}
+
+{% block content %}
+<h1>PGTE docs</h1>
+   <form action="{% url 'rpc:pgte' %}" method="post">
+   <table>
+   <tr><th class="center" colspan="2">Quarter to explore</th><tr>
+   {% csrf_token %}
+   {{ form.as_table }}
+   <tr><td class="e" colspan="2"><input type="submit" value="Look Up" /></td>
+   </table>
+   </form>
+{% endblock %}

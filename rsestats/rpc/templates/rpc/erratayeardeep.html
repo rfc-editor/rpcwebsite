@@ -1,0 +1,74 @@
+{% extends "rpc/deepbase.html" %}
+{% load static %}
+{% block title %}Statistics{% endblock %}
+{% block head %}<script src="{% static "canvasjs.min.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+  window.onload = function () {
+    var typechart = new CanvasJS.Chart("typechartContainer",
+    {
+      zoomEnabled: true,
+      title: {
+        text: "Errata by type and year from {{ tyears|first }} to {{ tyears|last }}",
+        fontSize: 30
+      },
+      legend: {
+	horizontalAlign: "right", // "center" , "right"
+	verticalAlign: "top",  // "top" , "bottom"
+	dockInsidePlotArea: true,
+	fontSize: 15
+     },
+     data: [
+{% for ty, d in tydata.items %}
+	    {        
+		type: "{{ charttype }}",
+		name: "{{ ty }}",
+		showInLegend: true,
+		dataPoints: [ {{ d|safe }} ]
+	    },
+{% endfor %}
+      ]
+    });
+
+    var statuschart = new CanvasJS.Chart("statuschartContainer",
+    {
+      zoomEnabled: true,
+      title: {
+        text: "Errata by status and year from {{ tyears|first }} to {{ tyears|last }}",
+        fontSize: 30
+      },
+      legend: {
+	horizontalAlign: "right", // "center" , "right"
+	verticalAlign: "top",  // "top" , "bottom"
+	dockInsidePlotArea: true,
+	fontSize: 15
+     },
+     data: [
+{% for st, d in sydata.items %}
+	    {        
+		type: "{{ charttype }}",
+		name: "{{ st }}",
+		showInLegend: true,
+		dataPoints: [ {{ d|safe }} ]
+	    },
+{% endfor %}
+      ]
+    });
+
+    typechart.render();
+    statuschart.render();
+  }
+  </script>
+
+<div id="typechartContainer" class="deeperpiechart">
+Types go here
+</div>
+  
+<hr />
+<div id="statuschartContainer" class="deeperpiechart">
+Statuses go here
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "rpc/base.html" %}
+{% block title %}SLA Statistics{% endblock %}
+
+{% block content %}
+<h1>SLA stats from {{ min }} to {{ max }}</h1>
+
+<center><p>
+   <table>
+      <tr><th class="center">Period</th>
+	 <th class="center">Doc<br/>Count</th>
+	 <th class="center">PGTE</th>
+	 <th class="center">DGTE</th>
+	 <th class="center">Old<br/>PGTE</th>
+	 <th class="center">Publish<br/>Pages</th>
+	 <th class="center">Edit<br/>Docs</th>
+	 <th class="center">Mean</th>
+	 <th class="center">Median</th>
+	 <th class="center">Std Dev</th>
+	 <th class="center">At SLA<br/>Pctile</th>
+	 <th class="center">Tier</th>
+	 <th class="center">Goal</th>
+	 <th class="center">Num met<br/>Goal</th>
+	 <th class="center">Met<br/>SLA?</th>
+	 <th class="center">Actual Pct</br>Met Goal</th>
+      </tr>
+	 
+{% for e in slastats %}
+
+      <tr><td>{{ e.startdate }}
+{% if e.partial %}
+<br/>(so far)
+{% endif %}
+	 </td>
+	 <td>{{ e.count }}</td>
+	 <td>{{ e.pgte }}</td>
+	 <td>{{ e.dgte }}</td>
+	 <td>{{ e.oldpgte }}</td>
+	 <td>{{ e.pagecount }}</td>
+	 <td>{{ e.editcount }}</td>
+	 <td>{{ e.mean }}</td>
+	 <td>{{ e.median }}</td>
+	 <td>{{ e.stddev }}</td>
+	 <td>{{ e.okpercentile }}</td>
+{% if e.partial %}
+	 <td colspan=5>&nbsp;</td>
+{% else %}
+	 <td>{{ e.volume }}</td>
+	 <td>{{ e.goal }}</td>
+	 <td>{{ e.metweeks }}</td>
+	 <td>{{ e.metsla|yesno:"Yes,No,Huh?" }}</td>
+	 <td>{{ e.percentile }}</td>
+{% endif %}
+      </tr>
+
+{% endfor %}
+   </table>
+</p></center>
+{% endblock %}
+
+
+   

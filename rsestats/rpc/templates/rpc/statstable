@@ -1,0 +1,49 @@
+{% load static %}
+   <table class="fmt">
+      <tr><th rowspan="2">&nbsp;</th>{{ hdr1|safe }}</tr>
+      <tr>{{ hdr2|safe }}</tr>
+      <tr><th><em>Submissions</em></th><th colspan="{{ ncols }}">&nbsp;</th></tr>
+      <tr><th>Pages</th>
+{% for p in subpages %}
+   <td>{{ p }}</td>
+{% endfor %}
+</tr>
+      <tr><th>Docs</th>
+{% for d in subdocs %}
+   <td>{{ d }}</td>
+{% endfor %}
+</tr>
+      <tr class="y"><th>PGTE</th>
+{% for p in pgte %}
+   <td>{{ p }}</td>
+{% endfor %}
+</tr>
+      <tr><th><em>Publications</em></th><th colspan="{{ ncols }}">&nbsp;</th></tr>
+      <tr><th>Pages</th>
+{% for p in pubpages %}
+   <td>{{ p }}</td>
+{% endfor %}
+</tr>
+      <tr><th>Docs</th>
+{% for d in pubcount %}
+   <td>{{ d }}</td>
+{% endfor %}
+</tr>
+      <tr><th>Docs met SLA</th>
+{% for d in metweeks %}
+   <td>{{ d }}</td>
+{% endfor %}
+</tr>
+      <tr class="y"><th>SLA tier</th>
+{% for t in tier %}
+   <td>{{ t }}</td>
+{% endfor %}
+</tr>
+      <tr class="y"><th>SLA</th>
+{% for m in metsla %}
+   <td>{% if m == "y"%} <img src="{% static "check-icon.png" %} "/>
+   {% elif m == "n" %} <img src="{% static "no-icon.png" %} "/> {% else %} 
+   {% endif%} </td>
+{% endfor %}
+</tr>
+   </table>
