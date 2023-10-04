@@ -13,6 +13,7 @@
 /* June 2021 : Modified the script for server upgrade - PN                            */
 /* January 2022 : Modified script to use get_draft_exact_data instead of              */
 /*                  get_draft_data - PN                                               */
+/* Sept 2023 : Modified link for internet-drafts - PN                                  */
 /**************************************************************************************/
 include("config.php");
 include('cluster_lib.php');
@@ -120,6 +121,7 @@ add_action('body_class','add_body_class_function');
 
      global $document_root;
      global $internet_draft;
+     global $ietf_root;
      global $pdo;   # keep the connection open between subroutine calls
 //Add title specifying the dynamic page
      add_filter( 'wp_title', 'wp_title_auth48_cluster', 10, 3 );
@@ -161,7 +163,7 @@ add_action('body_class','add_body_class_function');
           $draft_data['cid'] = $cid;
           $rfc_to_be = substr($draft_data['doc-id'],3);
           if (($draft_data['state_id'] == '2') OR ($draft_data['state_id'] == '23')){
-              print "<li><a href=\"" . htmlspecialchars($document_root) . '/' . htmlspecialchars($internet_draft) . '/' . htmlspecialchars($draft_data['draft']) . ".txt\">";
+              print "<li><a href=\"" . htmlspecialchars($ietf_root) . '/id/' . htmlspecialchars($draft_data['draft']) . ".txt\">";
 	      print htmlspecialchars($draft_data['draft']) . ".txt (RFC-to-be " . htmlspecialchars($rfc_to_be) . ")</a>&nbsp;&nbsp;" . htmlspecialchars($draft_data['state']);
 	      print "</a></li>";
           }elseif($draft_data['state_id'] == '14'){
@@ -170,7 +172,7 @@ add_action('body_class','add_body_class_function');
                   print "<li>" . htmlspecialchars($draft_data['draft']) . ".txt&nbsp;&nbsp;<a href=\"" . htmlspecialchars($rfc_url) . "\">" . htmlspecialchars($draft_data['doc-id']) . "</a>&nbsp;&nbsp;" . htmlspecialchars($draft_data['state']) . "</li>";
                }
           }else {
-	      print "<li><a href=\"" . htmlspecialchars($document_root) . "/" . htmlspecialchars($internet_draft) . "/" . htmlspecialchars($draft_data['draft']) . ".txt\">";
+              print "<li><a href=\"" . htmlspecialchars($ietf_root) . "/id/" . htmlspecialchars($draft_data['draft']) . ".txt\">";
 	      print htmlspecialchars($draft_data['draft']) . ".txt</a>&nbsp;&nbsp;" . htmlspecialchars($draft_data['state']);
 	      print "</a></li>";
               

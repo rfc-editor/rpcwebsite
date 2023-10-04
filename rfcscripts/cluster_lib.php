@@ -1,5 +1,5 @@
 <?php
-  /* $Id: cluster_lib.php,v 1.11 2022/10/25 21:59:25 priyanka Exp $ */
+  /* $Id: cluster_lib.php,v 1.13 2023/09/29 17:30:05 priyanka Exp $ */
 /**************************************************************************************/
 /* Copyright The IETF Trust 2020 All Rights Reserved                                  */
 /* March 2020 : Modified the script to change the order of cluster detail based on    */
@@ -9,6 +9,8 @@
 /* November 2020 : Modified the script to use PDO prepared statements - PN            */
 /* September 2021 : Added get_draft_exact_data to script - PN                         */
 /* October 2022 : Added horizontal line between drafts for special case - PN          */
+/* July 2023 : Modified function to eliminate duplicate draft - PN                    */
+/* Sept 2023 : Modified link for internet-drafts - PN                                  */
 /**************************************************************************************/
 #
 #+
@@ -89,7 +91,7 @@ END;
 function get_cluster_a48status($pdo,$cid, $exclude_pub=false) {
      $state_id = '99';
      try {
-         $sql = "SELECT draft_base
+         $sql = "SELECT DISTINCT(c.draft_base)
 	         FROM `index` i, clusters c
 	         WHERE cluster_id = :cid
 	         AND state_id != :state_id
@@ -481,6 +483,7 @@ function display_draft_data($draft_data) {
      global $document_root;
      global $internet_draft;
      global $datatracker;
+     global $ietf_root;
      global $pdo;     
      print "<p>";
      print '<a id="' . htmlspecialchars($draft_data['draft_base']) . '"></a>'; // always empty name anchor
@@ -499,8 +502,9 @@ function display_draft_data($draft_data) {
                print "<p><h5>";
                print htmlspecialchars($draft_data['date_received']) . " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;";
 
-	       print("<a href=\"" . htmlspecialchars($document_root . '/' . $internet_draft . '/' . $draft_data['draft']) . ".txt\">");
+               print("<a href=\"" . htmlspecialchars($ietf_root . '/id/' . $draft_data['draft']) . ".txt\">");
                print htmlspecialchars($draft_data['draft']) . ".txt</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;";
+
                display_draft_state($draft_data['state'], substr($draft_data['doc-id'],3),$draft_data['state_id'],$draft_data['cid']);
                print "</h5></p><p>"; 
                process_ref_string($draft_data['ref']);

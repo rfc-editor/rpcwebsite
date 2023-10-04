@@ -42,6 +42,7 @@
  * October 2022 : Corrected links about Working group under Source - PN 
  * March 2033 : Added Not prepped XML file link, bib tex link , words "the mailing list" if it precedes a mailing list address
                 and handled the special Author names ( with II, III) - PN
+ * Sept 2033 : Corrected area URL - PN
  */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -749,6 +750,8 @@ function format_source_data($data) {
      
 */
 
+             $area_upper = strtoupper($data['area_acronym']);
+
 	     switch($data['ssp_id']) {
 	     case '1':
                     if ($data['source'] == 'IETF - NON WORKING GROUP') {
@@ -761,7 +764,7 @@ function format_source_data($data) {
 		          $formatted_source = sprintf('<a href="//datatracker.ietf.org/wg/%s/about/">%s</a> 
                                       (<a href="//datatracker.ietf.org/wg/#%s">%s</a>)', 
                                       $data['wg_acronym'], $data['wg_acronym'],
-                                      $data['area_acronym'],$data['area_acronym'] );
+                                      $area_upper,$data['area_acronym'] );
 			} 
                     break;
 	     case '3':
@@ -779,7 +782,7 @@ function format_source_data($data) {
 		          $formatted_source = sprintf('<a href="//datatracker.ietf.org/wg/%s/charter/">%s</a> 
                                       (<a href="//datatracker.ietf.org/wg/#%s/">%s</a>)', 
                                       $data['wg_acronym'], $data['wg_acronym'],
-                                      $data['area_acronym'],$data['area_acronym'] );
+                                      $area_upper,$data['area_acronym'] );
                   }  
         	  break;
      	     }

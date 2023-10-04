@@ -3,6 +3,8 @@
 /* April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN*/
 /* June 2019 Updates : Modified the search_query_base from http to https - PN*/
 /* July 2021 Updates : Modified the errata_processing_html link - PN*/
+/* Sept 2023 Updates : Added ietf_root link - PN*/
+
 
 /*********************************************************/
 /*For all_clusters.php/rfcmeta.php/auth48_cluster.php*/
@@ -19,7 +21,7 @@
 $document_root= "https://www.rfc-editor.org";
 $internet_draft="internet-drafts";/* First part of URL locating draft documents*/
 $rfc = "rfc"; /*URL base for RFC editor*/
-
+$ietf_root = "https://www.ietf.org";
 
 $all_clusters = "all_clusters.php";/*All cluster*/
 /*********************************************************/
