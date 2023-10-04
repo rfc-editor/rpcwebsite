@@ -5,11 +5,13 @@
 /*Description : The script handles the functionality for Auth48 processing                                 */
 /*May 2017    : Modified to add the file type changes  PN                                                  */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
-/* February 2021 : Added the changes for awaiting_ad_approval flag - PN */
+/* February 2021 : Added the changes for awaiting_ad_approval flag - PN                                    */
 /* June 2021 : Modified the script for server upgrade - PN                                                 */
+/* September 2023 : Modified the script for display improvement - PN                                       */
+/* October 2023 : Modified the link for internet-drafts - PN                                               */
 /***********************************************************************************************************/
 #
-# $Id: auth48_lib.php,v 2.24 2021/06/23 05:11:48 priyanka Exp $
+# $Id: auth48_lib.php,v 2.26 2023/10/03 22:30:53 priyanka Exp $
 # Routines to support processing of the AUTH48 state
 include_once("db_connect.php");
 include_once("cluster_support_lib.php");
@@ -1127,15 +1129,15 @@ function approvals_files_row($draft, $docnum) {
   <tr>
     <td colspan="4">
       <p><b>Files</b><br />
-        ORIGINAL: <a href="http://www.rfc-editor.org/internet-drafts/{$draft}.txt">{$draft}.txt</a>
-        EDITED: <a href="http://www.rfc-editor.org/authors/rfc{$docnum}.txt">rfc{$docnum}.txt</a>
-        DIFF: <a href="http://www.rfc-editor.org/authors/rfc{$docnum}-diff.html">rfc{$docnum}-diff.html</a>
+        ORIGINAL: <a href="https://www.ietf.org/id/{$draft}.txt">{$draft}.txt</a>
+        EDITED: <a href="https://www.rfc-editor.org/authors/rfc{$docnum}.txt">rfc{$docnum}.txt</a>
+        DIFF: <a href="https://www.rfc-editor.org/authors/rfc{$docnum}-diff.html">rfc{$docnum}-diff.html</a>
 END;
 
      if (xml_file_check($docnum)) {
           print<<<END
 <br />
-XML SOURCE: <a href="http://www.rfc-editor.org/authors/rfc{$docnum}.xml">rfc{$docnum}.xml</a>
+XML SOURCE: <a href="https://www.rfc-editor.org/authors/rfc{$docnum}.xml">rfc{$docnum}.xml</a>
 END;
      }
 
@@ -1208,7 +1210,7 @@ END;
 function display_approved_yes($num) {
      print<<<END
     <td>
-      <input type="radio" checked name="approved_$num" value="yes" /> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" checked name="approved_$num" value="yes" /> Yes
       <input type="radio" name="approved_$num" value="no" /> No
     </td>
 
@@ -1218,7 +1220,7 @@ END;
 function display_approved_no($num) {
      print<<<END
     <td>
-      <input type="radio" name="approved_$num" value="yes" /> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="approved_$num" value="yes" /> Yes
       <input type="radio" checked name="approved_$num" value="no" /> No
     </td>
 
@@ -1231,8 +1233,8 @@ function new_approver_row() {
   <tr>
     <td><input type="text" size="60" id="new_approver" name="new_approver" /></td>
     <td>
-      <input type="radio" name="new_approved" value="yes" /> Yes &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="new_approved" value="no" /> No
+      <input type="radio" name="new_approved" value="yes" /> Yes 
+      <input type="radio" name="new_approved" value="no" /> No &nbsp;&nbsp;
     </td>
     <td>&nbsp;</td>
   </tr>

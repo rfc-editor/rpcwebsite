@@ -11,16 +11,17 @@
 /*              XMLv2 file (X) ,XMLv3 file (v3), NROFF file (N),No file (NO), Looks like XML (X?)          */
 /*              Asked for a file (AA),id2xml in progress (in_prog),id2xml complete (id2xml)                */
 /*                                                                                                         */
-/*September 2020 : Modified the return type from error to warning for editor_key - PN                                      */
-/* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
+/*September 2020 : Modified the return type from error to warning for editor_key - PN                      */
+/*November 2020 : Modified the script to use PDO prepared statements - PN                                  */
+/*February  2023 : Modified the script to lock DOC-ID after the publication - PN                           */
 /***********************************************************************************************************/
 #
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
-# $Id: edit_lib.php,v 2.31 2020/12/01 20:39:33 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
+# $Id: edit_lib.php,v 2.34 2023/02/22 22:50:32 priyanka Exp $
 # 
 # 03-23-10 rpc added get_stream_name
 
@@ -299,6 +300,17 @@ function table_text_input($name, $width=70) {
     elseif ( $field_errors[$name] ) {
 	$label_class = " class=\"error\"";
     }
+
+    /*DOC_ID is read only for PUB documents*/
+    if ($name == 'doc_id') {
+       if ($fields['state_id'] == '14'){
+           $attr = " readonly";
+           $label_class="class=\"readonly\"";
+       }
+    
+    }
+    
+
     print '
     <tr>
 	<td>
@@ -1573,7 +1585,7 @@ END;
        } else {
            rfc_fail("Insert failed on State History: Add draft");
        }
-  
+ 
        if (set_editor_assignments($fields)) {
 
 	   update_queue_html();    // format for HTML page
@@ -1825,7 +1837,6 @@ END;
                    rfc_fail("Insert failed on State History: ");
                }
            }
-
 
            update_queue_html(); // format for HTML page
            update_queue_xml();  // format for XML page
@@ -2486,7 +2497,7 @@ function post_datatracker(){
 	'password' => '');
  curl_setopt ($ch, CURLOPT_POSTFIELDS, $data);
 */
- curl_setopt ($ch, CURLOPT_POSTFIELDS, "username=rfcedsync&password=^L8$9@qVY4gQ");
+ curl_setopt ($ch, CURLOPT_POSTFIELDS, "username=rfcedsync&password=/wpMNi3QLUO9");
 
  $output = curl_exec ($ch);
  $info = curl_getinfo($ch);

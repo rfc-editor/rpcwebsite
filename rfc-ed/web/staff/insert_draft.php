@@ -5,6 +5,7 @@
 /*                   approval of a draft*/
 /*March 20202 : Modified the formt to HTML, TEXT, v3PDF, XML from ASCII - PN              */
 /* November 2020 : Modified the script to use PDO prepared statements - PN                */
+/* October 2023 : Modified link for internet-drafts - PN                                  */
 /******************************************************************************************/
 include('/a/www/staff/db_connect.php');
 include('/a/www/staff/editor_lib.php');
@@ -380,7 +381,7 @@ function get_counts($draft){
 	$bytes = "";
 	$pages = "";
         
-        $filename = '/a/ftp/in-notes/internet-drafts/'.$draft.'.txt';
+        $filename = '/a/inc-work/internet-drafts/'.$draft.'.txt';
         
 	if (!(file_exists($filename))){
             if ( $debug_insert_draft === true) {
