@@ -1,8 +1,9 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: header.php,v 2.17 2021/05/18 18:42:00 priyanka Exp $ */
+  /* $Id: header.php,v 2.18 2023/02/24 23:44:54 priyanka Exp $ */
   /*October 2018 : Added a link for Area Assignment Page*/
   /*May 2021 : Modified link for Procedures*/
+  /*February 2023 : Added link for operational notes page*/
 include_once("ams_util_lib.php");
 
 $dev_mode = get_dev_mode();
@@ -64,6 +65,7 @@ END;
       <li><a href="' . htmlspecialchars($base) . '/current_queue.php" target="_blank">Current Queue</a></li>
       <li><a href="' . htmlspecialchars($base) . '/track_by_editor.php" target="_blank">Tracking by Editor</a></li>
       <li><a href="' . htmlspecialchars($base) . '/auth48_edit.php">AUTH48 Tracking</a></li>
+      <li><a href="' . htmlspecialchars($base) . '/op_notes_queue.php">Queue Notes</a></li>
       <li><a href="' . htmlspecialchars($base) . '/wiki/doku.php?id=v3_procedures_manual" target="_blank">Procedures</a></li>
     </ul>
     <hr/>';
