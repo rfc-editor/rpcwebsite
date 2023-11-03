@@ -1,12 +1,13 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved                 */
-  /* $Id: errata_mail_lib.php,v 1.11 2022/07/29 01:50:59 priyanka Exp $ */
+  /* $Id: errata_mail_lib.php,v 1.12 2023/10/25 20:45:05 priyanka Exp $ */
   /* May 2017 Updates : Removed rfcid from function generate_rfc_errata_search_query - PN*/ 
   /* June 2020 Updates : Added check for 'None' in the email address to avoild sending email to None - PN*/
   /* July 2021 Updates : Added the changes to Make Editorial errata notification go to rfc-ed only - PN*/
   /* October 2021 : Modified the script to remove unwanted print - PN   */  
   /* February 2022 Updates : Added the IANA email for Verified Errata - PN*/
   /* July 2022 Updates : Added the check for CC authors before adding it to the CC email list - PN*/
+  /* October 2023 Updates : Added rfc-editor email for Verified Editorial Errata - PN*/
 // Set dev_mode 
 include_once("ams_util_lib.php");
 include("config.php");
@@ -200,6 +201,14 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
           if ($style == VERIFY_MSG){
               $headers .= ", "."iana@iana.org";
           }
+          //Add TO to rfc-editor@rfc-editor.org for Verified Editorial Type Errata
+          if ($form_data['errata_type_code'] == 'Editorial') {
+          // Tag on the RFC Editor address if the SSP isn't the RFC Editor
+              if ((strcasecmp($db_data['ssp_email'], "rfc-editor@rfc-editor.org")) != 0) {
+                 $headers .= ", rfc-editor@rfc-editor.org";
+              }
+          }
+
           break;
      case REPORT_MSG:
           // This only changes REPORT acks; others do not have the TYPE template
@@ -275,7 +284,7 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
           error_log("generate_msg() called with unknown style: " . $style);
           break;
      }
-     
+     /*This takes care for Technical Reported and Verified Errata*/
      if ($form_data['errata_type_code'] != 'Editorial') {
          // Tag on the RFC Editor address if the SSP isn't the RFC Editor
          if ((strcasecmp($db_data['ssp_email'], "rfc-editor@rfc-editor.org")) != 0) {
