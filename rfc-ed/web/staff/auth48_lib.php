@@ -9,9 +9,10 @@
 /* June 2021 : Modified the script for server upgrade - PN                                                 */
 /* September 2023 : Modified the script for display improvement - PN                                       */
 /* October 2023 : Modified the link for internet-drafts - PN                                               */
+/* November 2023 : Modified the script to show for AD for IETF NON WG  - PN                                */
 /***********************************************************************************************************/
 #
-# $Id: auth48_lib.php,v 2.26 2023/10/03 22:30:53 priyanka Exp $
+# $Id: auth48_lib.php,v 2.28 2023/11/22 23:27:10 priyanka Exp $
 # Routines to support processing of the AUTH48 state
 include_once("db_connect.php");
 include_once("cluster_support_lib.php");
@@ -696,10 +697,26 @@ function approvals_display_form($docnum) {
 
      $a48_row = auth48_lookup($docnum);
      if ($a48_row !== FALSE){
-	 $draft_name = $a48_row['draft'];
+	 
+         $draft_name = $a48_row['draft'];
          $state_name = get_state_name($a48_row['state_id']);
          $ad_name = get_ad_name($draft_name);
-        
+       
+         if ($a48_row !== FALSE){
+         # Get the iesg_contact from index table
+         if ($ad_name == 'Not Applicable'){
+            #Get the source and check if it is IETF NON WORKING GROUP            
+            $source = get_source_name($a48_row['doc-id']);
+            if ($source == 'IETF - NON WORKING GROUP'){
+                $iesg_contact = get_iesg_contact($a48_row['doc-id']);
+                $ad_name = '[see below]';
+            } else {
+                $iesg_contact = 'Not Applicable';
+            }
+         } else {
+          $iesg_contact = get_iesg_contact($a48_row['doc-id']);
+         }
+ 
          print("<h2 style=\"display: table; margin-right: auto; margin-left: auto;\">$state_name for RFC $docnum <br>(<a href=\"https://www.rfc-editor.org/staff/edit_draft.php?draft=$draft_name\">$draft_name</a>)</h2>");
          print ("<table style=\"width: 850px; margin: auto\"; >");
          print ("<tr><td>");
@@ -716,13 +733,6 @@ function approvals_display_form($docnum) {
           print("\n-->\n");
      }
 
-     if ($a48_row !== FALSE){
-       # Get the iesg_contact from index table
-        if ($ad_name == 'Not Applicable'){
-          $iesg_contact = 'Not Applicable';
-        } else { 
-          $iesg_contact = get_iesg_contact($a48_row['doc-id']);
-        }
         print ("<table style=\"width: 850px; margin: auto\"; >");
         print ("<tr><td>");
         print ("<label class=\"a48\">Responsible AD: </label>".$iesg_contact);
@@ -1393,6 +1403,39 @@ function get_iesg_contact($doc_id){
    }
 
    return $iesg_contact;
+}
+
+#Get source name
+                
+function get_source_name($doc_id){
+   global $debug_a48_lib;
+   global $pdo;
+        
+   $query= "
+       SELECT `source`
+       FROM `index` i
+       WHERE i.`doc-id` = :doc_id";
+
+   try { 
+       $stmt = $pdo->prepare($query);
+       $stmt->bindParam('doc_id',$doc_id);
+       $stmt->execute();
+       $num_of_rows = $stmt->rowCount();
+   }catch (PDOException $pe){
+       error_log("Error processing : get_source_name", $pe->getMessage(), $pe->getCode(), array('exception' => $pe));
+   }
+     
+   if ($debug_a48_lib === TRUE) {
+       print("\n<!-- get_source_contact: query=$query\n-->\n");
+   }
+
+   #$count = $num_of_rows;
+   if ($num_of_rows > 0) {
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+       $source = $row['source'];
+   }
+
+   return $source;
 }
 
 ?>

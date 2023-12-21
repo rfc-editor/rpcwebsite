@@ -4,6 +4,7 @@
 /*Oct 2018  : Removed dfonseca@amsl.com from Autosystem recipient. - PN*/
 /*Apr 2019  : Added csmiley@amsl.com to Autosystem recipient - PN*/
 /*May 2022  : Added apaloma@amsl.com to Autosystem recipient - PN*/
+/*Dec 2023  : Added starrant@amsl.com to Autosystem recipient - PN*/
 
 $debug_json = FALSE;
 $template_dir = "/a/home/rfc-ed/Templates/JSONInput-msgs/";
@@ -39,7 +40,7 @@ fclose($tplate_f);
 $body = preg_replace("/DRAFT_NAME/", $in_draft,$body);
 
 $subject = "needs review: status change? $in_draft";
-$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com";
+$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com,starrant@amsl.com";
 $headers  = "From: autosystem@rfc-editor.org\n";
 
 if ($debug_json) {
@@ -177,7 +178,7 @@ fclose($tplate_f);
 $body = preg_replace("/DRAFT_NAME/", $in_draft,$body);
 
 $subject = "needs review: already in queue $in_draft";
-$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com";
+$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com,starrant@amsl.com";
 $headers  = "From: autosystem@rfc-editor.org\n";
 
 
@@ -227,7 +228,7 @@ $body = preg_replace("/DRAFT_NAME/", $in_draft,$body);
 $body = preg_replace("/REV/",$rev,$body);
 
 $subject = "needs review: new version? $in_draft";
-$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com";
+$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com,starrant@amsl.com";
 $headers  = "From: autosystem@rfc-editor.org\n";
 
 if ($debug_json) {
@@ -279,7 +280,7 @@ $body = preg_replace("/DRAFT_NAME/", $in_draft,$body);
 $body = preg_replace("/DRAFT/",$draft,$body);
 
 $subject = "needs review: row added for $in_draft";
-$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com";
+$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com,starrant@amsl.com";
 $headers  = "From: autosystem@rfc-editor.org\n";
 
 if ($debug_json) {
