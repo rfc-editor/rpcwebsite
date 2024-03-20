@@ -40,9 +40,12 @@
  * August 2022 : Modified the XML link for Cite this RFC - PN
  * August 2022 : Added 'Editorial' stream to the script - PN 
  * October 2022 : Corrected links about Working group under Source - PN 
- * March 2033 : Added Not prepped XML file link, bib tex link , words "the mailing list" if it precedes a mailing list address
+ * March 2023 : Added Not prepped XML file link, bib tex link , words "the mailing list" if it precedes a mailing list address
                 and handled the special Author names ( with II, III) - PN
- * Sept 2033 : Corrected area URL - PN
+ * Sept 2023 : Corrected area URL - PN
+ * January 2024 : Made two changes - PN
+                 1) Changed the DOI display as a full URL link
+                 2) Display error message when source data does not match any existing group 
  */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -272,8 +275,7 @@ function display_citation_links($num,$prefix,$doi) {
      global $datatracker_base;    
  
      $doistring = "";
-     if($doi > "") $doistring = "<b>DOI</b>: &nbsp;$doi"; 
-     
+     if($doi > "") $doistring = "<b>DOI</b>: &nbsp;<a href=\"https://doi.org/".$doi."\">https://doi.org/".$doi."</a>"; 
      if ($prefix == 'RFC'){ 
      print<<<END
 <p>
@@ -750,7 +752,12 @@ function format_source_data($data) {
      
 */
 
+             $wg_upper = strtoupper($data['wg_acronym']);
              $area_upper = strtoupper($data['area_acronym']);
+             $formatted_url1 = "";
+             $formatted_url2 = "";
+             $formatted_status1 = "";
+             $formatted_status2 = "";
 
 	     switch($data['ssp_id']) {
 	     case '1':
@@ -765,7 +772,13 @@ function format_source_data($data) {
                                       (<a href="//datatracker.ietf.org/wg/#%s">%s</a>)', 
                                       $data['wg_acronym'], $data['wg_acronym'],
                                       $area_upper,$data['area_acronym'] );
-			} 
+                          /*URL are formattted to check if it exists*/
+                          $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
+                          $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
+                          $formatted_status1 = isUrl($formatted_url1);
+                          $formatted_status2 = isUrl($formatted_url2);
+		
+                    	} 
                     break;
 	     case '3':
 	     case '6':
@@ -783,12 +796,38 @@ function format_source_data($data) {
                                       (<a href="//datatracker.ietf.org/wg/#%s/">%s</a>)', 
                                       $data['wg_acronym'], $data['wg_acronym'],
                                       $area_upper,$data['area_acronym'] );
-                  }  
+                          /*URL are formattted to check if it exists*/
+                          $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
+                          $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
+                          $formatted_status1 = isUrl($formatted_url1);
+                          $formatted_status2 = isUrl($formatted_url2);
+                       }  
         	  break;
      	     }
 
+     if (($formatted_status1 == "URL Doesn't Exist") || ($formatted_status2 == "URL Doesn't Exist")){
+          $formatted_source = '[error: data not available]';
+     }
 
      return $formatted_source;
+}
+
+/* This function is used to check if input URL eixts
+   or not and reeturns the status code */
+
+function isUrl($in_url){
+   $in_url = trim($in_url);
+   // Use get_headers() function to get headers 
+   $headers = get_headers($in_url);
+   // Use condition to check the existence of URL 
+   if($headers && strpos( $headers[0], '200')) {
+       $status = "URL Exist";
+   } else {
+       $status = "URL Doesn't Exist";
+   }
+// Return status 
+return ($status);
+
 }
 
 /*
