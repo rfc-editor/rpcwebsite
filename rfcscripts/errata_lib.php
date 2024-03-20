@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_lib.php,v 1.21 2023/05/26 19:45:09 priyanka Exp $
+  /* $Id: errata_lib.php,v 1.23 2024/03/12 23:57:55 priyanka Exp $
    * 
    * v1.33 2010/02/08 rcross: added handling for special characters in title, edit_full_record_form()
    * April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN
@@ -16,7 +16,9 @@
    * August 2022 : Modified the script for Editorial stream - PN 
    * April 2023 : Modified the script to prevent submission against a not issued doc-id - PN 
    * May 2023 : Modified the script to change the URL from .txt to info page for RFC Number and modified the styling of link - PN 
-  */
+   * January 2024 : Modified the script to add Updated by line and add commas to errata display - PN
+   * March 2024 : Modified the script to modify the ad_list and chair list email address and added wg_cronym to the query - PN   
+   */
 
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -209,10 +211,10 @@ function get_extra_email_data($doc_id) {
          $query =
              "SELECT i.`doc-id`, i.email, i.authors, i.source, i.draft,
                   i.`pub-status`, w.area_name, a.area_director_email,
-                  w.ssp_id, s.stream_name, s.ssp_email, s.ssp_name,
+                  w.wg_acronym,w.ssp_id, s.stream_name, s.ssp_email, s.ssp_name,
                   w.wg_chair_email, w.wg_email, w.wg_status,
-                  CONCAT(w.wg_acronym,'-ads@tools.ietf.org') AS ad_list,
-                  CONCAT(w.wg_acronym,'-chairs@tools.ietf.org') AS chair_list
+                  CONCAT(w.wg_acronym,'-ads@ietf.org') AS ad_list,
+                  CONCAT(w.wg_acronym,'-chairs@ietf.org') AS chair_list
              FROM `index` i, working_group w, stream_specific_parties s, area a
              WHERE w.wg_name = i.source 
                  AND w.area_name = a.area_name
@@ -2028,7 +2030,8 @@ function report_header($rfcid,$rfctitle,$rfcdate) {
      $rfcnum = substr($rfcid,3,4);
      $metadata = get_rfcmeta_data($rfcnum);
      $obs = $metadata['obsoleted-by'];
-
+     $updated_by = $metadata['updated-by'];
+     
      if ($debug_erlib === true) {
           print("<b>metadata</b>\n<pre>\n");
           print_r($metadata);
@@ -2038,15 +2041,35 @@ function report_header($rfcid,$rfctitle,$rfcdate) {
      # display obsolete message
      if ($obs != NULL && strlen(trim($obs)) != 0) {
           $values = explode(',', $obs);
+          $num_of_docs = count($values);
+          $count = 0;
           $formatted_obs = "<p><b>Note: This RFC has been obsoleted by ";
           foreach($values as $value) {
+              $count++;
               list($rfc_value_name,$rfc_value_number,$length) = split_rfc($value); 
  	      $formatted_obs .= sprintf(' <a href="/info/%s">%s&nbsp;%d</a>', htmlspecialchars(trim(strtolower($value))), htmlspecialchars($rfc_value_name), htmlspecialchars(trim($rfc_value_number))); 
-
+              if ($count < $num_of_docs) { $formatted_obs .= ", "; }
           }
           $formatted_obs .= "</b></p>\n";
           print("$formatted_obs");
      }
+
+     # display update message
+     if ($updated_by != NULL && strlen(trim($updated_by)) != 0) {
+          $updated_by_values = explode(',', $updated_by);
+          $updated_num_of_docs = count($updated_by_values);
+          $updated_count = 0;
+          $formatted_updated_by = "<p><b>Note: This RFC has been updated by ";
+          foreach($updated_by_values as $updated_by_value) {
+              $updated_count++;
+              list($rfc_value_name,$rfc_value_number,$length) = split_rfc($updated_by_value);
+              $formatted_updated_by .= sprintf(' <a href="/info/%s">%s&nbsp;%d</a>', htmlspecialchars(trim(strtolower($updated_by_value))), htmlspecialchars($rfc_value_name), htmlspecialchars(trim($rfc_value_number)));
+              if ($updated_count < $updated_num_of_docs) { $formatted_updated_by .= ", "; }
+          }
+          $formatted_updated_by .= "</b></p>\n";
+          print("$formatted_updated_by");
+     }
+
      # if this is Legacy or NONWG strip area acronym and print on separate line
      $src_acronym = get_rfc_source_acronyms($rfcid);
      if ($src_acronym != null) {

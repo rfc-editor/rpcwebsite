@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved                 */
-  /* $Id: errata_mail_lib.php,v 1.12 2023/10/25 20:45:05 priyanka Exp $ */
+  /* $Id: errata_mail_lib.php,v 1.15 2024/03/12 23:57:55 priyanka Exp $ */
   /* May 2017 Updates : Removed rfcid from function generate_rfc_errata_search_query - PN*/ 
   /* June 2020 Updates : Added check for 'None' in the email address to avoild sending email to None - PN*/
   /* July 2021 Updates : Added the changes to Make Editorial errata notification go to rfc-ed only - PN*/
@@ -8,6 +8,9 @@
   /* February 2022 Updates : Added the IANA email for Verified Errata - PN*/
   /* July 2022 Updates : Added the check for CC authors before adding it to the CC email list - PN*/
   /* October 2023 Updates : Added rfc-editor email for Verified Editorial Errata - PN*/
+  /* January 2024 Updates : Added RG list to errata notification mail when RG is the source - PN*/
+  /* February 2024 Updates : Added RG list to errata notification mail when RG is the source for Editorial errata- PN*/
+  /* March 2024 Updates : Added WIT related changes to the script so [wg_acronym]-ad@ietf.org email address is used for reported errata - PN*/
 // Set dev_mode 
 include_once("ams_util_lib.php");
 include("config.php");
@@ -149,7 +152,6 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
      $body = preg_replace('/RFCSTATUS/', $db_data['pub-status'], $body);
      $body = preg_replace('/RFCPUBDATE/', format_date($form_data['pub-date']), $body);
      $body = preg_replace('/RFCSOURCE/', $db_data['source'], $body);
-     $body = preg_replace('/RFCAREA/', $db_data['area_name'], $body);
      $body = preg_replace('/RFCSTREAM/', $db_data['stream_name'], $body);
     
 
@@ -219,10 +221,38 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
           switch ($db_data['area_director_email']) {
           case 'rfc-editor@rfc-editor.org':
                $additional_to = $db_data['ssp_email']; // Legacy and N/A areas
-               $use_wg_email = false;
+               // Check ssp_id for IRTF and add RG list to errata notification mail 
+               if ($db_data['ssp_id'] == '4') {
+                   if ($db_data['wg_email'] != null && $db_data['wg_status'] == 'open') {
+                      $additional_to .= ", " . $db_data['wg_email'];
+                      $use_wg_email = false;
+                   }
+               }
                break;
           default:
-               $additional_to = trim($db_data['area_director_email']); // Area Directors Only
+               // Check for working group those are going to be in are WIT and send email to
+               // related working group AD as area WIT contains working group from various
+               // areas. So solution is to send email to associated [wg_acronym]-ads@ietf.org 
+               // so email go to proper aliases.
+               if ($db_data['wg_acronym'] == 'avtcore' OR $db_data['wg_acronym'] == 'cdni'
+                   OR $db_data['wg_acronym'] == 'ccwg' OR $db_data['wg_acronym'] == 'core'
+                   OR $db_data['wg_acronym'] == 'httpapi' OR $db_data['wg_acronym'] == 'httpbis'
+                   OR $db_data['wg_acronym'] == 'masque' OR $db_data['wg_acronym'] == 'moq'
+                   OR $db_data['wg_acronym'] == 'nfsv4' OR $db_data['wg_acronym'] == 'quic'
+                   OR $db_data['wg_acronym'] == 'rtcweb' OR $db_data['wg_acronym'] == 'taps'
+                   OR $db_data['wg_acronym'] == 'tcpm' OR $db_data['wg_acronym'] == 'tsvarea'
+                   OR $db_data['wg_acronym'] == 'tsvwg'
+                   OR $db_data['wg_acronym'] == 'webtrans' OR $db_data['wg_acronym'] == 'wish'
+                   OR $db_data['wg_acronym'] == 'alto' OR $db_data['wg_acronym'] == 'dtn'
+                   OR $db_data['wg_acronym'] == 'ippm' OR $db_data['wg_acronym'] == 'scim'
+                   OR $db_data['wg_acronym'] == 'tigress' OR $db_data['wg_acronym'] == 'uta'
+                   ) {
+
+                    $additional_to = $db_data['ad_list'];
+               } else {
+                    $additional_to = trim($db_data['area_director_email']); // Area Directors Only
+               }
+               
                if ($db_data['wg_chair_email'] != null) {
                     $additional_to .= ", " . $db_data['wg_chair_email'];
                }
@@ -246,7 +276,11 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
                    $to .= ", " . $additional_to;
                 } else {
                    $to = "rfc-editor@rfc-editor.org";
-                    if ($out_email_string){
+                   // For Editorial errata check ssp_id for IRTF(4) and add RG list to errata notification mail 
+                   if ($db_data['ssp_id'] == '4') {
+                      $to .= ", " . $additional_to;
+                   }
+                   if ($out_email_string){
                       $cc_authors = $out_email_string;
                    } else {
                       $cc_authors = trim($db_data['email']); // Authors
@@ -257,6 +291,10 @@ function generate_message($form_data, $subj_template, $msg_template, $style) {
                   $to  = $additional_to; // SSP
                } else {
                   $to = "rfc-editor@rfc-editor.org";
+                  // For Editorial errata check ssp_id for IRTF(4) and add RG list to errata notification mail 
+                  if ($db_data['ssp_id'] == '4') {
+                     $to .= ", " . $additional_to;
+                  }
                }
           }
           // For report acknowledgments, make To & Cc like this:
