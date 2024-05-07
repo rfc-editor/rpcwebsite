@@ -25,6 +25,7 @@
 /*January 2022  : Change tags to make Google Scholar happy, fix broken HTML - JRL      */
 /*August 2022  : Modified CSS to comment the line-height  - PN                         */
 /*January 2023  : Added closing tag for citation_technical_report_number - PN          */
+/*April 2024  : Modified Updated By handling part for multiline values - PN            */
 /***************************************************************************************/
 
 
@@ -602,9 +603,15 @@ function get_meta_header($rfc_data,$display,$in_num){
                }
            }
 
-            if (($update_multiline_dev) == 1 and ($update_multiline_mod ==1)){/*Special arrangement for only one element in the second row*/
-                           $update_flat_string .= 'NEW'.$update_string_array[1][0];
+           if (($update_multiline_dev) == 1){/*Special arrangement for less elements in the second row*/
+
+                         $update_flat_string .= 'NEW';
+
+                         for ($mult = 0; $mult <= $update_multiline_mod; $mult++){
+                            $update_flat_string .= $update_string_array[1][$mult].",";
+                         }
             }
+
             if ($update_multiline_mod != 0){
                $update_flat_string = rtrim($update_flat_string,",");
             }
