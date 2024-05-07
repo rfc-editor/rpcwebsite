@@ -1,6 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: exportINDEX.php,v 2.9 2021/10/01 06:19:25 priyanka Exp $ */
+  /* $Id: exportINDEX.php,v 2.10 2024/05/01 19:02:49 priyanka Exp $ */
+  /* May 2024 : Removed call to scripts make_bcp_ref.pl and make_std_ref.pl(Text entires for BCPs and STDs) */
+  /*            Removed call to scripts parse-bcpref.py and parse-std.ref.py (Building citation files for BCPs and STDs)*/
 $ei_debug = false;
 $output   = array();
 $status   = null;
@@ -13,13 +15,9 @@ $xml_reference_cmd = "${cmd_base}/xmlRFCref.php";
 
 $ref_cmd_base =  "/a/home/rfc-ed/bin";
 $make_ref_cmd = "/usr/bin/perl $ref_cmd_base/make_ref.pl $ref_cmd_base/database_information.txt > /a/ftp/in-notes/rfc-ref.txt.new";
-$make_bcp_ref_cmd = "/usr/bin/perl $ref_cmd_base/make_bcp_ref.pl $ref_cmd_base/database_information.txt > /a/ftp/in-notes/bcp-ref.txt";
-$make_std_ref_cmd = "/usr/bin/perl $ref_cmd_base/make_std_ref.pl $ref_cmd_base/database_information.txt > /a/ftp/in-notes/std-ref.txt";
 
 
 $parse_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-rfcref.py";
-$parse_bcp_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-bcpref.py";
-$parse_std_ref_cmd = "/usr/bin/python3 $ref_cmd_base/parse-stdref.py";
 
 
 ?>
@@ -140,48 +138,6 @@ if ($status != 0) {
      }
 }
 
-
-$output_make_bcp_ref = array(); 
-?>
-<br>
-<b>Running Text Reference entries for BCPs</b>
-<?php
-exec($make_bcp_ref_cmd, $output_make_bcp_ref, $status);
-if ($status != 0) {
-     print("<h1 class=\"error\">ERROR!</h1>");
-     print("<p>Script $make_bcp_ref_cmd returned non-zero status ${status}! Output was:</p>");
-     foreach ($output_make_bcp_ref as $line) {
-          print($line . "<br />");
-     }
-     print("<p class=\"error\">End of  $make_bcp_ref_cmd error text output.</p>");
-     if ($ei_debug !== true) { exit(0); }
-}else {
-     foreach ($output_make_bcp_ref as $line) {
-          print($line . "<br />");
-     }
-}
-
-
-$output_make_std_ref = array(); 
-?>
-<br>
-<b>Running Text Reference entries for STDs</b>
-<?php
-exec($make_std_ref_cmd, $output_make_std_ref, $status);
-if ($status != 0) {
-     print("<h1 class=\"error\">ERROR!</h1>");
-     print("<p>Script $make_std_ref_cmd returned non-zero status ${status}! Output was:</p>");
-     foreach ($output_make_std_ref as $line) {
-          print($line . "<br />");
-     }
-     print("<p class=\"error\">End of  $make_std_ref_cmd error text output.</p>");
-     if ($ei_debug !== true) { exit(0); }
-}else {
-     foreach ($output_make_std_ref as $line) {
-          print($line . "<br />");
-     }
-}
-
 $output_rfc_ref = array(); 
 ?>
 <br>
@@ -198,46 +154,6 @@ if ($status != 0) {
      if ($ei_debug !== true) { exit(0); }
 }else {
      foreach ( $output_rfc_ref as $line) {
-          print($line . "<br />");
-     }
-}
-
-$output_bcp_ref = array(); 
-?>
-<br>
-<b>Building citation files for BCPs</b>
-<?php
-exec($parse_bcp_ref_cmd,$output_bcp_ref, $status);
-if ($status != 0) {
-     print("<h1 class=\"error\">ERROR!</h1>");
-     print("<p>Script $parse_bcp_ref_cmd returned non-zero status ${status}! Output was:</p>");
-     foreach ($output_bcp_ref as $line) {
-          print($line . "<br />");
-     }
-     print("<p class=\"error\">End of $parse_bcp_ref_cmd error text output.</p>");
-     if ($ei_debug !== true) { exit(0); }
-}else {
-     foreach ( $output_bcp_ref as $line) {
-          print($line . "<br />");
-     }
-}
-
-$output_std_ref = array(); 
-?>
-<br>
-<b>Building citation files for STDs</b>
-<?php
-exec($parse_std_ref_cmd ,$output_std_ref, $status);
-if ($status != 0) {
-     print("<h1 class=\"error\">ERROR!</h1>");
-     print("<p>Script $parse_std_ref_cmd returned non-zero status ${status}! Output was:</p>");
-     foreach ($output_std_ref as $line) {
-          print($line . "<br />");
-     }
-     print("<p class=\"error\">End of $parse_std_ref_cmd error text output.</p>");
-     if ($ei_debug !== true) { exit(0); }
-}else {
-     foreach ( $output_std_ref as $line) {
           print($line . "<br />");
      }
 }
