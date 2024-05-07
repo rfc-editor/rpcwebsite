@@ -1,8 +1,9 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata.php,v 1.6 2021/06/17 00:47:33 priyanka Exp $ */
+  /* $Id: errata.php,v 1.8 2024/03/20 16:31:49 priyanka Exp $ */
   /* April 2017 Updates : Added the redirect link for Errata Id and RFC number - PN*/
   /* June 2021 : Modified the script for server upgrade - PN                            */
+  /* March 2024 : Added Overview of the process link to the script - PN */
 session_start();
 $_SESSION['report_count'] = 0;  /* Count errata reports submitted this session */
 
@@ -75,7 +76,7 @@ global $how_to_verify;
 global $ietf_base;
 global $errata_processing_html;
 global $materials;
-global $draft_errata_process;
+global $draft_rfc_editor_errata_process;
 
 print<<<END
 <h2 id="reportnew">Report New Errata</h2>
@@ -113,6 +114,7 @@ reported to the maintainer of rfc2html or <a href="mailto:rfc-editor@rfc-editor.
   <li>For verifiers: <a href="$how_to_verify">How to verify errata</a></li>
   <li>IESG Statement on <a href="$ietf_base$errata_processing_html">
 "IESG Processing of RFC Errata for the IETF Stream"</a></li>
+  <li><a href="$datatracker_baselink$draft_rfc_editor_errata_process">Current Process for Handling RFC Errata</a></li>
 </ul> 
 
 END;

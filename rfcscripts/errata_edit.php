@@ -1,7 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: errata_edit.php,v 1.3 2021/06/17 00:47:33 priyanka Exp $ */
+  /* $Id: errata_edit.php,v 1.4 2024/03/19 19:55:04 priyanka Exp $ */
   /* June 2021 : Modified the script for server upgrade - PN                            */
+  /* March 2024 : Modified Overview of the process link  - PN */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -30,6 +31,9 @@ if (!is_privileged_user()) {
 }
 
 function edit_form() {
+     global $datatracker_baselink;
+     global $draft_rfc_editor_errata_process;
+
      print '
 <h2>Edit Errata for a particular RFC</h2>
 <form method="post" id="query_by_doc" action="errata_edit_select.php" onsubmit="return validateRFCEditSearchForm(this);">
@@ -85,7 +89,7 @@ a general overview of the process.
 </p>
 <ul>
   <li><a href="how_to_verify.html">How to verify errata</a></li>
-  <li><a href="' . htmlspecialchars($document_root . $draft_rfc_editor_errata_process) . '" target="_blank"> 
+  <li><a href="' . htmlspecialchars($datatracker_baselink . $draft_rfc_editor_errata_process) . '"> 
 Overview of the process</a></li>
 </ul>
 

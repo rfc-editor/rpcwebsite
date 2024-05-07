@@ -4,7 +4,7 @@
 /* June 2019 Updates : Modified the search_query_base from http to https - PN*/
 /* July 2021 Updates : Modified the errata_processing_html link - PN*/
 /* Sept 2023 Updates : Added ietf_root link - PN*/
-
+/* March 2024 Updates : Modified $draft_rfc_editor_errata_process to update Overview process link - PN */ 
 
 /*********************************************************/
 /*For all_clusters.php/rfcmeta.php/auth48_cluster.php*/
@@ -78,7 +78,6 @@ $how_to_report = "/how-to-report/";
 $how_to_verify = "/how-to-verify/";
 $errata_processing_html = "/about/groups/iesg/statements/processing-errata-ietf-stream/";
 $materials = "/materials";
-$draft_errata_process= "/draft-rfc-editor-errata-process-02.txt";
 /*********************************************************/
 /*Constants from errata_lib.php     */
 /*********************************************************/
@@ -95,7 +94,7 @@ $defer_template = "/home/rfc-ed/Templates/Errata-Msgs/held-message.txt";
 /*********************************************************/
 /*Constants from errata_edit.php     */
 /*********************************************************/
-$draft_rfc_editor_errata_process = "/draft-rfc-editor-errata-process-02.txt";
+$draft_rfc_editor_errata_process = "draft-rpc-errata-process/";
 /*********************************************************/
 /*For rfcmeta.php*/
 /*********************************************************/
