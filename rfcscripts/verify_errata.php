@@ -1,7 +1,8 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved */
-  /* $Id: verify_errata.php,v 1.3 2021/06/17 00:47:33 priyanka Exp $ */
+  /* $Id: verify_errata.php,v 1.4 2024/03/19 19:55:04 priyanka Exp $ */
   /* June 2021 : Modified the script for server upgrade - PN                            */
+  /* March 2024 : Modified Overview of the process link  - PN */
 session_start();
 include("errata_headers.php");
 include("errata_search_lib.php");
@@ -29,13 +30,15 @@ $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
 
 function more_information() {
      global $document_root;
+     global $datatracker_baselink;
+     global $draft_rfc_editor_errata_process;
+
      print<<<END
 
 <h2>More Information</h2>
 <ul>
   <li><a href="/how-to-verify/">How to verify errata</a></li>
-  <li><a href="$document_root/materials/draft-rfc-editor-errata-process-02.txt" target="_blank">
-Overview of the process</a></li>
+  <li><a href="$datatracker_baselink$draft_rfc_editor_errata_process">Overview of the process</a></li>
 </ul>
 
 END;
