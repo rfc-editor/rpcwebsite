@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /************************************************************************************************************/
-/*Script Name : get_wp_dttracker.php                                                                        */
+/*Script Name : get_wg_dttracker.php                                                                        */
 /*Description : The script calls the datatracker API to get the information about active Working group      */
 /*              Seperate API calls required to get the details of Area, and various Working group chair     */
 /*              detail                                                                                      */
