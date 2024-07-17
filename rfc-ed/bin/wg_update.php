@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /************************************************************************************************************/
-/*Script Name : wp_update.php                                                                               */
+/*Script Name : wg_update.php                                                                               */
 /*Description : The script uses i/p file wg_data.txt to update the database table working_group             */
 /*February 2022: Working Group Table Data - PN                                                              */
 /*May 2024: Added the changes to remove word 'Area' from the area name before adding to Working Group       */
