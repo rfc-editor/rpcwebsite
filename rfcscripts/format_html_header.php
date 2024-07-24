@@ -26,6 +26,7 @@
 /*August 2022  : Modified CSS to comment the line-height  - PN                         */
 /*January 2023  : Added closing tag for citation_technical_report_number - PN          */
 /*April 2024  : Modified Updated By handling part for multiline values - PN            */
+/*July 2024  : Modified Updated By handling part - PN                                  */
 /***************************************************************************************/
 
 
@@ -587,7 +588,7 @@ function get_meta_header($rfc_data,$display,$in_num){
                 $update_string_array[$u] = array_slice($updated_data,$k,7);
             }
 
-           for ($x=0; $x< $update_multiline_dev;$x++){
+            for ($x=0; $x< $update_multiline_dev;$x++){
                for ($y=0;$y< 7;$y++){
                  if (($update_string_array[$x][$y] != '') OR ($update_string_array[$x][$y] != null)){
                      if ($y != 6) {
@@ -601,16 +602,20 @@ function get_meta_header($rfc_data,$display,$in_num){
                      }
                  }
                }
-           }
+            }
 
            if (($update_multiline_dev) == 1){/*Special arrangement for less elements in the second row*/
-
                          $update_flat_string .= 'NEW';
-
                          for ($mult = 0; $mult <= $update_multiline_mod; $mult++){
                             $update_flat_string .= $update_string_array[1][$mult].",";
                          }
             }
+
+            if (($update_multiline_mod) == 1 and $update_multiline_dev > 1){/*Special arrangement when mod value is 1 and updated by value is multiline*/
+                  $mod_element = $updated_data[$k];
+                  $update_flat_string .= 'NEW'.$mod_element;
+            }
+
 
             if ($update_multiline_mod != 0){
                $update_flat_string = rtrim($update_flat_string,",");
