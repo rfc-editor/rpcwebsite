@@ -1,6 +1,6 @@
 <?php
   /* Copyright The IETF Trust 2020 All Rights Reserved               */
-  /* $Id: errata_report.php,v 1.14 2023/11/30 20:03:14 priyanka Exp $ */
+  /* $Id: errata_report.php,v 1.15 2024/01/31 23:38:24 priyanka Exp $ */
   //
   //       2010/04/14 rcross: added server-side validations.  errata_confirm.php has been 
   //                          absorbed into this script so we can validate and hand off to 
@@ -16,6 +16,7 @@
  /* April 2022 : Removed the Math problem and added Google re-Captcha to handle bot submission - PN */
  /* July 2022 : Added the Javascript required warning to Errata report form  - PN */
  /* November 2023 : Modified script to improve data validation for section field  - PN */
+ /* January 2024 : Modified script to improve data validation for section field  - PN */
 session_start();
 include("errata_headers.php");
 include("errata_lib.php");
@@ -217,12 +218,17 @@ if (isset($_POST['doc-id']) && ($_POST['submit'] != "Edit this Errata Report")) 
         $errmsg = $errmsg . "ERROR: Please select a valid type<br>";
     }
      //Limit the section to certain values only
-    if (trim($section) == '')
-    {
+    if (trim($section) == ''){
         $errmsg = $errmsg . "ERROR: Please enter a section number<br>";
-    }else if (preg_match('/RFC/i',$section)){
-
+    } else if (preg_match('/RFC/i',$section)){
+     
         $errmsg = $errmsg . "ERROR: Please enter a valid section number or \"GLOBAL\". <br>";
+    } else if ($section == '0'){
+     
+       $errmsg = $errmsg . "ERROR: Please enter a valid section number or \"GLOBAL\". <br>";
+    } else if (preg_match('/^\d{4}/',$section)){
+             
+       $errmsg = $errmsg . "ERROR: Please enter a valid section number or \"GLOBAL\". <br>";
     } else if(!preg_match('/(Abstract|Appendix|Global|Page|Algorithm|Applications|Manufacture|Example|Normative Ref|OTHER RESERVED CHARACTERS|Table|Manifest|Acknowledgements|Discussion|Overview|Annex|grouping prefix|Data Syntax|Contributors|\d+(?:\.\d+)*)/i',$section)){
 
        $errmsg = $errmsg . "ERROR: Please enter a valid section number or \"GLOBAL\". <br>";
