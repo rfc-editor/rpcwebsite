@@ -46,6 +46,7 @@
  * January 2024 : Made two changes - PN
                  1) Changed the DOI display as a full URL link
                  2) Display error message when source data does not match any existing group 
+ * May 2024 : Added link to bib.ietf.org for subseries info page - PN
  */
 include_once("db_connect.php");
 include_once("core_lib.php");
@@ -292,7 +293,9 @@ END;
      print<<<END
 <p>
 <b>Cite this $prefix</b>: 
-<a href="/refs/ref-$prefix_low$str_num.txt">TXT</a></p>
+<a href="/refs/ref-$prefix_low$str_num.txt">TXT</a> &nbsp;|</b>&nbsp;
+<a href="$bib_link_base/public/rfc/bibxml9/reference.$prefix.$numwithzeros.xml">XML</a>
+</p>
 
 END;
 
