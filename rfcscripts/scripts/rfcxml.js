@@ -1,5 +1,5 @@
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-/* $Id: rfcxml.js,v 1.1.1.1 2016/02/08 21:03:51 priyanka Exp $ */
+/* $Id: rfcxml.js,v 1.3 2023/11/16 19:31:43 priyanka Exp $ */
 /*
  * Functions to use in the XSL Transformation of rfc-index.xml into
  * rfc-index.html. These functions take the doc-id values and generate
@@ -7,6 +7,8 @@
  *
  * Install this script in the scripts directory of the root server directory:
  *    $SERVER_ROOT/scripts/rfcxml.js
+ * Nov 2023 : Modified the IEN document link to remove extraneous type + '/'
+ *            to correct the issue - PN 
  */
 
 /*
@@ -30,7 +32,7 @@ function writeDocUrl(type, numStr, anchor) {
       // For unknown (or forgotten) reasons, the IEN documents are stored
       // differently from the other types.
       document.write('<a href="http://www.rfc-editor.org/' + type + '/' +
-                     type + '/' + type +  num + '.txt"');
+                    type +  num + '.txt"');
       document.write(' target="_blank">' + anchor + '</a>');
       break;
    default:
