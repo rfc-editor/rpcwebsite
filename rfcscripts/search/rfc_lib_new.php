@@ -17,6 +17,7 @@
 /* June 2021 : Modified the script for server upgrade - PN                                                                                                                 */
 /* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                               */
 /* December 2022 : Added space in the final query formation to handle the error while searching the RFCs along with number - PN                                            */
+/* May 2024 : Increased the length for wg_acronym in the form - PN */
 /***************************************************************************************************************************************************************************/
 include_once('db_connect.php');
 include('search_config.php');
@@ -307,7 +308,7 @@ END;
 function add_wg_acronym($criteria){
      print<<<END
 	 <tr><td class="boldtext">WG Acronym:</td>
-         <td><input id="wg_acronym" size="6" type="text" name="wg_acronym" maxlength="10"
+         <td><input id="wg_acronym" size="8" type="text" name="wg_acronym" maxlength="12"
 END;
      if ((array_key_exists('wg_acronym',$criteria))) {
          print(" value=\"{$criteria['wg_acronym']}\"");

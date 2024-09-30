@@ -9,6 +9,7 @@
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                                                                                */
 /* August 2022 : Added 'Editorial' stream to the script - PN                                                                                                              */
 /* December 2022 : Modified the script to handle search when only rfc or RFC is entered - PN                                                                              */
+/* May 2024 : Increased the length for wg_acronym in the form - PN */
 /**************************************************************************************************************************************************************************/
 
 include("rfc_headers.php");
@@ -575,8 +576,8 @@ function getErrors($getData){
 		
                 	 case 'wg_acronym':
 						if (($value != null) or ($value != "")){
-							  if (strlen($value) > '10'){
-								  $errors[] = 'WG Acronym should not be more than 10';
+							  if (strlen($value) > '12'){
+								  $errors[] = 'WG Acronym should not be more than 12';
 							  }else{
                                                                  if (!ctype_alnum($value)){
                                                                     $errors[] =  'Error: Invalid input : The WG Acronym  may contain only alphanumeric characters \n';
