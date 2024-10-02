@@ -217,7 +217,6 @@ $to_address = get_to_address();
 /*Generate the header part for the email                                   */
 /***************************************************************************/
 $to = $to_address;
-#$to = 'priyanka@amsl.com,arusso@amsl.com,sginoza@amsl.com';
 $subject = 'Reported Errata Summary for '.date('F Y');
 $headers['From'] = 'rfc-editor@rfc-editor.org';
 $headers['Reply-To']= 'rfc-editor@rfc-editor.org';
