@@ -1,0 +1,11 @@
+#!/bin/bash
+
+: ${1?"Need list of messages"}
+
+for i
+do
+	/usr/sbin/sendmail -frfc-editor@rfc-editor.org -t < $i &&
+	echo $i &&
+	mv $i $(dirname $i)/sent-$(basename $i)
+done
+
