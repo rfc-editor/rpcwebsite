@@ -1,0 +1,117 @@
+This is the template file for email messages sent to notify authors
+that their document is in AUTH48 state and available for review
+(when using an NROFF source file).
+The template text becomes the body of the message. (Headers are
+handled differently.)
+
+Text above the marker "TEXT:" is igored. The message is below that
+marker. Other markers are substituted based on the table below.
+
+Database Column             Marker
+---------------             ------
+doc-id                      RFCXXXX   (e.g., RFC5124)
+title                       RFCTITLE
+draft                       RFCDRAFT
+authors                     RFCAUTHORS
+working_group.wg_chair_name WGCHAIRNAMES
+area.AREA_DIRECTOR_NAME     ADNAMES
+
+
+Not in the database as far as I know
+------------------------------------
+curr_date                  CURRDATE
+lowercase doc-id           LCXXXX  (e.g., rfc5124)
+
+TEXT:
+*****IMPORTANT*****
+
+Updated CURRDATE
+
+RFC Author(s):
+--------------
+
+Instructions for Completing AUTH48
+
+This is your last chance to make changes to your RFC-to-be: 
+RFCDRAFT.txt.
+Once the document is published as an RFC, we will not make changes.
+Please follow the instructions below to complete the AUTH48 process.
+(For frequently asked questions, please see 
+https://www.rfc-editor.org/faq/#auth48.)
+
+1) Review the edited document completely.  The files are available here:
+
+   https://www.rfc-editor.org/authors/LCXXXX.txt
+   https://www.rfc-editor.org/authors/LCXXXX-diff.html
+
+   We recommend reviewing the entire document, not just the diff file.
+   FYI, https://tools.ietf.org/rfcdiff provides tools to make various
+   kinds of diff files.
+
+2) Review and resolve (as necessary) any questions raised by the RFC Editor.
+   The questions (if any) will be sent in a subsequent AUTH48 email.
+
+3) Send us your changes or respond with your approval for publication.  
+   Please use 'REPLY ALL' so that rfc-editor@rfc-editor.org and the parties
+   CC'ed on this message receive your response. Note that your document will
+   not move forward until we have received approvals from each of the
+   authors listed on the front page.
+
+   Note that, because you are listed in the document header, you are 
+   responsible for reviewing and approving the RFC-to-be for publication.
+   As part of that, you are also responsible for engaging other parties 
+   (e.g., Contributors or Working Group) as necessary before providing 
+   your approval.
+
+   If sending changes, please provide us with an explicit list of changes
+   via email. Please send the changes in this format:
+
+      Section # (or indicate Global)
+   
+      OLD:
+      old text
+   
+      NEW:
+      new text
+
+   Be sure to pay particular attention to these areas of the document:
+   - IANA Considerations updates (if applicable)
+   - Contact information
+   - Copyright notice and legends (see item 6 for more details)
+
+4) Send a list of suitable keywords for this document (beyond those 
+   that appear in the title) for use on https://www.rfc-editor.org/search
+
+5) Review changes submitted by your coauthors (if any).  We assume that 
+   you will speak up if you do not agree with the proposed changes. 
+   That is, your silence is your assent to changes submitted by your 
+   coauthors. Note that any changes that are beyond editorial will be 
+   sent to the relevant body for approval.
+
+6) Review the copyright notice and legends as defined in RFC 5378 and the
+   Trust Legal Provisions (TLP -- https://trustee.ietf.org/license-info/).
+
+   If your document was approved for publication with a pre-RFC-5378
+   copyright notice, we have applied the text from section 6.c.iii of the
+   TLP.  Please consider whether this text is required (note that the
+   6.c.iii text is not applicable to Alternate Stream RFCs).  See item
+   4.5 of the "Copyright FAQ" at https://trustee.ietf.org/faq.html for
+   guidance on whether this text applies to your document.
+
+7) Please reply, as the document will not be published until we receive
+   approvals from each author.  The details of the AUTH48 status of your
+   document are here:
+
+   https://www.rfc-editor.org/auth48/LCXXXX
+
+Thank you for your cooperation,
+
+RFC Editor
+
+--------------------------------------
+RFCXXXX (RFCDRAFT)
+--------------------------------------
+Title            : RFCTITLE
+Author(s)        : RFCAUTHORS
+WG Chair(s)      : WGCHAIRNAMES
+Area Director(s) : ADNAMES
