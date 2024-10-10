@@ -1,0 +1,11 @@
+TEXT:
+
+DRAFT_NAME has been added to the db as PENDING; please review the record for additions and corrections
+then change its state.
+
+In the db:
+https://www.rfc-editor.org/staff/edit_draft.php?draft=DRAFT_NAME
+
+In the datatracker:
+https://datatracker.ietf.org/doc/DRAFT
+
