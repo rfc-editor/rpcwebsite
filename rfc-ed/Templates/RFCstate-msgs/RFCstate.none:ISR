@@ -1,0 +1,27 @@
+/********************************************************************/
+/*                                                                  */
+/* File name    : RFCstate.none:ISR                                 */
+/* Author       : Deepa Prakash <dprakash@isi.edu>                  */
+/* Date         : April 02, 2006                                    */
+/* Desc         : This file contains the text which is copied to the*/
+/*                email message when the a draft is inserted in a   */
+/*                state "ISR"                                       */
+/********************************************************************/
+TO : AUTHORS
+CC : AREA_DIRECTORS, WG_CHAIRS, RFC-ED
+TEXT:
+Greetings,
+
+Thank you for your submission. The RFC Editor has received your
+proposed RFC, and will review the document. If revisions are
+necessary, please notify us when a new version is available as an Internet
+Draft. Once the RFC Editor has reviewed this draft, we will send it 
+to the IESG for a 4-week timeout, allowing the IESG time to
+review and comment on this effort.
+
+You can track the progress of your document at:
+<http://www.rfc-editor.org/queue2.html>
+
+Thank you,
+
+RFC Editor

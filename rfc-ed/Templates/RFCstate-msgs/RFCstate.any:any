@@ -1,0 +1,30 @@
+/********************************************************************/
+/*                                                                  */
+/* File name    : RFCstate.any:any                                  */
+/* Author       : Deepa Prakash <dprakash@isi.edu>                  */
+/* Date         : April 02, 2006                                    */
+/* Desc         : This file contains the text which is copied to the*/
+/*                email message when the state of the draft changes */
+/*                to anything other than WITHDRAWN.                 */
+/*               Updated 9/3/08 by AH to include desc. of states    */
+/*               Updated 3/20/12 by AH to point to state_def.html   */
+/*               Updated 10/5/15 by AR to update URLs               */
+/*               Updated 03/31/2022 by PN to add the following line */
+/*               If you have questions, please send mail to         */
+/*               rfc-editor@rfc-editor.org.                         */
+/********************************************************************/
+TO : AUTHORS
+CC : AREA_DIRECTORS, WG_CHAIRS, RFC-ED
+TEXT:
+The document DRAFT_NAME has 
+changed from OLD_STATE state to NEW_STATE state. We thought you'd like to know. 
+You can also follow your document's state at
+<https://www.rfc-editor.org/current_queue.php>.
+For definitions of state names, please see
+<https://www.rfc-editor.org/about/queue/#state_def>.
+
+If you have questions, please send mail to rfc-editor@rfc-editor.org.
+
+Best regards,
+The RFC Editor Team
+

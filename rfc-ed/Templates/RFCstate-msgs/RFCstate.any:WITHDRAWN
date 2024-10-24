@@ -1,0 +1,18 @@
+/********************************************************************/
+/*                                                                  */
+/* File name	: RFCstate.any.WITHDRAWN			    */
+/* Author	: Deepa Prakash <dprakash@isi.edu>		    */
+/* Date  	: March 30, 2006			            */
+/* Desc         : This file contains the text which is copied to the*/
+/*                email message when the state of the draft changes */
+/*                to WITHDRAWN.                                     */
+/********************************************************************/
+TO : AUTHORS
+CC : AREA_DIRECTORS, WG_CHAIRS, RFC-ED
+TEXT:
+The document DRAFT_NAME has 
+changed from OLD_STATE state to NEW_STATE state. We thought you'd
+like to know.
+
+Best regards,
+The RFC Editor Team
