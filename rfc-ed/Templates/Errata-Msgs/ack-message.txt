@@ -1,0 +1,72 @@
+This is the template file for email messages sent to acknowledge a new report
+of an erratum. The template text becomes the body of the message. (Headers are
+handled differently.)
+
+Text above the marker "TEXT:" is igored. The message is below that
+marker. Other markers are substituted based on the table below.
+
+Database Column         Marker
+---------------         ------
+doc-id                  RFCXXXX
+title                   RFCTITLE
+draft			RFCDRAFT
+submitter_name          SUBMITTER_NAME
+submitter_email         SUBMITTER_EMAIL
+errata_type_name	ERRATA_TYPE
+section                 RFCSECTION
+orig_text               RFCORIGINAL_TEXT
+correct_text            RFCCORRECTED_TEXT
+notes                   RFCNOTES_TEXT
+authors                 RFCAUTHORS
+pub-status		RFCSTATUS
+pub-date                RFCPUBDATE
+source                  RFCSOURCE
+stream_name             RFCSTREAM
+ssp_name                RFCSSP
+
+QUERY_URL is a dynamically built URL to envoke the PHP query engine on the
+indicated RFC.
+
+TEXT:
+The following errata report has been submitted for RFCXXXX,
+"RFCTITLE".
+
+--------------------------------------
+You may review the report below and at:
+QUERY_URL
+
+--------------------------------------
+Type: ERRATA_TYPE
+Reported by: SUBMITTER_NAME <SUBMITTER_EMAIL>
+
+Section: RFCSECTION
+
+Original Text
+-------------
+RFCORIGINAL_TEXT
+
+Corrected Text
+--------------
+RFCCORRECTED_TEXT
+
+Notes
+-----
+RFCNOTES_TEXT
+
+Instructions:
+-------------
+This erratum is currently posted as "Reported". (If it is spam, it 
+will be removed shortly by the RFC Production Center.) Please
+use "Reply All" to discuss whether it should be verified or
+rejected. When a decision is reached, the verifying party  
+will log in to change the status and edit the report, if necessary.
+
+--------------------------------------
+RFCXXXX (RFCDRAFT)
+--------------------------------------
+Title               : RFCTITLE
+Publication Date    : RFCPUBDATE
+Author(s)           : RFCAUTHORS
+Category            : RFCSTATUS
+Source              : RFCSOURCE
+Stream              : RFCSTREAM

@@ -1,0 +1,73 @@
+This is the template file for email messages sent to notify that a
+report has been verified. The template text becomes the body of the
+message.  (Headers are handled differently.)
+
+For this message, Subject: [Errata Verified] RFCXXXX
+
+Text above the marker "TEXT:" is ignored. The message is below that
+marker. Other markers are substituted based on the table below.
+
+Database Column         Marker
+---------------         ------
+doc-id                  RFCXXXX
+title                   RFCTITLE
+draft			RFCDRAFT
+submitter_name          SUBMITTER_NAME
+submitter_email         SUBMITTER_EMAIL
+submit_date             SUBMIT_DATE
+errata_type_name	ERRATA_TYPE
+errata_status_name      ERRATA_STATUS
+section                 RFCSECTION
+orig_text               RFCORIGINAL_TEXT
+correct_text            RFCCORRECTED_TEXT
+notes                   RFCNOTES_TEXT
+authors                 RFCAUTHORS
+pub-status		RFCSTATUS
+pub-date                RFCPUBDATE
+source                  RFCSOURCE
+stream_name             RFCSTREAM
+ssp_name                RFCSSP
+verifier_name           VERIFIER_NAME
+
+QUERY_URL is a dynamcially built URL to envoke the PHP query engine on the
+indicated RFC.
+
+TEXT:
+The following errata report has been verified for RFCXXXX,
+"RFCTITLE". 
+
+--------------------------------------
+You may review the report below and at:
+QUERY_URL
+
+--------------------------------------
+Status: ERRATA_STATUS
+Type: ERRATA_TYPE
+
+Reported by: SUBMITTER_NAME <SUBMITTER_EMAIL>
+Date Reported: SUBMIT_DATE
+Verified by: VERIFIER_NAME RFCSSP
+
+Section: RFCSECTION
+
+Original Text
+-------------
+RFCORIGINAL_TEXT
+
+Corrected Text
+--------------
+RFCCORRECTED_TEXT
+
+Notes
+-----
+RFCNOTES_TEXT
+
+--------------------------------------
+RFCXXXX (RFCDRAFT)
+--------------------------------------
+Title               : RFCTITLE
+Publication Date    : RFCPUBDATE
+Author(s)           : RFCAUTHORS
+Category            : RFCSTATUS
+Source              : RFCSOURCE
+Stream              : RFCSTREAM
