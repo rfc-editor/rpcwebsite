@@ -1,5 +1,5 @@
 <?php
-  /* $Id: cluster_lib.php,v 1.13 2023/09/29 17:30:05 priyanka Exp $ */
+  /* $Id: cluster_lib.php,v 1.14 2024/11/06 01:37:32 priyanka Exp $ */
 /**************************************************************************************/
 /* Copyright The IETF Trust 2020 All Rights Reserved                                  */
 /* March 2020 : Modified the script to change the order of cluster detail based on    */
@@ -10,7 +10,8 @@
 /* September 2021 : Added get_draft_exact_data to script - PN                         */
 /* October 2022 : Added horizontal line between drafts for special case - PN          */
 /* July 2023 : Modified function to eliminate duplicate draft - PN                    */
-/* Sept 2023 : Modified link for internet-drafts - PN                                  */
+/* Sept 2023 : Modified link for internet-drafts - PN                                 */
+/* November 2024 : Modified get_ref_status for exact draft name for ref - PN          */
 /**************************************************************************************/
 #
 #+
@@ -601,7 +602,7 @@ function get_ref_status($pdo,$draft) {
 
    try {
         $sql = "
-      	 SELECT CONCAT( s.state_name,CASE WHEN i.iana_flag = \"1\"THEN \"*A\"ELSE \"\"END ,CASE WHEN i.ref_flag = \"1\"THEN \"*R\"ELSE \"\"END,
+      	 SELECT i.DRAFT,CONCAT( s.state_name,CASE WHEN i.iana_flag = \"1\"THEN \"*A\"ELSE \"\"END ,CASE WHEN i.ref_flag = \"1\"THEN \"*R\"ELSE \"\"END,
 	        CASE WHEN i.generation_number = \"1\" THEN \"(1G)\" WHEN i.generation_number = \"2\" THEN \"(2G)\" WHEN i.generation_number = \"3\" THEN \"(3G)\" WHEN i.generation_number = \"0\" THEN \"\" END) as state
          FROM `index` i, `states` s
          WHERE i.state_id NOT IN ($in)
@@ -618,7 +619,13 @@ function get_ref_status($pdo,$draft) {
     switch($num_of_rows) {
        case 1:
            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-           $state = $row['state'];
+           $draft_name = $row['DRAFT'];
+           $draft_name_base = trim(substr($draft_name, 0, -3));
+           if ($draft == $draft_name_base) { //ref is matched with the draft_base
+              $state = $row['state'];
+           } else {
+              $state = 'NOT-RECEIVED';
+           }
            break;
        default:
            $state = 'NOT-RECEIVED';
