@@ -1,0 +1,200 @@
+#!/usr/bin/perl
+# $Id: create7and30dayZIPandTAR,v 2.0 2010/03/15 22:50:45 rcross Exp $
+
+#################################################################################
+#This script creates tarred and zipped files of files that have been changed    #
+#or added (rfc files, etc) within the last 7 days and the last 30 days          #
+#and sticks them into http://www.rfc-editor.org/tar/                            #
+#                                                                               # 
+# Originally written by: Emad Fanous                                            #
+# 29 Mar 00: Bob Braden: Move output to ftpable directory                       #
+# 03 Jun 00: Emad/Braden: Fix bug when date is only one digit.                  #
+# 27 Jun 00: Braden: Make tar file paths relative                               #
+# 08 Aug 00: Braden: remove old files                                           #
+# 08 Aug 00: Braden: Add zip files                                              #
+# 26 Oct 00: DongJin(DJ): Exclude .zip .tar .tar.gz files                       #
+# 12 Nov 01: Dongjin(DJ): to use different option for bin and ascii when zip    #
+# 25 Aug 04: gjthomas: changed location of log file                             #
+#                                                                               #
+#################################################################################
+
+
+chdir "/a/ftp/";
+@dirs=("in-notes/");
+
+$filesmo_bin="";    # to save binary files like pdf (don't use -l option)
+$filesmo_asc="";    # to save ascii files like txt,ps (use -l option for zip)
+$filesmo="";
+
+$fileswk_bin="";
+$fileswk_asc="";
+$fileswk="";
+
+#$rmthis="/usr/bin/rm -f";
+$rmthis="/bin/rm -f";
+
+
+# Remove old tar/zip files
+#  It is unclear exactly which files it is useful to keep.
+#  For now, keep only latest version of 7 and 30 day file.
+# delete previous log file and open file handle for it (LOG)
+
+#$logfile = "/nfs/jade/rfc-ed/bin/LOG_FILES/create7and30dayZIPandTAR.log";
+$logfile = "/home/rfc-ed/logs/create7and30dayZIPandTAR.log";
+
+if (-e $logfile) {
+    unlink($logfile);
+}
+
+open(LOG,">$logfile");
+
+
+
+
+
+$file7 = "/a/ftp/in-notes/tar/7daysTo*";
+$file30 = "/a/ftp/in-notes/tar/30daysTo*";
+print LOG `$rmthis $file7`;
+print LOG `$rmthis $file30`;
+
+
+foreach $dir (@dirs) {
+   @files=`ls $dir`;
+   foreach $file (@files) 
+   {
+      chomp($file);
+      $file2="$dir" . "$file";
+
+      unless (-d $file2) {
+          $age=(-M $file2);
+          $age2=int($age);
+
+          # to Exclude some files (like .zip, .tar, .tar.gz ...)
+
+          unless ( ($file =~ /us-d/) or ($file =~ /\~/) or ($file =~ /tar/)
+                 or ($file =~ /zip/) ) 
+          {
+ 	      if ( defined $age2) {
+    
+                   # create file list for the last 30 days
+		   if ($age2 < 31) {
+                       if($file2 =~ /pdf$/i) {
+	                  $filesmo_bin ="$filesmo_bin" . " $file2";
+	
+		       }
+
+                       else {
+	                  $filesmo_asc ="$filesmo_asc" . " $file2";
+                       } 
+                     
+	               $filesmo ="$filesmo" . " $file2";
+	           }
+            
+                   # create file list for the last 7 days
+	           if ($age2 < 8) {
+                       if($file2 =~ /pdf$/i) {
+	                  $fileswk_bin="$fileswk_bin" . " $file2";
+		       }
+                       else {
+			   $fileswk_asc="$fileswk_asc" . " $file2";
+                       }
+
+		       $fileswk ="$fileswk" . " $file2";
+	           }
+	      }
+
+	      else { 
+		   print LOG "Dunno: $file2, $age, $age2\n";
+	      }
+          }
+       }
+   }
+}
+
+
+# create tar and zip files
+
+#$tar="/usr/bin/tar";
+$tar="/bin/tar";
+$datefile="/bin/date";
+$datemo=`$datefile \+30daysTo\%Y\%b\%d`;
+chomp($datemo);
+$dateweek=`$datefile \+7daysTo\%Y\%b\%d`;
+chomp($dateweek);
+$tarmoname=  "in-notes/tar/" . "$datemo" . ".tar";
+$tarweekname="in-notes/tar/" . "$dateweek" . ".tar";
+
+$zipmoname=  "in-notes/tar/" . "$datemo";
+$zipweekname="in-notes/tar/" . "$dateweek";
+
+$cotarmo=  "$tarmoname" . ".Z";
+$cotarwk=  "$tarweekname" . ".Z";
+$cotarmo2= "$tarmoname" . ".z";
+$cotarwk2= "$tarweekname" . ".z";
+
+$gzip= "/usr/bin/gzip -v9 ";
+
+########################################################
+# Use different zip option for binary and ascii files  #
+########################################################
+
+$zip_bin=  "/usr/bin/zip -9 ";
+$zip_asc=  "/usr/bin/zip -l9 ";
+
+
+  $dothis=`$datefile \+\%a`;
+  chomp($dothis);
+  $dothis=lc($dothis);
+ 
+if ((-e $tarmoname) or (-e $cotarmo) or (-e $cotarmo2)) {
+	print LOG "Month was already done\n";
+} else {
+	print LOG "\n o Create 30 day TAR and ZIP ...\n";
+	$tarmo="$tar cvfh $tarmoname $filesmo";	  
+	print LOG `$tarmo`;
+
+        if(length $filesmo_asc > 9) {
+	   print LOG `$zip_asc $zipmoname $filesmo_asc`;
+        }
+        if(length $filesmo_bin > 9) {
+	   print LOG `$zip_bin $zipmoname $filesmo_bin`;
+        }
+	print LOG "\n o Compress (gzip) 30 day tar...\n";
+	print LOG `$gzip $tarmoname 2>>$logfile`;
+      }
+
+if ((-e $tarweekname) or (-e $cotarwk) or (-e $cotarwk2)) {
+	print LOG "\n o Week was already done!!\n";
+} else {
+	print LOG "\n o create 7 day tar and zip\n";
+	$tarweek="$tar cvfh $tarweekname $fileswk";
+	print LOG `$tarweek`;
+ 
+        if(length $fileswk_asc > 9) {
+ 	   print LOG `$zip_asc $zipweekname $fileswk_asc`;
+        }
+        if(length $fileswk_bin > 9) {
+	   print LOG `$zip_bin $zipweekname $fileswk_bin`;
+        }
+	print LOG "\n o compress (gzip) 7 day tar\n";
+	print LOG `$gzip $tarweekname 2>>$logfile`;
+	  
+}
+print LOG "\n==> Files are created successfully!!\n";
+
+close(LOG);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

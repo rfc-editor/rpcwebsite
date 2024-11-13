@@ -1,0 +1,14 @@
+#!/bin/sh
+#This scripts calls the specified PHP script
+#Change to working directory
+cd /a/home/rfc-ed/bin
+
+
+# The queue_data.php script script is used to get the CURRENT QUEUE DATA and
+# CURRENT HISTORY DATA for the passed draft name
+
+./queue_data.php $1
+
+# end of script
+
+

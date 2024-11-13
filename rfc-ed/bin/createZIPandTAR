@@ -1,0 +1,196 @@
+#!/usr/bin/perl
+# $Id: createZIPandTAR,v 2.0 2010/03/15 22:50:45 rcross Exp $
+
+##################################################################################
+#                                                                                #
+# File Name: createZIPandTAR                                                     #
+#                                                                                # 
+# Description:                                                                   #
+#   Perl script to create tar.Z and .gzip versions of complete text of all RFCs  #
+#                                                                                #
+# 25 Aug 04: gjthomas                                                            #
+#	     Changed the location of the log file				 #
+#                                                                                #
+# 28 Aug 01: Dongjin Son(DJ)                                                     #
+#            o Modified ZIP process                                              #
+#              - added -l option for txt and ps file                             #
+#              - removed -l option for pdf file                                  # 
+#                                                                                # 
+# 21 May 01: Dongjin Son(DJ)                                                     #
+#            - added a line to cleanup in-notes directory                        #
+#                                                                                # 
+# 05 Feb 01: Dongjin Son(DJ)                                                     #
+#            - modifyed to use /tmp/tarAndZip directory for temporary files      # 
+# Written by Emad Fanous                                                         #
+# 29 Mar 00: B Braden: Moved to FTPable space                                    #
+# 03 Apr 00: B Braden: Remove .txt suffix from RFC files included in tar         #
+#		file, so that .ps and .pdf files will be incldued.               #
+#                                                                                #
+################################################################################## 
+
+
+chdir "/a/ftp/in-notes/";
+
+$zip = "/usr/bin/zip";
+$tar="/bin/tar";
+$gzip="/usr/bin/gzip -v9 ";
+$rm="/bin/rm";
+
+$rfctarfile="/tmp/tarAndZip/RFC-all.tar";
+$rfczipfile="/tmp/tarAndZip/RFC-all";
+
+$rfctarfileORG = "/a/ftp/in-notes/tar/RFC-all.tar";
+$rfczipfileORG = "/a/ftp/in-notes/tar/RFC-all";
+
+$readme="/a/ftp/in-notes/tar/readme.txt";
+
+$comptar="$rfctarfile" . ".Z";
+$gzfile="$rfctarfile" . ".gz";
+
+$comptarORG = "$rfctarfileORG" . ".Z";
+$gzfileORG = "$rfctarfileORG" . ".gz";
+
+
+# delete previous log file and open file handle for it (LOG)
+
+#$logfile = "/nfs/jade/rfc-ed/bin/LOG_FILES/createZIPandTAR.log";
+$logfile = "/home/rfc-ed/logs/createZIPandTAR.log";
+
+if (-e $logfile) {
+		unlink($logfile);
+}
+
+open(LOG,">$logfile");
+
+
+# see if tarAndZip dir does exist or not (create if it doesn't)
+
+if(-e "/tmp/tarAndZip/") {
+}
+else{
+   print LOG `mkdir /tmp/tarAndZip`;
+}
+
+
+if (-e $readme) {
+    unlink($readme);
+}
+
+
+$date=`date`;
+open (README, ">$readme");
+print README "This tar file was updated/created at\n $date\n\n";
+print README "It is at updated at least weekly.\n";
+close (README);
+print `chmod 777 $readme`;
+
+if (-e $rfctarfile) {
+   print LOG `$rm $rfctarfile`;
+}
+
+
+if (-e $rfctarfileORG) {
+   print LOG `$rm $rfctarfileORG`;
+}
+
+
+if (-e $comptar) {
+   print LOG `$rm $comptar`;
+}
+
+
+if (-e $comptarORG) {
+   print LOG `$rm $comptarORG`;
+}
+
+
+
+if (-e $gzfile) {
+   print LOG `$rm $gzfile`;
+}
+
+if (-e $gzfileORG) {
+   print LOG `$rm $gzfileORG`;
+}
+
+
+## $command="$tar cf $rfctarfile rfc-index.txt rfc1\*\.txt rfc2\*\.txt 
+## rfc3\*\.txt rfc4\*\.txt rfc5\*\.txt rfc6\*\.txt rfc7\*\.txt rfc8\*\.txt 
+## rfc9\*\.txt
+
+ $command="$tar cf $rfctarfile rfc-index.txt rfc1\* rfc2\* rfc3\* rfc4\* rfc5\* rfc6\* rfc7\* rfc8\* rfc9\*  $readme";
+
+ print LOG "\nCreating Tar file...\n";
+ 
+ print LOG `$command`;
+
+ print LOG "Creating tar.gz file ...\n";
+
+ print LOG `$gzip $rfctarfile 2>>$logfile`;
+
+
+$deletezip = "$rfczipfile" . ".zip";
+
+if (-e $deletezip) { 
+   print LOG `$rm $deletezip`;
+}
+chdir "/a/ftp/in-notes/";
+
+
+# to clean up ~in-notes directory
+
+print LOG `rm -f temp* *% *~ printable*`;
+
+print LOG "Creating Zip file...\n";
+
+print LOG `$zip -l9 $rfczipfile $readme`;
+print LOG `$zip -l9 $rfczipfile rfc-index.txt`;
+
+
+for ($i = 1; $i < 10; $i++) {
+
+   
+   $commandzip = "$zip -l9 $rfczipfile rfc"."$i".'*.txt';
+   print LOG `$commandzip`;
+
+
+   $pdfcheck = 'ls -l /a/ftp/in-notes/rfc' . "$i" . '*.pdf';
+   $pdffile = `$pdfcheck 2>/dev/null`;
+
+   if(length $pdffile > 0) {
+
+      $commandzip = "$zip -9 $rfczipfile rfc"."$i".'*.pdf';
+      print LOG `$commandzip`;
+	 }
+
+
+   $pscheck = 'ls -l /a/ftp/in-notes/rfc' . "$i" . '*.ps';
+   $psfile = `$pscheck 2>/dev/null`;
+
+   if(length $psfile > 0) {
+      $commandzip = "$zip -l9 $rfczipfile rfc"."$i".'*.ps';  
+      print LOG `$commandzip`;
+	 }
+}
+
+print LOG `$rm $readme`;
+
+if (-e $rfctarfile) {
+   print LOG `chmod 777 $rfctarfile`;
+}
+if (-e $comptar) {
+   print LOG `chmod 777 $comptar`;
+}
+if (-e $gzfile) {
+   print LOG `chmod 777 $gzfile`;
+}
+
+print LOG `cp /tmp/tarAndZip/RFC-all.* /a/ftp/in-notes/tar`;
+
+print LOG `rm /tmp/tarAndZip/RFC-all.*`;
+
+close(LOG);
+
+
+
+
