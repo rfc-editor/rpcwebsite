@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#################################################################################################
+# Script name : single_json_generator
+# This script reads the input rfc number and generates the
+# .json file at the appropriate location using index_json_creator.php
+# May 2019 - Created the script - PN
+# Nov 2019 - Modified the path for the script - PN 
+#################################################################################################
+
+
+cd /a/home/rfc-ed/bin
+
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied please specify input rfc number rfcxxxx"
+    exit 1
+fi
+
+in_number=$1
+
+./index_json_creator.php ${1}  > /a/ftp/in-notes/${1}.json

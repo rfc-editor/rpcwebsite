@@ -1,0 +1,43 @@
+#!/bin/sh
+
+#----------------------------------------------------------------------------------#
+#	extract_abstrat 
+#	Get the input XML file rfcXXXX.xml and calls the php script
+#       extract_abstract.php with argument rfcxxxx.xml and xxxx
+#
+#
+#  01-15-2019   Priyanka Narkar  - Created the script during V3 implementation
+#----------------------------------------------------------------------------------#
+
+cd /a/home/rfc-ed/bin
+
+
+if [ -z "$1" ]
+  then
+    echo "No argument passed as input file"
+    echo "Script need to execute as ./extract_abstract rfcxxxx.xml"
+    exit 1
+fi
+
+
+input_xml_file=$1
+
+#Get the input and arrage it to proper format 
+len=${#1}
+
+pos=$((len - 3))
+
+extn=${1:pos:4}
+
+number=${1:3:4}
+  
+if [ $extn != 'xml' ]; then
+   echo "*------------------------------------------------------------------------------------------------*"
+   echo "   The file entered is $1. The script requires .xml as input file. Please enter again            "
+   echo "*------------------------------------------------------------------------------------------------*"
+   exit 1;
+fi
+
+#Extract and update abstract from XML file to index table in the database using the php script
+
+./extract_abstract.php $1 $number
