@@ -1,0 +1,41 @@
+#!/bin/sh
+
+#----------------------------------------------------------------------------------#
+#	extract_data 
+#	Get the input rfc numbe rfcXXXX   and calls the extract_pagecount,
+#       extract_abstract and extract_title script with appropriate input
+#       files.
+#  04-14-2020   Priyanka Narkar  - Created the script during V3 implementation
+#----------------------------------------------------------------------------------#
+
+cd /a/home/rfc-ed/bin
+
+
+if [ -z "$1" ]
+  then
+    echo "No argument passed as input rfc number"
+    echo "Script need to execute as ./extract_data rfcxxxx"
+    exit 1
+fi
+
+#Get the input RFC number
+input_rfcnumber=$1
+
+
+#Call extract_pagecount script
+
+./extract_pagecount $1.pdf
+
+
+#Call the extratc_title script
+
+./extract_title $1.notprepped.xml
+
+
+#Call the extratc_data script
+
+./extract_abstract $1.notprepped.xml
+
+
+
+
