@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+# check txt or xml documents for propoer DOIs
+# John Levine, June 2017
+ 
+from __future__ import print_function
+from __future__ import with_statement
+
+import argparse
+import urllib
+import urllib3
+import re
+import requests
+import json
+
+feedbase = "https://www.rfc-editor.org/authors/"
+feed = feedbase
+
+doicache = dict()
+
+class Checkdoi:
+    """
+    Look at the DOIs in documents and see if they look right
+    """
+    doiurl = "https://dx.doi.org"
+    guessdoi = "10.17487"
+
+    def doi_valid(self, doi, guess=False):
+        if doi in doicache:
+            return doicache[doi]
+
+        if doi[:3] == '10.':
+            url = "https://dx.doi.org/"+doi
+        else:
+            url = doi
+        r = requests.get(url,
+            headers={'Accept': 'application/vnd.citationstyles.csl+json'})
+        if r.status_code != 200:
+            if guess:
+                m = re.match(r'10.17487/(RFC\d{4,5})', doi, flags=re.I)
+                if m:
+                    doicache[doi] = "Guessed future "+m.group(1)
+                    return doicache[doi]
+            doicache[doi] = False
+            return False
+
+        j = json.loads(r.text)
+        doicache[doi] = j['title']
+        return j['title']
+
+    def doi_report(self, doi, filename, lineno, lastrfc, quiet=False,
+    guess=False):
+        dv = self.doi_valid(doi, guess=guess)
+        if dv:
+            if not quiet:
+                print("{0}:{1} {2} {3}".format(filename, lineno, doi, dv))
+        else:
+            print("{0}:{1} BAD {2}".format(filename, lineno, doi))
+        if lastrfc:
+            m = re.match(r'10.17487/RFC(\d{4,5})', doi, flags=re.I)
+            if m and lastrfc != m.group(1):
+                print("{0}:{1} WRONG DOI {2} for RFC {3}".format(filename,
+    lineno, doi, lastrfc))
+
+    def __init__(self, filetext, filename=None, isxml=False, guess=False,
+    quiet=False):
+        print("check",filename,"length",len(filetext))
+        dangle = False                  # dangling DOI
+        lastrfc = None
+        for n, l in enumerate(filetext, start=1):
+            if isxml:
+                m = re.search(r"<seriesInfo
+    +name=.DOI. +value=.([^'\"]+)['\"]", l)
+                if m:
+                    doi = m.group(1)
+                    #dv = self.doi_valid(doi, guess, lastrfc)
+                    self.doi_report(doi, filename, n, lastrfc, quiet=quiet,
+    guess=guess)
+                continue
+
+            if re.search(r'^\s*$', l):  # blank line
+                lastrfc = None
+                continue
+
+            m = re.search(r'..RFC +(\d{4}),', l)
+            if m: # RFC reference not in header
+                lastrfc = m.group(1)
+
+            m = re.search(r'DOI +(10.\d+/\S+)', l) # regular text
+            if not m and dangle:
+                m = re.search(r'^ +(10.\d+/\S+)', l) # regular text wrapped
+            DOI
+            dangle = False
+            if m:
+                doi = m.group(1)
+                if doi[-1] in '.,>':
+                    doi = doi[:-1]
+                # dv = self.doi_valid(doi, guess=guess)
+                self.doi_report(doi, filename, n, lastrfc, quiet=quiet,
+            guess=guess)
+            else:
+                m = re.search(r'DOI\s+$', l)
+                if m: dangle = True
+
+################################################################
+
+if __name__=="__main__":
+    parser = argparse.ArgumentParser(description='Check DOI references in TXT
+    or XML RFCs')
+    parser.add_argument("--quiet", action='store_true', help="Don't report
+    valid DOIs")
+    parser.add_argument("--guess", action='store_true', help="Guess likely
+    future DOIs")
+    parser.add_argument("--feed", action='store_true', help="Read docs from
+    auth48 feed")
+    parser.add_argument("draft", action='store', nargs='+', help="Input
+    draft(s) XML or TXT")
+    args = parser.parse_args()
+
+    if args.feed:
+        for d in args.draft:
+            du = urllib.request.urlopen(feedbase+d)
+            Checkdoi(du.readlines(), filename=d, isxml=(".xml" in d),
+                quiet=args.quiet, guess=args.guess)
+    else:
+        for d in args.draft:
+            with open(d, "r") as df:
+                Checkdoi(df.readlines(), filename=d, isxml=(".xml" in d),
+                    quiet=args.quiet, guess=args.guess)

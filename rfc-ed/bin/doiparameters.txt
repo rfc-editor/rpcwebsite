@@ -1,0 +1,26 @@
+# parameters for RFC Editor DOIs
+# format is parameter name, one space, parameter value
+
+# comments in Crossref upload batch
+doiregistrant RFC Editor
+doidepositor RFC Production Center for the RFC Editor
+
+# URL the DOI will redirect to, with {0} for the doc-id
+doiurl https://www.rfc-editor.org/info/{0}
+
+# where XML report mail goes to
+doiemail webmaster@rfc-editor.org
+
+# crossref user credentials
+crossrefuser user
+crossrefpw pass
+
+# local file that tracks upload status
+statusfile /a/home/rfc-ed/bin/doistatus.p
+
+#Test status file
+testdoistatus /a/home/rfc-ed/bin/teststatusfile.p
+
+# prefix used for debugging, not in production since
+# the DOIs are read from the XML file
+doiprefix 10.17487
