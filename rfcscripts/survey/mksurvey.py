@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.9
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -65,16 +65,16 @@ class Survey:
 
     def getxml(self, rfc):
         """ rfc is file name or DirEntry
-        returns (number. title, list of (name, address))
+        returns (number. title, list of (name, address), prev)
         """
 
         xml = ET.parse(rfc)
-        assert xml
+        assert xml is not None
         r = xml.getroot()
         assert r.tag == 'rfc'            # better be an RFC
         number = r.attrib['number']
         frontnode = r.find('front')
-        assert frontnode
+        assert frontnode is not None
         title = frontnode.find('title').text
         if self.debug:
             print("title", title)
@@ -92,22 +92,23 @@ class Survey:
                     authors.append((aname,emailtxt))
                     if self.debug:
                         print("author",aname, "email", emailtxt)
-        return { 'number': number, 'title': title, 'authors': authors}
+        # find link to I-D
+        prev = None
+        for l in r.findall('link'):
+            if l.attrib["rel"] == "prev":
+                prev = l.attrib["href"]
+                break
+        if debug:
+            print(f"prev is {prev}")
+        assert prev is not None
+        return { 'number': number, 'title': title, 'authors': authors, 'prev': prev }
         
-    def getshepherd(self, rfc):
-        """ rfc is file name or DirEntry
+    def getshepherd(self, prev):
+        """ rfc is url of I-D from prev field
         returns list of shepherd addresses
         """
-        if type(rfc) is posix.DirEntry: # extract RFC number
-
-            r = re.match(r'rfc(\d+)', rfc.name)
-            if not r:
-                print("mystery name", rfc.name)
-                exit(1)
-            rfc = r.group(1)
-        url = self.config['dturl'].format(rfc=rfc)
         # get the datatracker page
-        with urllib.request.urlopen(url) as uf:
+        with urllib.request.urlopen(prev) as uf:
             soup = bs4.BeautifulSoup(uf, 'html.parser')
 
         # find TH tag for contact
@@ -129,7 +130,10 @@ class Survey:
                 continue
             href = shepa['href']
             if href.startswith('mailto:'):
-                shepaddr = href[7:].replace('%40', '@')
+#                shepaddr = href[7:].replace('%40', '@')
+            # decode hex %xx codes
+                shepaddr = re.sub(r'%([0-9a-fA-F][0-9a-fA-F])',
+                    lambda m: bytes.fromhex(m.group(1)).decode(), href[7:] )
         return (shepname, shepaddr)
 
     def addrsplit(self, addr):
@@ -179,7 +183,7 @@ if __name__ == '__main__':
                     print("author add", aa, people[aa])
             people[aa]['msg'].append(f"author of {name}")
                 
-        shep = s.getshepherd(r)
+        shep = s.getshepherd(gx['prev'])    # shepherd from previous I-D
         if shep:
             (sn, sa) = shep
             if not sa:
