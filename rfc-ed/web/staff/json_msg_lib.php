@@ -40,7 +40,7 @@ fclose($tplate_f);
 $body = preg_replace("/DRAFT_NAME/", $in_draft,$body);
 
 $subject = "needs review: status change? $in_draft";
-$to = "sginoza@amsl.com,arusso@amsl.com,lbartholomew@amsl.com,kmoore@amsl.com,csmiley@amsl.com,apaloma@amsl.com,starrant@amsl.com";
+$to = "sginoza@staff.rfc-editor.org,arusso@staff.rfc-editor.org,lbartholomew@staff.rfc-editor.org,kmoore@staff.rfc-editor.org,apaloma@staff.rfc-editor.org,starrant@staff.rfc-editor.org";
 $headers  = "From: autosystem@rfc-editor.org\n";
 
 if ($debug_json) {
