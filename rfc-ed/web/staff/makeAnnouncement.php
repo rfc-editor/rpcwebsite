@@ -1,6 +1,6 @@
 <?php
 /* Copyright The IETF Trust 2020 All Rights Reserved */
-# $Id: makeAnnouncement.php,v 2.28 2021/01/14 01:04:16 priyanka Exp $
+# $Id: makeAnnouncement.php,v 2.29 2025/01/13 17:17:06 priyanka Exp $
 # 07-10-2012 Added function get_wg_ssp_id to indentify IRTF documents
 #            using ssp-id.
 /*April 2015 : Update INDEX table for DOI values                   */
@@ -9,6 +9,7 @@
 /*December 2019  : Removed the character count from the announcement email - PN*/
 /* November 2020 : Modified the script to use PDO prepared statements - PN                                 */
 /* January 2021 : Adjusted the spacing for Email and Authors for Announcment  - PN*/
+/* January 2025 : Removed text from publication announcement - PN*/
 
 include("db_connect.php");
 include("format_lib.php");
@@ -562,7 +563,6 @@ memo is unlimited.\n";
 	$body .=  "\n";
 	$body .=  "\n";
         $body .=  "The RFC Editor Team\n";
-	$body .=  "Association Management Solutions, LLC\n";
 	$body .=  "\n";
    ?>
 
