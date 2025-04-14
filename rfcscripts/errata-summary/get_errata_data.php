@@ -6,6 +6,7 @@
 /*              This script gets the area wise and stream wise  errata counts */
 /*              and sends monthly email to stream managers                    */
 /* September 2024  : Created the script - PN                                  */
+/* April 2025      : Updated to show sources with zero counts - PN            */
 /******************************************************************************/
 include('db_connect.php');
 
@@ -136,8 +137,33 @@ if ($data_count > 0){
    } 
 }
 
-#print_r($area_result_array);
+#This arrangement is made to show the Area or source for 0 data count visibility in the report
+$report_order = array ('art', 'gen','int', 'ops','rtg','sec','wit','3','6','4','Legacy','8');
+$ordered_report_data = array();
+$indexed_data = array();
+foreach ($area_result_array as $item) {
+    $indexed_data[$item[1]] = $item;
+}
 
+foreach ($report_order as $order_item) {
+    if (isset($indexed_data[$order_item])) {
+        $ordered_report_data[] = $indexed_data[$order_item];
+   } else {
+#For streams matching is done with ssp-id's hence rerragnging array for printing
+              if ($order_item == '3'){    
+                 $ordered_report_data[] = array('IAB', $order_item, 0) ;
+              }elseif ($order_item == '6'){    
+                 $ordered_report_data[] = array('INDEPENDENT', $order_item, 0) ;
+              }elseif($order_item == '4'){    
+                 $ordered_report_data[] = array('IRTF', $order_item, 0) ;
+              }elseif ($order_item == '8'){    
+                 $ordered_report_data[] = array('Editorial', $order_item, 0) ;
+              } else {
+              $ordered_report_data[] = array($order_item, $order_item, 0) ;
+              }
+     }
+
+}
 
 if ($data_count > 0){
    $message = '';
@@ -158,49 +184,16 @@ if ($data_count > 0){
    $print_line = '';
    $last_print_line = '';
 
-/******************************************************************************************
-Adjustments are made to keep the printing order as : 'Applications and Real-Time','General','Internet','Operations and Management','Routing','Security','Web and Internet Transport','IAB','INDEPENDENT','IRTF', 'Editorial', 'Legacy'
-*****************************************************************************************/
-   foreach ($area_result_array as $line) {
-       if (trim($line[0]) == 'Legacy'){
-           $last_print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.$line[0].' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
+   foreach ($ordered_report_data as $line) {
+        if ($line[1] == '3' || $line[1] == '6' || $line[1] == '4' || $line[1] == 'Legacy' || $line[1] == '8') {
+$print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.$line[0].' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[0].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
 |<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&stream_name='.$line[0].'&presentation=table \'> public page</a>)</td></tr>';
- 
-       }elseif (trim($line[0]) == 'IAB'){
-           $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.$line[0].' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[0].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
-|<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&stream_name='.$line[0].'&presentation=table \'> public page</a>)</td></tr>';
- 
-       }elseif (trim($line[0]) == 'INDEPENDENT'){
-           $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>Independent (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[0].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
-|<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&stream_name='.$line[0].'&presentation=table \'> public page</a>)</td></tr>';
-
-        }elseif (trim($line[0]) == 'IRTF'){
-            $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.$line[0].' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[0].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
-|<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&stream_name='.$line[0].'&presentation=table \'> public page</a>)</td></tr>';
-
-        }elseif (trim($line[0]) == 'Editorial'){
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.$line[0].' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&stream_name='.$line[0].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
-|<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&stream_name='.$line[0].'&presentation=table \'> public page</a>)</td></tr>';
-
-      }elseif (trim($line[0]) == 'Applications and Real-Time') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'General') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'Internet') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'Operations and Management') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'Routing') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'Security') {
-          $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-      } elseif (trim($line[0]) == 'Web and Internet Transport') {
+        } else { 
           $print_line .= '<tr><td allign=\'center\'>'.$line[2].'</td><td>'.strtoupper($line[1]).' (<a href=\'https://www.rfc-editor.org/verify_errata_select.php?rec_status='.$errata_status_id.'&area_acronym='.$line[1].'&errata_type='.$errata_type_id.'&presentation=table \'>verifier page</a> 
-      | <a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'>public page</a>)</td></tr>';
-       }
+|<a href=\'https://www.rfc-editor.org/errata_search.php?rec_status='.$errata_status_id.'&errata_type='.$errata_type_id.'&area_acronym='.$line[1].'&presentation=table \'> public page</a>)</td></tr>';
+        }
+   }
 
-}
-$print_line .= $last_print_line;
 $print_line .='</table>';
 $print_line .='<p>The links above are to the relevant results on https://www.rfc-editor.org/errata.php; it includes RFCs that have a source of Legacy or Non-WG with an area assignment.</p>';
 $print_line .='<p>For an overview of how to verify errata, please see https://www.rfc-editor.org/how-to-verify/.</p>';
@@ -212,12 +205,11 @@ $message = $print_header.$print_body.$print_line;
 
 
 $to_address = get_to_address();
-
-/***************************************************************************/
 /*Generate the header part for the email                                   */
 /***************************************************************************/
 $to = $to_address;
-$subject = 'Reported Errata Summary for '.date('F Y');
+#$to = 'priyanka@amsl.com';
+$subject = 'Reported Errata Summary for '.date('F, Y');
 $headers['From'] = 'rfc-editor@rfc-editor.org';
 $headers['Reply-To']= 'rfc-editor@rfc-editor.org';
 $headers['MIME-Version'] = 'MIME-Version: 1.0';
