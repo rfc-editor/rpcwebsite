@@ -15,7 +15,7 @@ include('cluster_support_lib.php');
 $debug760 = false;
 #$debug760 = true;
 
-rfc_header("OP Notes Qeue");
+rfc_header("OP Notes Queue");
 $orderby;
 $sort;
 
