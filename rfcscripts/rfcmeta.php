@@ -776,10 +776,10 @@ function format_source_data($data) {
                                       $data['wg_acronym'], $data['wg_acronym'],
                                       $area_upper,$data['area_acronym'] );
                           /*URL are formattted to check if it exists*/
-                          $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
-                          $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
-                          $formatted_status1 = isUrl($formatted_url1);
-                          $formatted_status2 = isUrl($formatted_url2);
+                         //  $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
+                         //  $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
+                         //  $formatted_status1 = isUrl($formatted_url1);
+                         //  $formatted_status2 = isUrl($formatted_url2);
 		
                     	} 
                     break;
@@ -800,10 +800,10 @@ function format_source_data($data) {
                                       $data['wg_acronym'], $data['wg_acronym'],
                                       $area_upper,$data['area_acronym'] );
                           /*URL are formattted to check if it exists*/
-                          $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
-                          $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
-                          $formatted_status1 = isUrl($formatted_url1);
-                          $formatted_status2 = isUrl($formatted_url2);
+                         //  $formatted_url1 = "https://datatracker.ietf.org/wg/".$data['wg_acronym']."/about/";
+                         //  $formatted_url2 = "https://datatracker.ietf.org/wg/#".$area_upper;
+                         //  $formatted_status1 = isUrl($formatted_url1);
+                         //  $formatted_status2 = isUrl($formatted_url2);
                        }  
         	  break;
      	     }
